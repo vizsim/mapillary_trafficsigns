@@ -1,0 +1,22 @@
+*.csv
+*.txt
+!requirements.txt  # Exception to track requirements.txt
+*.gpkg
+*.parquet
+*.pbf
+*.ini
+*.json
+*.geojson
+
+
+venv/
+Schrott/
+
+!output/
+!output/**
+
+
+__pycache__/
+*.pyc
+*.log  
+*.ipynb_checkpoints
