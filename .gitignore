@@ -10,7 +10,7 @@
 
 
 venv/
-Schrott/
+schrott/
 
 !output/
 !output/**
