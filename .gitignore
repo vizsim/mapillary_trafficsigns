@@ -6,7 +6,7 @@
 *.pbf
 *.ini
 *.json
-*.geojson
+#*.geojson
 
 
 venv/
