@@ -1,31 +1,36 @@
 # mapillary_trafficsigns
 
-This project downloads detected traffic signs in Germany by Bundesland from Mapillary using the vector tile layer:
+## 📖 Overview
 
-- [Traffic Sign Tiles API Documentation](https://www.mapillary.com/developer/api-documentation?locale=de_DE#traffic-sign-tiles)
+This project provides code to download and process **traffic sign detections from Mapillary** in Germany using the Mapillary vector tile layer API.
 
-For more information, see:
+It is intended to support **OpenStreetMap (OSM)** mapping tasks such as identifying missing cycleways, based on automatically detected signs like `DE:237`, `DE:240`, `DE:241`, etc.
 
-- [Traffic Signs API Documentation](https://www.mapillary.com/developer/api-documentation/traffic-signs?locale=de_DE)
+---
 
-Icon sprites are available at:
+## 📚 Resources
 
-- [mapillary_sprite_source repository](https://github.com/mapillary/mapillary_sprite_source)
+- 📄 [Traffic Sign Tiles API Documentation](https://www.mapillary.com/developer/api-documentation?locale=de_DE#traffic-sign-tiles)  
+- 📄 [Traffic Signs API Documentation](https://www.mapillary.com/developer/api-documentation/traffic-signs?locale=de_DE)  
+- 📄 [mapillary_sprite_source repository](https://github.com/mapillary/mapillary_sprite_source) (for icon sprites)
 
 ---
 
 ## ⚠️ License & Data Availability
 
-This project uses traffic sign detections provided via the Mapillary API, which are subject to [Mapillary's API Terms of Use](https://www.mapillary.com/legal/api-terms).
+This project uses traffic sign detections provided via the [Mapillary API](https://www.mapillary.com/developer/api-documentation/traffic-signs?locale=de_DE), which are based on user-contributed imagery and Mapillary's own processing.
 
-According to these terms:
+As of now, there is **no publicly documented license** specifically for the traffic sign detection data. The general terms of use can be found here:
 
-> You may use the Mapillary API and derived metadata only for purposes related to map editing or improvement (e.g. OpenStreetMap), and you may not redistribute the raw data or store it in a public repository.
+- [Mapillary Terms of Use](https://www.mapillary.com/legal/terms)
+- [Mapillary API Documentation](https://www.mapillary.com/developer/api-documentation)
+
+Out of an abundance of caution regarding potential redistribution restrictions, this repository **does not include any downloaded detection data**.
 
 Therefore:
 
 - **The downloaded detection data is NOT included in this repository.**
-- The `output/` folder has been removed to comply with the license terms.
+- The `output/` folder with the data has been removed to comply with the license terms.
 - If you wish to access this data, you must retrieve it yourself using the Mapillary API.
 
 This repository only contains the code used to download, filter, and process traffic sign detections from Mapillary for use in OSM-related tasks.
@@ -36,3 +41,5 @@ This repository only contains the code used to download, filter, and process tra
 
 The goal of the [cycleway_complete_campaign](use_cases/cycleway_complete_campaign) is to assist in identifying missing cycleway infrastructure in OpenStreetMap by using automatically detected traffic signs (e.g., mandatory cycleways, shared paths) from Mapillary.
 
+You can explore the corresponding MapRoulette challenge here:  
+🔗 [**MapRoulette Challenge – Cycleway Completion Germany**](https://maproulette.org/browse/challenges/52916)
