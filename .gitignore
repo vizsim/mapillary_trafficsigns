@@ -12,8 +12,11 @@
 venv/
 schrott/
 
-#output/
-!output/**
+output/
+# But keep the tile_cache folder
+!output/tile_cache/
+# And keep everything inside tile_cache
+!output/tile_cache/**
 
 
 __pycache__/
