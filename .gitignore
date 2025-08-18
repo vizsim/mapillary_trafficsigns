@@ -6,6 +6,7 @@
 *.pbf
 *.ini
 *.json
+*.fgb
 #*.geojson
 
 
