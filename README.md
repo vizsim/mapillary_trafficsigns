@@ -39,7 +39,7 @@ This repository only contains the code used to download, filter, and process tra
 
 ## 🗺️ Use-Cases
 
-All use-cases follow the same streamlined workflow:
+All use-cases follow the same workflow:
 
 1. **Detect** relevant traffic signs via Mapillary.  
 2. **Filter** by specific criteria (e.g., sign type, proximity, absence in OSM).  
