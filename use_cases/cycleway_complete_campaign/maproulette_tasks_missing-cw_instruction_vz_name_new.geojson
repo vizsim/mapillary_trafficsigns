@@ -6,88 +6,152 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.501518964884,
-          49.504227576494756
+          8.409701585835199,
+          48.99617057259914
         ]
       },
       "properties": {
-        "image_id": "866189737348227",
-        "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=3954380174631194&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-03-01)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.504228/8.501519&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "938736887548594",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=934078674890090&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-31)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/48.996171/8.409702&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "3954380174631194"
+      "id": "934078674890090"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.711916804430297,
-          48.9046215611101
+          8.673287630146772,
+          49.39847304185692
         ]
       },
       "properties": {
-        "image_id": "674395514657952",
+        "image_id": "763837451166869",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1098405280681184&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-09)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.398473/8.673288&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1098405280681184"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.184345007008451,
+          48.781663294219264
+        ]
+      },
+      "properties": {
+        "image_id": "2861323427439918",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=178775758607188&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/48.904622/8.711917&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=500986941051223&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-25)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/48.781663/9.184345&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "178775758607188"
+      "id": "500986941051223"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.227083325502855,
-          49.05180618410228
+          9.329972863263055,
+          48.805213521971424
         ]
       },
       "properties": {
-        "image_id": "465842958865434",
+        "image_id": "3402062016712875",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=128555513329274&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-10)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.051806/9.227083&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1055893181995099&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-08)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/48.805214/9.329973&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "128555513329274"
+      "id": "1055893181995099"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.121476650355111,
-          48.49875244400698
+          10.109358429974597,
+          48.95079224959761
         ]
       },
       "properties": {
-        "image_id": "654667302461826",
+        "image_id": "2849317388538058",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=313941964139416&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-03-23)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/48.498752/10.121477&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=123347724029073&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-25)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/48.950792/10.109358&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "313941964139416"
+      "id": "123347724029073"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.140740156291056,
-          50.505593716921176
+          12.110989093846532,
+          50.52498914374389
+        ]
+      },
+      "properties": {
+        "image_id": "142201408019169",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=803981930311547&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-30)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.524989/12.110989&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "803981930311547"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.140740156239723,
+          50.50559371692133
         ]
       },
       "properties": {
         "image_id": "373972227580616",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=249696940100283&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-04)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.505594/12.14074&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=881796219213102&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-04)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.505594/12.14074&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "249696940100283"
+      "id": "881796219213102"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13.842108249781637,
-          51.18479387225831
+          12.305052280492033,
+          51.35200805077035
+        ]
+      },
+      "properties": {
+        "image_id": "1681093052278165",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=235871961626889&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-19)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.352008/12.305052&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "235871961626889"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.97967612749981,
+          50.4195623674247
+        ]
+      },
+      "properties": {
+        "image_id": "362521259139907",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=299997722250284&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-24)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.419562/12.979676&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "299997722250284"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.842108249730313,
+          51.18479387225993
         ]
       },
       "properties": {
@@ -102,152 +166,264 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          14.842609763262661,
-          50.90382106070961
+          14.842609763211376,
+          50.9038210607121
         ]
       },
       "properties": {
         "image_id": "1881483988693301",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1195808757508571&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-02)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.903821/14.84261&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=512058153314979&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-02)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.903821/14.84261&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "1195808757508571"
+      "id": "512058153314979"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.057015180704397,
-          53.77170244161524
+          12.06033825880928,
+          51.29885550614531
         ]
       },
       "properties": {
-        "image_id": "712457497682959",
+        "image_id": "7128767680583118",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=765521555632793&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-30)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.771702/9.057015&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=947820290085855&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-05)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.298856/12.060338&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "765521555632793"
+      "id": "947820290085855"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.056422233698857,
-          51.29680607682236
+          12.056422233647538,
+          51.29680607682243
         ]
       },
       "properties": {
         "image_id": "801758984638899",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=977839107109757&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-05)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.296806/12.056422&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1588991738307238&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-05)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.296806/12.056422&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "977839107109757"
+      "id": "1588991738307238"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.982988834498018,
-          53.5478746559181
+          9.982988834446875,
+          53.54787465591637
         ]
       },
       "properties": {
         "image_id": "6466767800002742",
         "Verkehrzeichen": "237",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=173073772266521&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.547875/9.982989&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=916616809645067&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.547875/9.982989&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "173073772266521"
+      "id": "916616809645067"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.873635292169459,
-          50.78939179968305
+          6.8174511194880365,
+          49.794372935856266
+        ]
+      },
+      "properties": {
+        "image_id": "1060160271333527",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=833829527624191&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.794373/6.817451&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "833829527624191"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.340245842998927,
+          49.42331315402475
+        ]
+      },
+      "properties": {
+        "image_id": "801053193894147",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=282068576703334&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-02)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.423313/7.340246&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "282068576703334"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.873635292118606,
+          50.78939179967941
         ]
       },
       "properties": {
         "image_id": "1330557565366451",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1963441067752411&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-19)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.789392/7.873635&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1451901996003129&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-19)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.789392/7.873635&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "1963441067752411"
+      "id": "1451901996003129"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.923814058420125,
-          49.89879837394115
-        ]
-      },
-      "properties": {
-        "image_id": "471325023928133",
-        "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=216420576671589&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-01)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.898798/7.923814&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
-      },
-      "id": "216420576671589"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.240057349320401,
-          51.13590449306873
+          6.2400573492699225,
+          51.1359044930637
         ]
       },
       "properties": {
         "image_id": "1018980228632451",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=3064204020513683&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.135904/6.240057&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=328623145323113&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.135904/6.240057&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "3064204020513683"
+      "id": "328623145323113"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.86784982692847,
-          51.43044079171371
+          6.6236937046701385,
+          50.8628120382971
+        ]
+      },
+      "properties": {
+        "image_id": "972762130133931",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=283750830002816&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-03-03)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.862812/6.623694&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "283750830002816"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.648375392025164,
+          51.66076354109432
+        ]
+      },
+      "properties": {
+        "image_id": "892849572395869",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1099207261468965&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-04)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.660764/6.648375&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1099207261468965"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.6383492947274965,
+          51.6712876313091
+        ]
+      },
+      "properties": {
+        "image_id": "1159246908135764",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=748752979870261&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.671288/6.638349&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "748752979870261"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.683657169407096,
+          50.90047522171299
+        ]
+      },
+      "properties": {
+        "image_id": "303326938065585",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=851523889055750&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-25)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.900475/6.683657&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "851523889055750"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.8459951878244825,
+          51.767697137126554
+        ]
+      },
+      "properties": {
+        "image_id": "3412581838958955",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1027158444920594&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.767697/6.845995&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1027158444920594"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.862801909511801,
+          51.84564450380886
+        ]
+      },
+      "properties": {
+        "image_id": "811533763130543",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=154141206673915&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-04)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.845645/6.862802&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "154141206673915"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.867849826877843,
+          51.43044079170927
         ]
       },
       "properties": {
         "image_id": "933843677436824",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=947224639370842&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.430441/6.86785&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=2362450710555990&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.430441/6.86785&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "947224639370842"
+      "id": "2362450710555990"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.937453150864963,
-          51.54798301817273
+          6.937453150814325,
+          51.54798301816826
         ]
       },
       "properties": {
         "image_id": "817658962484328",
         "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=816043685993863&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.547983/6.937453&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1366931167006735&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.547983/6.937453&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "816043685993863"
+      "id": "1366931167006735"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.926890611764311,
-          51.52738577468067
+          6.926890611713673,
+          51.52738577467621
         ]
       },
       "properties": {
@@ -262,152 +438,120 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.996949911233342,
-          51.59279891577003
+          7.079293727939913,
+          51.56926782579855
         ]
       },
       "properties": {
-        "image_id": "2783439861949322",
-        "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=130235962829262&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-08)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.592799/6.99695&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "4100659939992211",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1848591855351225&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.569268/7.079294&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "130235962829262"
+      "id": "1848591855351225"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.089518308755366,
-          51.513296338198266
+          7.089518308704684,
+          51.51329633819398
         ]
       },
       "properties": {
         "image_id": "504687857337974",
         "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=464857554614232&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-14)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.513296/7.089518&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=174796377894014&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-14)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.513296/7.089518&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "464857554614232"
+      "id": "174796377894014"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.1169090272154625,
-          51.54193127189688
+          7.1474164725001925,
+          50.72742675501268
         ]
       },
       "properties": {
-        "image_id": "434630437990112",
+        "image_id": "1718665291955014",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=299847368345722&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.541931/7.116909&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=671114738449254&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.727427/7.147416&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "299847368345722"
+      "id": "671114738449254"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.103889584657165,
-          51.5068593434014
-        ]
-      },
-      "properties": {
-        "image_id": "1185807568601012",
-        "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=4469563036404911&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-14)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.506859/7.10389&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
-      },
-      "id": "4469563036404911"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          7.281183600541656,
-          51.63875919923378
+          7.281183600490934,
+          51.63875919922968
         ]
       },
       "properties": {
         "image_id": "535763114258712",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=484166499495696&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-19)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.638759/7.281184&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=835854080340467&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-19)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.638759/7.281184&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "484166499495696"
+      "id": "835854080340467"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.368344664689671,
-          50.97667966711908
+          7.987682819431865,
+          50.963059048935605
         ]
       },
       "properties": {
-        "image_id": "987952138939492",
-        "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1347392769213873&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-11)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.97668/7.368345&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "1157997038228915",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=3105600479745011&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-03)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.963059/7.987683&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "1347392769213873"
+      "id": "3105600479745011"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.566769123193473,
-          51.35330793376758
+          8.33813488489977,
+          51.66860277324581
         ]
       },
       "properties": {
-        "image_id": "434254290941329",
-        "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=794081914814073&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-10)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.353308/7.566769&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
-      },
-      "id": "794081914814073"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.39909076702318,
-          51.67057900393411
-        ]
-      },
-      "properties": {
-        "image_id": "399256099348226",
+        "image_id": "394575303453637",
         "Verkehrzeichen": "237",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=704846444749971&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-07)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.670579/8.399091&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=336205985741566&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-15)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.668603/8.338135&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "704846444749971"
+      "id": "336205985741566"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.588921427843255,
-          51.66569482925439
+          8.588921427792286,
+          51.6656948292514
         ]
       },
       "properties": {
         "image_id": "1110546993049238",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=387174469661862&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-25)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.665695/8.588921&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=413577593467463&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-25)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.665695/8.588921&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "387174469661862"
+      "id": "413577593467463"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.689767122385211,
-          52.18345798481918
+          8.689767122334224,
+          52.18345798481628
         ]
       },
       "properties": {
@@ -422,120 +566,104 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.726025223848557,
-          51.7632417760349
+          8.72602522379756,
+          51.76324177603205
         ]
       },
       "properties": {
         "image_id": "2696885533942205",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1186373241814039&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-28)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.763242/8.726025&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=3335748793318453&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-28)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.763242/8.726025&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "1186373241814039"
+      "id": "3335748793318453"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.491766452905825,
-          50.067277080905406
+          8.783950209683189,
+          51.945435462472226
         ]
       },
       "properties": {
-        "image_id": "791855115085227",
-        "Verkehrzeichen": "237",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=397068107958450&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-08)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.067277/8.491766&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
-      },
-      "id": "397068107958450"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.48649859440058,
-          49.92966280349252
-        ]
-      },
-      "properties": {
-        "image_id": "776249919711409",
+        "image_id": "1162961265491924",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=977477283090053&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-13)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.929663/8.486499&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=2381912322165236&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.945435/8.78395&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "977477283090053"
+      "id": "2381912322165236"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.61431658279631,
-          50.221627695623994
+          9.243246316975462,
+          51.95049441242981
         ]
       },
       "properties": {
-        "image_id": "607441687546241",
-        "Verkehrzeichen": "237",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=631468408294389&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-19)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.221628/8.614317&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
-      },
-      "id": "631468408294389"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.827798962709723,
-          50.11977324219157
-        ]
-      },
-      "properties": {
-        "image_id": "895743804808094",
-        "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=171406835604013&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-05)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.119773/8.827799&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
-      },
-      "id": "171406835604013"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.213932395098503,
-          47.55936949539194
-        ]
-      },
-      "properties": {
-        "image_id": "603672794919953",
+        "image_id": "1367712300390711",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=716692290012003&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/47.559369/10.213932&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1032864957621730&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-01)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.950494/9.243246&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "716692290012003"
+      "id": "1032864957621730"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.211791992304619,
-          47.55971339883614
+          8.445906043118208,
+          49.94071185221343
         ]
       },
       "properties": {
-        "image_id": "5808704245892486",
+        "image_id": "2939735459582763",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=500436102042928&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/47.559713/10.211792&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=986102945469951&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-12)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.940712/8.445906&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "500436102042928"
+      "id": "986102945469951"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.339518666384778,
-          49.87589031842974
+          10.377557873791755,
+          50.27216495374157
+        ]
+      },
+      "properties": {
+        "image_id": "1056873315670680",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=3483231248595782&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-28)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/50.272165/10.377558&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "3483231248595782"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.892879962987074,
+          49.97080765275017
+        ]
+      },
+      "properties": {
+        "image_id": "1252412968790069",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1375141903079222&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-14)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/49.970808/10.89288&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1375141903079222"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.33951866633343,
+          49.87589031843002
         ]
       },
       "properties": {
@@ -550,112 +678,192 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.483724951861532,
-          47.8169982188195
+          12.63511955744674,
+          47.82716626438119
         ]
       },
       "properties": {
-        "image_id": "290238127489572",
-        "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=837248045102972&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-13)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/47.816998/12.483725&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "303930607891277",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=4076133792452642&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/47.827166/12.63512&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "837248045102972"
+      "id": "4076133792452642"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.651577592013522,
-          47.7687782654434
+          12.651577591962129,
+          47.768778265443984
         ]
       },
       "properties": {
         "image_id": "135199079619088",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=703994974902574&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-27)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/47.768778/12.651578&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1733345747127490&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-27)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/47.768778/12.651578&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "703994974902574"
+      "id": "1733345747127490"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13.43214333069134,
-          52.61435456153494
+          13.379121422833625,
+          52.53994045060547
         ]
       },
       "properties": {
-        "image_id": "1438918813532601",
-        "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1390704384825415&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/52.614355/13.432143&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "1208953107708350",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1907417310188149&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-04)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/52.53994/13.379121&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "1390704384825415"
+      "id": "1907417310188149"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13.432411551592828,
-          52.613947415875266
+          13.395472168988412,
+          52.53266406402921
         ]
       },
       "properties": {
-        "image_id": "492906455340355",
-        "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=115798103961261&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/52.613947/13.432412&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "1262259444239530",
+        "Verkehrzeichen": "237",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=115861484250257&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-02-01)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/52.532664/13.395472&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "115798103961261"
+      "id": "115861484250257"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.588127374766112,
-          53.37510766692326
+          9.084448814457689,
+          54.19481246045396
+        ]
+      },
+      "properties": {
+        "image_id": "319070272909785",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=4281036725273642&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-07-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/54.194812/9.084449&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "4281036725273642"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.438993930882315,
+          54.793349570949815
+        ]
+      },
+      "properties": {
+        "image_id": "625532908417228",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1033335910803875&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/54.79335/9.438994&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1033335910803875"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.438484311169479,
+          54.79197946715176
+        ]
+      },
+      "properties": {
+        "image_id": "1054474075091216",
+        "Verkehrzeichen": "241",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=530471548201143&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/54.791979/9.438484&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "530471548201143"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.588261485165637,
+          53.37507886448045
+        ]
+      },
+      "properties": {
+        "image_id": "2207770119408621",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=934812767805264&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.375079/10.588261&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "934812767805264"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.588127374714897,
+          53.37510766692202
         ]
       },
       "properties": {
         "image_id": "1133660103806072",
         "Verkehrzeichen": "240",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=517416299622543&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.375108/10.588127&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=472809047156128&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-08-16)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.375108/10.588127&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "517416299622543"
+      "id": "472809047156128"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.717989087222088,
-          53.31852775298044
+          11.273823380536191,
+          53.73879037701079
+        ]
+      },
+      "properties": {
+        "image_id": "1103173943498092",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=621514069248004&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-01)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.73879/11.273823&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "621514069248004"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.71798908717078,
+          53.318527752981076
         ]
       },
       "properties": {
         "image_id": "492281872016823",
         "Verkehrzeichen": "237",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=199086318534860&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.318528/12.717989&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:237** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1151925301886747&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-05-20)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/53.318528/12.717989&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:237](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "199086318534860"
+      "id": "1151925301886747"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13.236503005145128,
-          51.586896453963945
+          13.541191220349482,
+          52.91819900037637
         ]
       },
       "properties": {
-        "image_id": "544862503557112",
-        "Verkehrzeichen": "241",
-        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:241** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=182803250379063&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-06-24)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/51.586896/13.236503&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:241](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+        "image_id": "697296800963480",
+        "Verkehrzeichen": "240",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Verkehrszeichen **DE:240** \u00fcberpr\u00fcfen und Radinfra hinzuf\u00fcgen\nBitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild & Karte\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=575324453442109&focus=photo&trafficSign[]=regulatory--bicycles-only--g1&trafficSign[]=regulatory--shared-path-pedestrians-and-bicycles--g1&trafficSign[]=regulatory--dual-path-bicycles-and-pedestrians--g1&trafficSign[]=regulatory--dual-path-pedestrians-and-bicycles--g1)  \n(Hinweis: Das zuerst angezeigte Bild ist m\u00f6glicherweise nicht das neueste \u2013 die neueste Aufnahme hier ist von **2025-04-17)**\n\n- \ud83d\uddfa\ufe0f [**In radinfra.de bzw TILDA ansehen**](https://tilda-geo.de/regionen/radinfra?map=17.4/52.918199/13.541191&config=pdqyyt.7h3d.16g9vk&v=2)  \n(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu pr\u00fcfen.)\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\uded1 [**Traffic Sign Tool** \u2013 DE:240](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)  \n- \ud83d\udeb4 [**OSM-Wiki: Radverkehrsanlagen kartieren**](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
       },
-      "id": "182803250379063"
+      "id": "575324453442109"
     }
   ]
 }
