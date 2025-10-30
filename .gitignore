@@ -13,11 +13,23 @@
 venv/
 schrott/
 
-output/*
-# But keep the tile_cache folder
-!output/tile_cache/
-# And keep everything inside tile_cache
-!output/tile_cache/**
+# output/archive/*
+# !output/**
+
+
+# Alles in output einchecken …
+!output/**
+
+# … aber archive wieder ausnehmen
+output/archive/**
+
+
+# output/archive/*
+# output/*
+# # But keep the tile_cache folder
+# !output/tile_cache/
+# # And keep everything inside tile_cache
+# !output/tile_cache/**
 
 
 __pycache__/

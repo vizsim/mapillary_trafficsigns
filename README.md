@@ -16,24 +16,18 @@ It is intended to support **OpenStreetMap (OSM)** mapping tasks such as identify
 
 ---
 
-## ⚠️ License & Data Availability
+## 🪪 License & Data Availability
 
 This project uses traffic sign detections provided via the [Mapillary API](https://www.mapillary.com/developer/api-documentation/traffic-signs?locale=de_DE), which are based on user-contributed imagery and Mapillary's own processing.
 
-As of now, there is **no publicly documented license** specifically for the traffic sign detection data. The general terms of use can be found here:
+According to [Mapillary’s OpenStreetMap Wiki page](https://wiki.openstreetmap.org/wiki/Mapillary#License), these derived datasets may be shared under the same license.
 
-- [Mapillary Terms of Use](https://www.mapillary.com/legal/terms)
-- [Mapillary API Documentation](https://www.mapillary.com/developer/api-documentation)
+Therefore, the processed detection data can be included here, provided that:
 
-Out of an abundance of caution regarding potential redistribution restrictions, this repository **does not include any downloaded detection data**.
+- proper attribution is maintained (“© Mapillary”), and  
+- any redistribution follows the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) terms.
 
-Therefore:
-
-- **The downloaded detection data is NOT included in this repository.**
-- The `output/` folder with the data has been removed to comply with the license terms.
-- If you wish to access this data, you must retrieve it yourself using the Mapillary API.
-
-This repository only contains the code used to download, filter, and process traffic sign detections from Mapillary for use in OSM-related tasks.
+The latest processed traffic sign detection datasets for each German federal state are available in the [`output/`](./output) folder.
 
 ---
 
