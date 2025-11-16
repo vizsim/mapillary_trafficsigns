@@ -1,0 +1,1093 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.273206353370856,
+          52.53550950315888
+        ]
+      },
+      "properties": {
+        "image_id": "1479622563068469",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1479622563068469&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-13)**, die \u00e4lteste ist von **2024-05-23**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "3400731073557718"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.356478214447211,
+          52.589720322612536
+        ]
+      },
+      "properties": {
+        "image_id": "1837654793683779",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1837654793683779&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-11)**, die \u00e4lteste ist von **2016-02-09**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "3444128975856276"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.351580500786019,
+          52.51572792984822
+        ]
+      },
+      "properties": {
+        "image_id": "1428220095097389",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1428220095097389&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-11)**, die \u00e4lteste ist von **2017-09-03**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "513347299686299"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.35368335265369,
+          52.516579951495395
+        ]
+      },
+      "properties": {
+        "image_id": "1002184685291865",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1002184685291865&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-01-30)**, die \u00e4lteste ist von **2019-07-13**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "377556066975335"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.356408477012833,
+          52.50627297172655
+        ]
+      },
+      "properties": {
+        "image_id": "1696069514428439",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1696069514428439&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-14)**, die \u00e4lteste ist von **2019-03-06**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "766018410724743"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.369626403038211,
+          52.543617340639486
+        ]
+      },
+      "properties": {
+        "image_id": "583621944293957",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=583621944293957&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-24)**, die \u00e4lteste ist von **2022-08-20**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "582942846879965"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.375800848190497,
+          52.54646533215847
+        ]
+      },
+      "properties": {
+        "image_id": "1153923340243769",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1153923340243769&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-27)**, die \u00e4lteste ist von **2022-03-30**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1582744538769168"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.359525203888127,
+          52.51953741566592
+        ]
+      },
+      "properties": {
+        "image_id": "1208458294354222",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1208458294354222&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-01)**, die \u00e4lteste ist von **2024-06-02**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1160559341810414"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3607804777071,
+          52.491943005505995
+        ]
+      },
+      "properties": {
+        "image_id": "1770552646898427",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1770552646898427&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-11)**, die \u00e4lteste ist von **2017-05-29**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "519027855956638"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.395161032859985,
+          52.56624284502911
+        ]
+      },
+      "properties": {
+        "image_id": "785560417265820",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=785560417265820&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-24)**, die \u00e4lteste ist von **2016-01-01**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "738199592447100"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.396051526252934,
+          52.50809164204251
+        ]
+      },
+      "properties": {
+        "image_id": "1531834021112009",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1531834021112009&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-26)**, die \u00e4lteste ist von **2023-05-11**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "597815848985230"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.399994373504825,
+          52.511033353383255
+        ]
+      },
+      "properties": {
+        "image_id": "1044407634456607",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1044407634456607&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-21)**, die \u00e4lteste ist von **2014-05-02**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1126794351154687"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.399227261726564,
+          52.532083206313196
+        ]
+      },
+      "properties": {
+        "image_id": "1258354419064188",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1258354419064188&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-11)**, die \u00e4lteste ist von **2024-02-13**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "354591197460080"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.405825495903201,
+          52.5267017490588
+        ]
+      },
+      "properties": {
+        "image_id": "1024036033233740",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1024036033233740&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-19)**, die \u00e4lteste ist von **2023-12-07**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "2669913819823004"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.412439823333932,
+          52.505975838903886
+        ]
+      },
+      "properties": {
+        "image_id": "2976872245828381",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=2976872245828381&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-15)**, die \u00e4lteste ist von **2023-06-04**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "263341306291648"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.412498831932254,
+          52.51137942412544
+        ]
+      },
+      "properties": {
+        "image_id": "1081711410442575",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1081711410442575&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-15)**, die \u00e4lteste ist von **2024-03-21**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1082857526108056"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.423930406753728,
+          52.51658974475141
+        ]
+      },
+      "properties": {
+        "image_id": "1146625937283502",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1146625937283502&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-28)**, die \u00e4lteste ist von **2020-05-21**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "2932788316978669"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.437974453155707,
+          52.555044075184504
+        ]
+      },
+      "properties": {
+        "image_id": "1722560225292354",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1722560225292354&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-14)**, die \u00e4lteste ist von **2024-06-26**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "994640735662485"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.430421352569764,
+          52.466272597017365
+        ]
+      },
+      "properties": {
+        "image_id": "1446157896735267",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1446157896735267&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-24)**, die \u00e4lteste ist von **2024-03-03**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1078587663417352"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.625241279783659,
+          47.80876291171252
+        ]
+      },
+      "properties": {
+        "image_id": "1053477619796578",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1053477619796578&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-01-04)**, die \u00e4lteste ist von **2022-02-27**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "732589474411218"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.379634022894749,
+          48.98653285114312
+        ]
+      },
+      "properties": {
+        "image_id": "839746948426582",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=839746948426582&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-10-28)**, die \u00e4lteste ist von **2022-06-26**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "5999907280038618"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.462176323119081,
+          49.48586899324905
+        ]
+      },
+      "properties": {
+        "image_id": "1234913131782958",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1234913131782958&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-30)**, die \u00e4lteste ist von **2016-06-21**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "935125790610334"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.538860678854926,
+          49.13632579245251
+        ]
+      },
+      "properties": {
+        "image_id": "25072790285688384",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=25072790285688384&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-10-30)**, die \u00e4lteste ist von **2024-06-28**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1698880564265551"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.685775995436723,
+          49.42907027241056
+        ]
+      },
+      "properties": {
+        "image_id": "533788946158526",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=533788946158526&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-13)**, die \u00e4lteste ist von **2016-03-20**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "198889418727349"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.745358586493657,
+          47.74024329035854
+        ]
+      },
+      "properties": {
+        "image_id": "1666705453990690",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1666705453990690&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-27)**, die \u00e4lteste ist von **2019-04-23**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "263283781985094"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.036313891593277,
+          48.20593874573761
+        ]
+      },
+      "properties": {
+        "image_id": "9989851491134982",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=9989851491134982&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-06-07)**, die \u00e4lteste ist von **2021-07-19**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "376612507160137"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.104549288932134,
+          49.34917446297983
+        ]
+      },
+      "properties": {
+        "image_id": "1181404563904152",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1181404563904152&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-10-11)**, die \u00e4lteste ist von **2017-05-12**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "229593711868933"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.145678281966516,
+          49.300081797444946
+        ]
+      },
+      "properties": {
+        "image_id": "794827726634021",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=794827726634021&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-10-11)**, die \u00e4lteste ist von **2019-09-12**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "2915390852069820"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.167897701445924,
+          48.68489401736814
+        ]
+      },
+      "properties": {
+        "image_id": "702814199226511",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=702814199226511&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-22)**, die \u00e4lteste ist von **2020-10-24**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "308016724275334"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.192112684432374,
+          49.120870033444405
+        ]
+      },
+      "properties": {
+        "image_id": "1408467100572971",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1408467100572971&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-12)**, die \u00e4lteste ist von **2018-02-11**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "202630614917675"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.212974906150215,
+          49.15303982719685
+        ]
+      },
+      "properties": {
+        "image_id": "1435754844218171",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1435754844218171&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-18)**, die \u00e4lteste ist von **2018-06-09**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "331153778372178"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.217631221000069,
+          49.1463976998536
+        ]
+      },
+      "properties": {
+        "image_id": "1185915453305132",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1185915453305132&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-19)**, die \u00e4lteste ist von **2022-06-01**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1208556509920318"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.216257929984447,
+          49.1464398080613
+        ]
+      },
+      "properties": {
+        "image_id": "669550909508111",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=669550909508111&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-11)**, die \u00e4lteste ist von **2016-07-18**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "162907752452811"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.209933281127325,
+          49.14635910063182
+        ]
+      },
+      "properties": {
+        "image_id": "1100873348847142",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1100873348847142&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-11)**, die \u00e4lteste ist von **2024-07-26**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "809430834507946"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.218569994155294,
+          48.800065504366444
+        ]
+      },
+      "properties": {
+        "image_id": "952222453697148",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=952222453697148&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-25)**, die \u00e4lteste ist von **2024-07-16**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "357988410686269"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.22057092208042,
+          48.485676724404975
+        ]
+      },
+      "properties": {
+        "image_id": "1621201718563650",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1621201718563650&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-16)**, die \u00e4lteste ist von **2017-09-28**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "145944000882506"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.237554669562702,
+          49.14196561091088
+        ]
+      },
+      "properties": {
+        "image_id": "761750859838600",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=761750859838600&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-17)**, die \u00e4lteste ist von **2022-06-24**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "400022658857682"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.561801552955243,
+          47.70065722434138
+        ]
+      },
+      "properties": {
+        "image_id": "1271835694712039",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1271835694712039&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-11-03)**, die \u00e4lteste ist von **2024-08-22**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "2800025323513182"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.74617123622096,
+          49.11189906112115
+        ]
+      },
+      "properties": {
+        "image_id": "534611419665346",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=534611419665346&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-03-03)**, die \u00e4lteste ist von **2023-03-15**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "893368955303641"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.908863306228358,
+          49.040642542923585
+        ]
+      },
+      "properties": {
+        "image_id": "1052244530108386",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1052244530108386&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-12)**, die \u00e4lteste ist von **2023-03-15**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "855082405589319"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.88718295115664,
+          49.90166629930733
+        ]
+      },
+      "properties": {
+        "image_id": "1025191889549263",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1025191889549263&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-03-27)**, die \u00e4lteste ist von **2017-10-26**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "798110207775346"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.918452143852265,
+          49.8999006449409
+        ]
+      },
+      "properties": {
+        "image_id": "1115603803696934",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1115603803696934&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-02-26)**, die \u00e4lteste ist von **2023-07-22**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1209470619733214"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.92228233832554,
+          49.91992372917576
+        ]
+      },
+      "properties": {
+        "image_id": "2087728011751673",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=2087728011751673&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-24)**, die \u00e4lteste ist von **2024-07-12**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "381899041572502"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.969735980217036,
+          49.94451282975902
+        ]
+      },
+      "properties": {
+        "image_id": "1314343852935892",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1314343852935892&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-01-07)**, die \u00e4lteste ist von **2024-01-10**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "900566818238380"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.345577836220015,
+          47.99879587244599
+        ]
+      },
+      "properties": {
+        "image_id": "960265206306937",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=960265206306937&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-03-16)**, die \u00e4lteste ist von **2022-03-26**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "751307632671334"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.686255932037637,
+          48.15149256423969
+        ]
+      },
+      "properties": {
+        "image_id": "1245236403520410",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1245236403520410&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-29)**, die \u00e4lteste ist von **2024-06-20**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1129934081416457"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.103961706344892,
+          49.83508652389289
+        ]
+      },
+      "properties": {
+        "image_id": "642341655280924",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=642341655280924&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-04)**, die \u00e4lteste ist von **2018-11-22**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "139670578155398"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.214892506782919,
+          47.62773650413076
+        ]
+      },
+      "properties": {
+        "image_id": "1397406751559951",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1397406751559951&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-20)**, die \u00e4lteste ist von **2023-09-29**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1482363179854882"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.471746206467092,
+          47.77937751695438
+        ]
+      },
+      "properties": {
+        "image_id": "1423532265731060",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1423532265731060&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-31)**, die \u00e4lteste ist von **2024-04-28**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1177188786780524"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.483628392403066,
+          47.835020553309775
+        ]
+      },
+      "properties": {
+        "image_id": "1186309266845152",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1186309266845152&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-07-20)**, die \u00e4lteste ist von **2023-10-07**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "147864021738972"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.589929700081294,
+          47.79944888466169
+        ]
+      },
+      "properties": {
+        "image_id": "25139055099023952",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=25139055099023952&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-20)**, die \u00e4lteste ist von **2019-03-23**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "300475135048659"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.600937485878413,
+          47.902404729413774
+        ]
+      },
+      "properties": {
+        "image_id": "1033749514816255",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1033749514816255&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-03)**, die \u00e4lteste ist von **2020-04-17**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "255622483021288"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.607213854973258,
+          47.84281604685674
+        ]
+      },
+      "properties": {
+        "image_id": "1689764114951170",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1689764114951170&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-03-22)**, die \u00e4lteste ist von **2018-07-14**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "754984861861860"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.590337395851558,
+          47.80397459342804
+        ]
+      },
+      "properties": {
+        "image_id": "3088026924677968",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=3088026924677968&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-06)**, die \u00e4lteste ist von **2023-10-28**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "7280139432016743"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.611848712150998,
+          47.81225749286584
+        ]
+      },
+      "properties": {
+        "image_id": "2858118544396931",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=2858118544396931&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-17)**, die \u00e4lteste ist von **2023-06-18**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1494662638006662"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.625088095848504,
+          47.86728952240278
+        ]
+      },
+      "properties": {
+        "image_id": "1015663733255730",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1015663733255730&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-03-09)**, die \u00e4lteste ist von **2018-03-10**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "2916928445242819"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.615088820640999,
+          47.81328780902432
+        ]
+      },
+      "properties": {
+        "image_id": "1197864782164490",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1197864782164490&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-18)**, die \u00e4lteste ist von **2019-05-18**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "4945874312096637"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.637265324776122,
+          47.84733797645599
+        ]
+      },
+      "properties": {
+        "image_id": "1011271774466106",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1011271774466106&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-10)**, die \u00e4lteste ist von **2020-04-04**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "2802066670107254"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.646293640320245,
+          47.872982385421444
+        ]
+      },
+      "properties": {
+        "image_id": "1112704633956031",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1112704633956031&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-01)**, die \u00e4lteste ist von **2020-03-29**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1349328048783425"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.637850046341363,
+          47.87669212582616
+        ]
+      },
+      "properties": {
+        "image_id": "710915108033868",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=710915108033868&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-29)**, die \u00e4lteste ist von **2022-03-05**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "541615561444964"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.643627524559442,
+          47.874583615361736
+        ]
+      },
+      "properties": {
+        "image_id": "1030272735728987",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1030272735728987&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-23)**, die \u00e4lteste ist von **2023-06-24**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "566881158981792"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.646631598656128,
+          47.829039013404355
+        ]
+      },
+      "properties": {
+        "image_id": "1019134393656015",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1019134393656015&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-04-17)**, die \u00e4lteste ist von **2024-02-18**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "283894284521068"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.65136837977642,
+          47.86937673821453
+        ]
+      },
+      "properties": {
+        "image_id": "2376679619380276",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=2376679619380276&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-11)**, die \u00e4lteste ist von **2020-03-29**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "806907983579953"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.64043033141369,
+          47.79879305657796
+        ]
+      },
+      "properties": {
+        "image_id": "1111913824475877",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1111913824475877&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-26)**, die \u00e4lteste ist von **2019-06-08**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "283018870170083"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.641444206421326,
+          47.81932159286402
+        ]
+      },
+      "properties": {
+        "image_id": "1303027507933290",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1303027507933290&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-09-20)**, die \u00e4lteste ist von **2018-04-08**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "542744840221366"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.657580375854923,
+          47.87121917611457
+        ]
+      },
+      "properties": {
+        "image_id": "1336178857667374",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1336178857667374&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-05-19)**, die \u00e4lteste ist von **2024-02-18**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "7345943902167311"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.719083428566403,
+          47.79633903299868
+        ]
+      },
+      "properties": {
+        "image_id": "1152121196727830",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1152121196727830&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-08)**, die \u00e4lteste ist von **2024-06-04**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1010200734107248"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.706385851089916,
+          47.800353337283
+        ]
+      },
+      "properties": {
+        "image_id": "1800912083797533",
+        "MapFeaturePoint": "Lane Marking - Crosswalk",
+        "instruction": "  \n### \ud83d\udea7 Aufgabe: Erkannter Fu\u00dfg\u00e4nger\u00fcberweg (Lane Marking - Crosswalk)\u00fcberpr\u00fcfen und ggf. in OSM hinzuf\u00fcgen.\nBitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier ein Fu\u00dfg\u00e4nger\u00fcberweg, den du hinzuf\u00fcgen kannst.\n\n---\n\n### \ud83d\uddbc\ufe0f Bild\n\n- \ud83d\udcf7 [**Mapillary-Bild anzeigen**](https://www.mapillary.com/app/?pKey=1800912083797533&focus=photo&mapFeature[]=marking--discrete--crosswalk-zebra)  \n(Hinweis: Die neueste Aufnahme hier ist von **2025-08-09)**, die \u00e4lteste ist von **2023-06-11**\n\n---\n\n### \ud83d\udcda N\u00fctzliche Links\n\n- \ud83d\udeb4 [**OSM-Wiki: Fu\u00dfg\u00e4nger\u00fcberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:footway%3Dcrossing)\n- \ud83d\udeb4 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)\n\n---\n\nViel Erfolg beim Pr\u00fcfen und Mappen! \ud83d\uddfa\ufe0f\n        "
+      },
+      "id": "1304450333783890"
+    }
+  ]
+}
