@@ -39,7 +39,7 @@ All use-cases follow the same workflow:
 2. **Filter** by specific criteria (e.g., sign type, proximity, absence in OSM).  
 3. **Validate & map** missing or incorrect data in OSM via structured MapRoulette tasks.  
 
-### 🚲 Cycleway Completion (Germany)  
+### 🚲 Bicycle Infrastucture Completion (Germany)  
 
 - Targets **bicycle-related signs** (like `DE:237`, `DE:240`, `DE:241`) to identify missing cycleways in OSM.  
 - **Code Repository:** [cycleway_complete_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/cycleway_complete_campaign)  
@@ -50,3 +50,9 @@ All use-cases follow the same workflow:
 - Focuses on **Tempo-30 signs** (`DE:274-30`) within **400 m of schools and kindergartens**, where `maxspeed` tagging may be missing or incomplete in OSM.  
 - **Code Repository:** [schools_tempo30_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/schools_tempo30_campaign)  
 - **MapRoulette Challenge:** [Tempo-30 Near Schools & Kindergartens](https://maproulette.org/browse/challenges/52985)  
+
+### 🚶 Fehlende Fußgängerüberwege ergänzen (Deutschland)
+
+- Fokussiert auf **Fußgängerüberweg-Zeichen** (`DE:350`) zur Identifizierung fehlender Fußgängerüberwege (`highway=crossing` + `crossing=*`) in OSM.  
+- **Code Repository:** [pedestrian_crossing_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/pedestrian_crossing_campaign)  
+- **MapRoulette Challenge:** [Fehlende Fußgängerüberwege anhand von Mapillary-Verkehrszeichen ergänzen](https://maproulette.org/browse/challenges/53589)  
