@@ -22,7 +22,7 @@ schrott/
 
 # … aber archive wieder ausnehmen
 output/archive/**
-
+output/mapillary_map-feature-points_*.parquet
 
 # output/archive/*
 # output/*
