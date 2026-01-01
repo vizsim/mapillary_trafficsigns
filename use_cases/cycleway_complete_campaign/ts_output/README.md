@@ -2,7 +2,7 @@
 # Bicycle Infrastucture Traffic Signs Output
 
 This folder contains the output file for detected traffic signs related to bicycle infrastructure from Mapillary.  
-The output has been created on **2025-11-16**.
+The output has been created on **2026-01-01**.
 
 ## Applied Filters
 
@@ -13,12 +13,12 @@ The output has been created on **2025-11-16**.
 
 | VZ-Code | Beschreibung | Verkehrszeichen | Anzahl | Mapillary Wording |
 |-------|-------------|:---------------:|-------:|-----------------|
-| DE:237 | Radweg | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_237.36e48b6d.svg" width="40"> | 23645 | `regulatory--bicycles-only--g1` |
-| DE:240 | Gemeinsamer Geh- und Radweg | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_240.c2d222a0.svg" width="40"> | 56203 | `regulatory--shared-path-pedestrians-and-bicycles--g1` |
-| DE:241 | Getrennter Geh- und Radweg | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_241_31.3627eb18.svg" width="40"> oder <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_241_30.69c98777.svg" width="40"> | 20007 | `regulatory--dual-path-pedestrians-and-bicycles--g1`<br>`regulatory--dual-path-bicycles-and-pedestrians--g1` |
-| DE:244.2 | Ende Fahrradstraße | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_244_2.b586a5a6.svg" width="40"> | 418 | `regulatory--end-of-bicycles-only--g2` |
-| DE:1022-10 | Radfahrer frei | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_1022_10.cda7bd53.svg" width="40"> | 12623 | `complementary--except-bicycles--g1` |
-| DE:1000-33 | Radverkehr im Gegenverkehr | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_1000_33.c18820f3.svg" width="40"> | 6305 | `complementary--bike-route--g1` |
+| DE:237 | Radweg | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_237.36e48b6d.svg" width="40"> | 25835 | `regulatory--bicycles-only--g1` |
+| DE:240 | Gemeinsamer Geh- und Radweg | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_240.c2d222a0.svg" width="40"> | 57915 | `regulatory--shared-path-pedestrians-and-bicycles--g1` |
+| DE:241 | Getrennter Geh- und Radweg | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_241_31.3627eb18.svg" width="40"> oder <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_241_30.69c98777.svg" width="40"> | 20488 | `regulatory--dual-path-pedestrians-and-bicycles--g1`<br>`regulatory--dual-path-bicycles-and-pedestrians--g1` |
+| DE:244.2 | Ende Fahrradstraße | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_244_2.b586a5a6.svg" width="40"> | 431 | `regulatory--end-of-bicycles-only--g2` |
+| DE:1022-10 | Radfahrer frei | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_1022_10.cda7bd53.svg" width="40"> | 12856 | `complementary--except-bicycles--g1` |
+| DE:1000-33 | Radverkehr im Gegenverkehr | <img src="https://trafficsigns.osm-verkehrswende.org/_next/static/media/DE_1000_33.c18820f3.svg" width="40"> | 6410 | `complementary--bike-route--g1` |
 
 ## Statistics Plot
 
