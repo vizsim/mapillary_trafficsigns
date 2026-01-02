@@ -19,7 +19,7 @@ cd docker
 docker-compose -f docker-compose.yml -f docker-compose.vpn.yml down --remove-orphans || true
 
 # 2) Worker im VPN laufen lassen (blockierend, bis fertig)
-docker-compose -f docker-compose.yml -f docker-compose.vpn.yml up --build mapillary_worker
+docker-compose -f docker-compose.yml -f docker-compose.vpn.yml up --build mapillary-ts_worker
 
 # Optional: danach alles wieder aufräumen
 docker-compose -f docker-compose.yml -f docker-compose.vpn.yml down --remove-orphans

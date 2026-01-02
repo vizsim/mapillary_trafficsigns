@@ -17,7 +17,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
 
-  mapillary_worker:
+  mapillary-ts_worker:
     # hier überschreiben/erweitern wir nur Netzwerk-bezogene Sachen
     network_mode: "service:gluetun"
     depends_on:
