@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-DC="docker-compose -f docker-compose.yml -f docker-compose.vpn.yml"
+DC="docker-compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
 
 $DC down --remove-orphans
 
