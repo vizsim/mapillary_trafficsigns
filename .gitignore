@@ -24,6 +24,7 @@ schrott/
 # … aber archive wieder ausnehmen
 output/archive/**
 output/mapillary_map-feature-points_*.parquet
+output/ml-mf_metadata.json
 
 # output/archive/*
 # output/*
