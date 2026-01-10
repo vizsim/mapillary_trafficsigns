@@ -10,6 +10,7 @@
 #*.geojson
 
 
+
 venv/
 schrott/
 
@@ -23,6 +24,7 @@ schrott/
 # … aber archive wieder ausnehmen
 output/archive/**
 output/mapillary_map-feature-points_*.parquet
+output/ml-mf_metadata.json
 
 # output/archive/*
 # output/*
@@ -31,6 +33,11 @@ output/mapillary_map-feature-points_*.parquet
 # # And keep everything inside tile_cache
 # !output/tile_cache/**
 
+docker/.env
+
+config.py
+
+!prep/**
 
 __pycache__/
 *.pyc

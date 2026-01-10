@@ -79,4 +79,4 @@ urllib3==2.5.0
 vt2geojson==0.2.1
 wcwidth==0.2.13
 xyzservices==2025.4.0
-nbconvert
+nbconvert==7.16.4
