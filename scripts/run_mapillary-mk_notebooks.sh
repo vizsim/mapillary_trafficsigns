@@ -25,5 +25,17 @@ jupyter nbconvert \
 
 echo "✅ Notebook 2b execution finished"
 
+
+echo "🚦 Running generateOutput_2radinfra"
+
+jupyter nbconvert \
+  --to notebook \
+  --inplace \
+  --execute use_cases/cycleway_complete_marking_campaign/x_mapillary-markings_generateOutput_2radinfra.ipynb
+
+echo "✅ generateOutput_2radinfra execution finished"
+
+
+
 echo "done."
 
