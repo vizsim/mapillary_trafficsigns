@@ -4,7 +4,6 @@ set -euo pipefail
 cd /app
 export TQDM_DISABLE=1
 
-# ---- RAM logger ----
 (
   while true; do
     ts=$(date +"%H:%M:%S")
@@ -17,14 +16,14 @@ export TQDM_DISABLE=1
 LOGGER_PID=$!
 trap 'kill $LOGGER_PID 2>/dev/null || true' EXIT
 
-echo "🚦 Running Mapillary Traffic Signs pipeline"
-echo
+echo "🚀 Running Notebook: 2b_get_mapillary_map_feature_points.ipynb"
 
 jupyter nbconvert \
   --to notebook \
   --inplace \
-  --execute 2_get_mapillary_traffic_signs.ipynb
+  --execute 2b_get_mapillary_map_feature_points.ipynb
 
-echo "✅ Traffic Signs notebook finished"
+echo "✅ Notebook 2b execution finished"
 
 echo "done."
+

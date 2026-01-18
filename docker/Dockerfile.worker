@@ -23,5 +23,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Restliches Repo
 COPY . .
 
-# Standard-Command: Notebook ausführen
+# Standard-Command: Notebook ausführen (default wird in docker-compose.yml überschrieben)
 CMD ["bash", "scripts/run_mapillary-ts_notebooks.sh"]

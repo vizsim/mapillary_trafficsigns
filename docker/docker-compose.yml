@@ -1,18 +1,21 @@
 version: "3.9"
 
+x-worker-base: &worker_base
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile.worker
+  working_dir: /app
+  volumes:
+    - ..:/app
+  mem_limit: 6g
+
 services:
   mapillary-ts_worker:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.worker
+    <<: *worker_base
     container_name: mapillary-ts_worker
-    working_dir: /app
-    # Repo vom Host in den Container mounten (optional, aber praktisch beim Entwickeln)
-    volumes:
-      - ..:/app
-#    dns:
-#      - 1.1.1.1
-#      - 8.8.8.8
-    # Wenn du per SSH-Key zu GitHub pushen willst (später möglich):
-    # - ~/.ssh:/root/.ssh:ro
-    mem_limit: 6g
+    command: ["bash", "/app/scripts/run_mapillary-ts_notebooks.sh", "ts"]
+
+  mapillary-mk_worker:
+    <<: *worker_base
+    container_name: mapillary-mk_worker
+    command: ["bash", "/app/scripts/run_mapillary-mk_notebooks.sh", "mk"]
