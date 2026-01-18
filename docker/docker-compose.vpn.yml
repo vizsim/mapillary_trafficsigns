@@ -4,8 +4,7 @@ services:
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
-    cap_add:
-      - NET_ADMIN
+    cap_add: [NET_ADMIN]
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
@@ -18,7 +17,9 @@ services:
     restart: unless-stopped
 
   mapillary-ts_worker:
-    # hier überschreiben/erweitern wir nur Netzwerk-bezogene Sachen
     network_mode: "service:gluetun"
-    depends_on:
-      - gluetun
+    depends_on: [gluetun]
+
+  mapillary-mk_worker:
+    network_mode: "service:gluetun"
+    depends_on: [gluetun]
