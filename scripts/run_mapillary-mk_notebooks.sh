@@ -72,5 +72,19 @@ maybe_drop_caches
 
 
 
+echo "🚦 Running create PMTiles from geojson"
+
+jupyter nbconvert \
+  --to notebook \
+  --inplace \
+  --execute use_cases/cycleway_complete_marking_campaign/2_create_pmtiles_from_geojson_markings.ipynb
+
+echo "✅ 2_create_pmtiles_from_geojson_markings execution finished"
+
+maybe_sleep "$SLEEP_BETWEEN_STEPS"
+maybe_drop_caches
+
+
+
 echo "done."
 

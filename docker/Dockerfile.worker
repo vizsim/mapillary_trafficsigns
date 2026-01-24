@@ -14,6 +14,20 @@ WORKDIR /app
 #        osmium-tool \
 #     && rm -rf /var/lib/apt/lists/*
 
+# Systempakete (tippecanoe)
+ARG TIPPECANOE_VERSION=2.78.0
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git ca-certificates make g++ zlib1g-dev libsqlite3-dev \
+ && git clone --depth 1 --branch "${TIPPECANOE_VERSION}" https://github.com/felt/tippecanoe.git /tmp/tippecanoe \
+ && make -C /tmp/tippecanoe -j"$(nproc)" \
+ && make -C /tmp/tippecanoe install \
+ && rm -rf /tmp/tippecanoe \
+ && apt-get purge -y --auto-remove git make g++ \
+ && rm -rf /var/lib/apt/lists/*
+
+
+
+
 # Requirements ins Image
 # ➜ jupyterlab & nbconvert bitte einfach in requirements.txt mit reinnehmen
 COPY requirements.txt .
