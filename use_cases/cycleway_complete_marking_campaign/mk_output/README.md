@@ -2,13 +2,13 @@
 # Bicycle Marking Detections Output
 
 This folder contains the output file for detected bicycle markings from Mapillary.  
-The output has been created on **2026-01-18**.
+The output has been created on **2026-01-28**.
 
 ## Overview
 
-- **Total detections**: 26492
-- **Mapillary dataset from**: 2026-01-18
-- **Detection period**: 2014-03-30 00:00:00 - 2026-01-15 00:00:00
+- **Total detections**: 26679
+- **Mapillary dataset from**: 2026-01-28
+- **Detection period**: 2014-03-30 00:00:00 - 2026-01-26 00:00:00
 - **Marking type**: Lane marking - symbol (bicycle)
 
 ## Applied Filters
