@@ -33,8 +33,6 @@ maybe_drop_caches() {
   fi
 }
 
-
-# ---- RAM logger ----
 (
   while true; do
     ts=$(date +"%H:%M:%S")
@@ -47,32 +45,31 @@ maybe_drop_caches() {
 LOGGER_PID=$!
 trap 'kill $LOGGER_PID 2>/dev/null || true' EXIT
 
-echo "🚦 Running Mapillary Traffic Signs pipeline"
-echo
+echo "🚀 Running Notebook: 2b_get_mapillary_map_feature_points.ipynb"
 
 jupyter nbconvert \
   --to notebook \
   --inplace \
-  --execute 2_get_mapillary_traffic_signs.ipynb
+  --execute 2b_get_mapillary_map_feature_points.ipynb
 
-echo "✅ Traffic Signs notebook finished"
+echo "✅ Notebook 2b execution finished"
 
 maybe_sleep "$SLEEP_BETWEEN_STEPS"
 maybe_drop_caches
+
 
 echo "🚦 Running generateOutput_2radinfra"
 
 jupyter nbconvert \
   --to notebook \
   --inplace \
-  --execute use_cases/cycleway_complete_campaign/x_mapillary-trafficsigns_generateOutput_2radinfra.ipynb
-            
+  --execute use_cases/cycleway_complete_marking_campaign/x_mapillary-markings_generateOutput_2radinfra.ipynb
 
 echo "✅ generateOutput_2radinfra execution finished"
 
-
 maybe_sleep "$SLEEP_BETWEEN_STEPS"
 maybe_drop_caches
+
 
 
 echo "🚦 Running create PMTiles from geojson"
@@ -80,12 +77,14 @@ echo "🚦 Running create PMTiles from geojson"
 jupyter nbconvert \
   --to notebook \
   --inplace \
-  --execute use_cases/cycleway_complete_campaign/2_create_pmtiles_from_geojson_trafficsigns.ipynb
+  --execute use_cases/cycleway_complete_marking_campaign/2_create_pmtiles_from_geojson_markings.ipynb
 
-echo "✅ 2_create_pmtiles_from_geojson_trafficsigns execution finished"
+echo "✅ 2_create_pmtiles_from_geojson_markings execution finished"
 
 maybe_sleep "$SLEEP_BETWEEN_STEPS"
 maybe_drop_caches
 
 
+
 echo "done."
+
