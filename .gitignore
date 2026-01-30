@@ -33,6 +33,9 @@ output/ml-mf_metadata.json
 # # And keep everything inside tile_cache
 # !output/tile_cache/**
 
+
+!use_cases/utils/*motorways*.parquet
+
 docker/.env
 
 config.py
