@@ -1,5 +1,9 @@
 # mapillary_trafficsigns
 
+> **Note:** Current development/production is taking place in the  
+> **mapillary_trafficsigns** repository on the branch  
+> [feature/docker-notebook](https://github.com/vizsim/mapillary_trafficsigns/tree/feature/docker-notebook).
+
 ## 📖 Overview
 
 This project provides code to download and process **traffic sign detections from Mapillary** in Germany using the Mapillary vector tile layer API.
