@@ -1,4 +1,5 @@
 # ignore virtual environments
+venv/
 .venv/
 env/
 
@@ -37,3 +38,8 @@ archive/
 !use_cases/utils/*motorways*.parquet
 
 # ignore everything that shouldn't be in the Docker image
+schrott/
+logs/
+*.gpkg
+*.fgb
+*.log
