@@ -33,6 +33,8 @@ maybe_drop_caches() {
   fi
 }
 
+
+# ---- RAM logger ----
 (
   while true; do
     ts=$(date +"%H:%M:%S")
