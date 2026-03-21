@@ -17,6 +17,9 @@ fi
 # ---------------------------
 DC="docker-compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
 
+# Cleanup bei Exit (auch bei Fehler)
+trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
+
 # Container aufräumen
 $DC down --remove-orphans
 
@@ -26,16 +29,25 @@ $DC up -d gluetun
 
 # Auf VPN-Readiness warten (max. 5 Minuten)
 echo "Waiting for VPN readiness..."
-timeout 300 bash -c '
-  until docker logs gluetun 2>&1 | grep -q "Initialization Sequence Completed"; do sleep 2; done
-  until docker logs gluetun 2>&1 | grep -qi "dns.*ready"; do sleep 2; done
-'
+deadline=$(( $(date +%s) + 300 ))
+while true; do
+  vpn_status=$(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null || true)
+  if [[ "$vpn_status" == "healthy" ]]; then
+    echo "✅ VPN healthy"
+    break
+  fi
+  if (( $(date +%s) >= deadline )); then
+    echo "❌ Timeout: gluetun not healthy after 5 min (last status: ${vpn_status:-unknown})"
+    exit 1
+  fi
+  sleep 3
+done
 
 # ---------------------------
 # 🐳 Worker-Service starten
 # ---------------------------
 echo "✅ VPN ready → starte Worker: $SERVICE"
-$DC up --build "$SERVICE" || {
+$DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" || {
   echo "❌ Worker-Fehler — skippem Auto-Commit"
   exit 1
 }
@@ -43,18 +55,17 @@ $DC up --build "$SERVICE" || {
 # ---------------------------
 # 🔄 Auto-Commit nach erfolgreicher Ausführung
 # ---------------------------
-BRANCH="feature/docker-notebook"
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 
-if git diff --quiet && git diff --cached --quiet; then
+echo "➕ Füge alle Änderungen zum Commit hinzu..."
+git add -A
+
+if git diff --cached --quiet; then
   echo "ℹ️ Keine Änderungen — nichts zu committen."
   exit 0
 fi
 
-echo "➕ Füge alle Änderungen zum Commit hinzu..."
-git add .
-
-#COMMIT_MSG="Auto-update: worker $SERVICE outputs ($(date -Iseconds))"
-COMMIT_MSG="Auto-update: outputs, notebooks, metadata ($(date -Iseconds))"
+COMMIT_MSG="Auto-update [$SERVICE]: outputs, notebooks, metadata ($(date -Iseconds))"
 
 echo "✍️ Committe: $COMMIT_MSG"
 git commit -m "$COMMIT_MSG"
