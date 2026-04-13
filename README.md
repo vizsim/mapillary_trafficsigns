@@ -36,7 +36,7 @@ Therefore, the processed detection data can be included here, provided that:
 
 The latest processed traffic sign detection datasets for each German federal state are available in the [`output/`](./output) folder.
 
-**Detection quality (recency, repeat observations, motorway exclusion):** the mapper-facing rules and links to the shared constants are documented in [`docs/mapillary-detection-filters.md`](./docs/mapillary-detection-filters.md) (code: [`use_cases/shared/detection_filter_constants.py`](./use_cases/shared/detection_filter_constants.py)).
+**Detection quality (recency, repeat observations, motorway exclusion):** mapper-facing rules are documented in [`docs/mapillary-detection-filters.md`](./docs/mapillary-detection-filters.md). Recency uses a **rolling** cutoff: Berlin local date minus [`LAST_SEEN_LOOKBACK_MONTHS`](./use_cases/shared/detection_filter_constants.py), configured as **36** months / **3** years, with computed values written to `freshness_metadata.json` in each export folder.
 
 ---
 

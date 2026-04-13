@@ -6,11 +6,18 @@ The output has been created on **2026-03-31**.
 
 ## Applied Filters
 
-- Only detections with **last_seen_at** after **`2023-01-01`** (still current in Mapillary imagery)
+- Only detections with **last_seen_at** after the rolling cutoff (Berlin local date minus the configured **36**‑month / **3**‑year lookback; **example** cutoff from `freshness_metadata.json`: **2023-04-13**)
 - Excluded signs within **30 m** of motorways (reduces false positives on Autobahnen)
-- Same-calendar-day **first_seen_at** / **last_seen_at** rows get a **Hinweis** in the export (possible temporary signage); there is **no** minimum-days-between filter for signs — see [detection filters doc](../../../docs/mapillary-detection-filters.md)
+- Same-calendar-day **first_seen_at** / **last_seen_at** rows get a **Hinweis** in the export (possible temporary signage). Markings apply a separate minimum-days-between rule — [detection filters doc](../../../docs/mapillary-detection-filters.md)
 
-**Constants in code:** [`use_cases/shared/detection_filter_constants.py`](../../shared/detection_filter_constants.py) (`LAST_SEEN_CUTOFF_DATE_STR`, `MOTORWAY_EXCLUSION_BUFFER_M`).
+**Constants in code:** [`use_cases/shared/detection_filter_constants.py`](../../shared/detection_filter_constants.py) (`LAST_SEEN_LOOKBACK_MONTHS`, `FRESHNESS_TIMEZONE`, `compute_last_seen_cutoff_date_str`, `freshness_export_metadata`, `MOTORWAY_EXCLUSION_BUFFER_M`).
+
+**Per-run mirror:** [`freshness_metadata.json`](freshness_metadata.json) (computed cutoff and Berlin export time).
+
+## Output Files
+
+- GeoJSON / Parquet exports (from the notebook run)
+- `freshness_metadata.json` — rolling `last_seen` cutoff and export timestamp (Berlin)
 
 ## Signs
 
