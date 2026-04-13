@@ -1,7 +1,7 @@
 # mapillary_trafficsigns
 
-> **Note:** Current development/production is taking place in the  
-> **mapillary_trafficsigns** repository on the branch  
+> **Note:** Current development/production is taking place in the
+> **mapillary_trafficsigns** repository on the branch
 > [feature/docker-notebook](https://github.com/vizsim/mapillary_trafficsigns/tree/feature/docker-notebook).
 
 ## 📖 Overview
@@ -31,10 +31,12 @@ According to [Mapillary’s OpenStreetMap Wiki page](https://wiki.openstreetmap.
 
 Therefore, the processed detection data can be included here, provided that:
 
-- proper attribution is maintained (“© Mapillary”), and  
+- proper attribution is maintained (“© Mapillary”), and
 - any redistribution follows the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) terms.
 
 The latest processed traffic sign detection datasets for each German federal state are available in the [`output/`](./output) folder.
+
+**Detection quality (recency, repeat observations, motorway exclusion):** the mapper-facing rules and links to the shared constants are documented in [`docs/mapillary-detection-filters.md`](./docs/mapillary-detection-filters.md) (code: [`use_cases/shared/detection_filter_constants.py`](./use_cases/shared/detection_filter_constants.py)).
 
 ---
 

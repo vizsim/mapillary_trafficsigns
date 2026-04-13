@@ -1,13 +1,16 @@
 
 # Bicycle Infrastucture Traffic Signs Output
 
-This folder contains the output file for detected traffic signs related to bicycle infrastructure from Mapillary.  
+This folder contains the output file for detected traffic signs related to bicycle infrastructure from Mapillary.
 The output has been created on **2026-03-31**.
 
 ## Applied Filters
 
-- Only detections newer than **2023-01-01**
-- Excluded all signs located within **30 m of motorways** (to reduce false positives)
+- Only detections with **last_seen_at** after **`2023-01-01`** (still current in Mapillary imagery)
+- Excluded signs within **30 m** of motorways (reduces false positives on Autobahnen)
+- Same-calendar-day **first_seen_at** / **last_seen_at** rows get a **Hinweis** in the export (possible temporary signage); there is **no** minimum-days-between filter for signs — see [detection filters doc](../../../docs/mapillary-detection-filters.md)
+
+**Constants in code:** [`use_cases/shared/detection_filter_constants.py`](../../shared/detection_filter_constants.py) (`LAST_SEEN_CUTOFF_DATE_STR`, `MOTORWAY_EXCLUSION_BUFFER_M`).
 
 ## Signs
 
