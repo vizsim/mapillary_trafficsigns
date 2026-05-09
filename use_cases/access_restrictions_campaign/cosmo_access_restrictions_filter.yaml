@@ -1,0 +1,42 @@
+table:
+  name: access_restrictions_network
+  filter: "highway=motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service|road|track|path|footway|pedestrian|cycleway & (access | vehicle | motor_vehicle | motorcar | hgv | bicycle | motorcycle | foot | maxweight | maxaxleload | maxwidth | maxheight | maxlength)"
+  geometry:
+    node: false
+    way: linestring
+    closed_way: linestring
+    relation: false
+  columns:
+    - name: osm_id
+      source: meta:id
+      type: integer
+    - name: highway
+      source: tag:highway
+    - name: access
+      source: tag:access
+    - name: vehicle
+      source: tag:vehicle
+    - name: motor_vehicle
+      source: tag:motor_vehicle
+    - name: motorcar
+      source: tag:motorcar
+    - name: hgv
+      source: tag:hgv
+    - name: bicycle
+      source: tag:bicycle
+    - name: motorcycle
+      source: tag:motorcycle
+    - name: foot
+      source: tag:foot
+    - name: maxweight
+      source: tag:maxweight
+    - name: maxaxleload
+      source: tag:maxaxleload
+    - name: maxwidth
+      source: tag:maxwidth
+    - name: maxheight
+      source: tag:maxheight
+    - name: maxlength
+      source: tag:maxlength
+    - name: maxspeed
+      source: tag:maxspeed
