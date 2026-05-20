@@ -13,9 +13,9 @@ if [[ -z "$SERVICE" ]]; then
 fi
 
 # ---------------------------
-# 🌐 VPN-Setup mit Gluetun
+# 🌐 Compose-Setup
 # ---------------------------
-DC="docker-compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
+DC="docker compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
 
 # Cleanup bei Exit (auch bei Fehler)
 trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
@@ -23,32 +23,14 @@ trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
 # Container aufräumen
 $DC down --remove-orphans
 
-# VPN-Container starten
-echo "Starting gluetun..."
-$DC up -d gluetun
-
-# Auf VPN-Readiness warten (max. 5 Minuten)
-echo "Waiting for VPN readiness..."
-deadline=$(( $(date +%s) + 300 ))
-while true; do
-  vpn_status=$(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null || true)
-  if [[ "$vpn_status" == "healthy" ]]; then
-    echo "✅ VPN healthy"
-    break
-  fi
-  if (( $(date +%s) >= deadline )); then
-    echo "❌ Timeout: gluetun not healthy after 5 min (last status: ${vpn_status:-unknown})"
-    exit 1
-  fi
-  sleep 3
-done
-
 # ---------------------------
 # 🐳 Worker-Service starten
 # ---------------------------
-echo "✅ VPN ready → starte Worker: $SERVICE"
+# Compose startet gluetun automatisch mit hoch und wartet auf den
+# Healthcheck (depends_on: condition: service_healthy in docker-compose.vpn.yml).
+echo "Starte Worker: $SERVICE (gluetun wird automatisch hochgefahren)"
 $DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" || {
-  echo "❌ Worker-Fehler — skippem Auto-Commit"
+  echo "❌ Worker-Fehler — skippe Auto-Commit"
   exit 1
 }
 

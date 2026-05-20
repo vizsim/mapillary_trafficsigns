@@ -1,8 +1,6 @@
-version: "3.9"
-
 services:
   gluetun:
-    image: qmcgaw/gluetun
+    image: qmcgaw/gluetun:v3.40.0
     container_name: gluetun
     cap_add: [NET_ADMIN]
     devices:
@@ -16,16 +14,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "/gluetun-entrypoint", "healthcheck"]
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9999/v1/openvpn/status"]
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 20s
+      start_period: 30s
 
   mapillary-ts_worker:
     network_mode: "service:gluetun"
-    depends_on: [gluetun]
+    depends_on:
+      gluetun:
+        condition: service_healthy
 
   mapillary-mk_worker:
     network_mode: "service:gluetun"
-    depends_on: [gluetun]
+    depends_on:
+      gluetun:
+        condition: service_healthy
