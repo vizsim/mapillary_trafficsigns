@@ -35,6 +35,14 @@ $DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" 
 }
 
 # ---------------------------
+# ☁️ Schwere Outputs nach B2 archivieren (nicht in git)
+# ---------------------------
+# Unabhängig vom git-Commit: läuft auch, wenn es keine Notebook-/Metadata-Diffs
+# gibt. Defensive — fehlt b2/Creds, wird nur gewarnt (bricht den Lauf nicht).
+"$(dirname "$0")/upload_outputs_to_b2.sh" "$SERVICE" || \
+  echo "⚠️  B2-Upload meldete einen Fehler — Lauf wird trotzdem fortgesetzt."
+
+# ---------------------------
 # 🔄 Auto-Commit nach erfolgreicher Ausführung
 # ---------------------------
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
