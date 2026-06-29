@@ -47,7 +47,14 @@ config.py
 
 __pycache__/
 *.pyc
-*.log  
+*.log
 *.ipynb_checkpoints
+
+# Temporäre Artefakte der PMTiles-Erzeugung (tippecanoe). Werden bei sauberem
+# Lauf von Task 3 aufgeräumt; das hier fängt harte Abbrüche (OOM/SIGKILL) ab,
+# damit ein übrig gebliebenes Journal/Temp nicht vom verzeichnis-weiten
+# `git add` (Task 1) mitcommittet wird.
+*-journal
+*.tmp
 
 docs/

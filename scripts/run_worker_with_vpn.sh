@@ -24,6 +24,19 @@ trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
 $DC down --remove-orphans
 
 # ---------------------------
+# 🔎 Preflight: ist das Working Directory sauber?
+# ---------------------------
+# Ist beim Start schon was uncommitted, liegt vermutlich Müll eines
+# fehlgeschlagenen Vorlaufs herum (z. B. nach OOM-Abbruch). Nur WARNEN, kein
+# automatisches `reset --hard` — das würde echte Zwischenstände zerstören.
+# Task 1 begrenzt den Commit-Scope ohnehin, hier geht es nur um Sichtbarkeit.
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "⚠️  Working Directory ist beim Start nicht sauber:"
+  git status --short
+  echo "⚠️  Reste werden NICHT automatisch committet — bei Bedarf prüfen/aufräumen."
+fi
+
+# ---------------------------
 # 🐳 Worker-Service starten
 # ---------------------------
 # Compose startet gluetun automatisch mit hoch und wartet auf den
