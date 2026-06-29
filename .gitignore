@@ -25,6 +25,9 @@ schrott/
 output/archive/**
 output/mapillary_map-feature-points_*.parquet
 output/ml-mf_metadata.json
+# ts-Parquets sind Zwischendaten (~150 MB/Lauf) → nicht mehr in git,
+# mittelfristig nach B2 (data.vizsim.de). Siehe docs/worker_mix_fehleranalyse_und_todos.md
+output/mapillary_traffic-signs_*.parquet
 
 # output/archive/*
 # output/*

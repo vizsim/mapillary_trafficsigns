@@ -50,7 +50,8 @@ case "$SERVICE" in
   mapillary-ts_worker)
     COMMIT_PATHS=(
       "2_get_mapillary_traffic_signs.ipynb"
-      "output/mapillary_traffic-signs_*.parquet"
+      # ts-Parquets sind in .gitignore (Zwischendaten, -> B2) und werden bewusst
+      # NICHT committet. Nur das kleine Metadata-JSON bleibt als Lauf-Protokoll.
       "output/ml-ts_metadata.json"
       "use_cases/cycleway_complete_campaign"
     )
