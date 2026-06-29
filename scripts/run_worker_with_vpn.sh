@@ -39,8 +39,42 @@ $DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" 
 # ---------------------------
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 
-echo "➕ Füge alle Änderungen zum Commit hinzu..."
-git add -A
+# ---------------------------
+# 📦 Nur worker-eigene Pfade stagen
+# ---------------------------
+# WICHTIG: kein `git add -A`. Sonst werden liegengebliebene Dateien des ANDEREN
+# Workers (z. B. Reste eines fehlgeschlagenen Vorlaufs) mit committet.
+# Gescoped wird auf Verzeichnis-Ebene, damit neue Output-Dateien automatisch
+# erfasst werden, ohne dass diese Liste gepflegt werden muss.
+case "$SERVICE" in
+  mapillary-ts_worker)
+    COMMIT_PATHS=(
+      "2_get_mapillary_traffic_signs.ipynb"
+      "output/mapillary_traffic-signs_*.parquet"
+      "output/ml-ts_metadata.json"
+      "use_cases/cycleway_complete_campaign"
+    )
+    ;;
+  mapillary-mk_worker)
+    # mk-Outputs in output/ sind in .gitignore ausgeschlossen → kein output/-Eintrag.
+    COMMIT_PATHS=(
+      "2b_get_mapillary_map_feature_points.ipynb"
+      "use_cases/cycleway_complete_marking_campaign"
+    )
+    ;;
+  *)
+    echo "❌ Unbekannter Service '$SERVICE' — Auto-Commit abgebrochen"
+    exit 2
+    ;;
+esac
+
+echo "➕ Stage nur die Pfade von $SERVICE…"
+# Jeden Pfad einzeln stagen. Ein Glob ohne Treffer lässt `git add` fehlschlagen
+# und würde unter `set -e` den ganzen Lauf abbrechen → daher pro Pfad abfangen
+# und sichtbar loggen (statt still zu maskieren).
+for p in "${COMMIT_PATHS[@]}"; do
+  git add -- $p || echo "⚠️  Kein Treffer für Pfad '$p' — übersprungen"
+done
 
 if git diff --cached --quiet; then
   echo "ℹ️ Keine Änderungen — nichts zu committen."
