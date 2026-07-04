@@ -56,5 +56,8 @@ __pycache__/
 # `git add` (Task 1) mitcommittet wird.
 *-journal
 *.tmp
+# Temp-Name endet auf .pmtiles, weil tippecanoe das Ausgabeformat an der
+# Endung festmacht (sonst stillschweigend MBTiles/SQLite).
+*.tmp.pmtiles
 
 docs/
