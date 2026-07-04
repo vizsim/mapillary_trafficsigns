@@ -13,9 +13,9 @@ if [[ -z "$SERVICE" ]]; then
 fi
 
 # ---------------------------
-# 🌐 VPN-Setup mit Gluetun
+# 🌐 Compose-Setup
 # ---------------------------
-DC="docker-compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
+DC="docker compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
 
 # Cleanup bei Exit (auch bei Fehler)
 trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
@@ -23,42 +23,80 @@ trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
 # Container aufräumen
 $DC down --remove-orphans
 
-# VPN-Container starten
-echo "Starting gluetun..."
-$DC up -d gluetun
-
-# Auf VPN-Readiness warten (max. 5 Minuten)
-echo "Waiting for VPN readiness..."
-deadline=$(( $(date +%s) + 300 ))
-while true; do
-  vpn_status=$(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null || true)
-  if [[ "$vpn_status" == "healthy" ]]; then
-    echo "✅ VPN healthy"
-    break
-  fi
-  if (( $(date +%s) >= deadline )); then
-    echo "❌ Timeout: gluetun not healthy after 5 min (last status: ${vpn_status:-unknown})"
-    exit 1
-  fi
-  sleep 3
-done
+# ---------------------------
+# 🔎 Preflight: ist das Working Directory sauber?
+# ---------------------------
+# Ist beim Start schon was uncommitted, liegt vermutlich Müll eines
+# fehlgeschlagenen Vorlaufs herum (z. B. nach OOM-Abbruch). Nur WARNEN, kein
+# automatisches `reset --hard` — das würde echte Zwischenstände zerstören.
+# Task 1 begrenzt den Commit-Scope ohnehin, hier geht es nur um Sichtbarkeit.
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "⚠️  Working Directory ist beim Start nicht sauber:"
+  git status --short
+  echo "⚠️  Reste werden NICHT automatisch committet — bei Bedarf prüfen/aufräumen."
+fi
 
 # ---------------------------
 # 🐳 Worker-Service starten
 # ---------------------------
-echo "✅ VPN ready → starte Worker: $SERVICE"
+# Compose startet gluetun automatisch mit hoch und wartet auf den
+# Healthcheck (depends_on: condition: service_healthy in docker-compose.vpn.yml).
+echo "Starte Worker: $SERVICE (gluetun wird automatisch hochgefahren)"
 $DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" || {
-  echo "❌ Worker-Fehler — skippem Auto-Commit"
+  echo "❌ Worker-Fehler — skippe Auto-Commit"
   exit 1
 }
+
+# ---------------------------
+# ☁️ Schwere Outputs nach B2 archivieren (nicht in git)
+# ---------------------------
+# Unabhängig vom git-Commit: läuft auch, wenn es keine Notebook-/Metadata-Diffs
+# gibt. Defensive — fehlt b2/Creds, wird nur gewarnt (bricht den Lauf nicht).
+"$(dirname "$0")/upload_outputs_to_b2.sh" "$SERVICE" || \
+  echo "⚠️  B2-Upload meldete einen Fehler — Lauf wird trotzdem fortgesetzt."
 
 # ---------------------------
 # 🔄 Auto-Commit nach erfolgreicher Ausführung
 # ---------------------------
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 
-echo "➕ Füge alle Änderungen zum Commit hinzu..."
-git add -A
+# ---------------------------
+# 📦 Nur worker-eigene Pfade stagen
+# ---------------------------
+# WICHTIG: kein `git add -A`. Sonst werden liegengebliebene Dateien des ANDEREN
+# Workers (z. B. Reste eines fehlgeschlagenen Vorlaufs) mit committet.
+# Gescoped wird auf Verzeichnis-Ebene, damit neue Output-Dateien automatisch
+# erfasst werden, ohne dass diese Liste gepflegt werden muss.
+case "$SERVICE" in
+  mapillary-ts_worker)
+    COMMIT_PATHS=(
+      "2_get_mapillary_traffic_signs.ipynb"
+      # ts-Parquets sind in .gitignore (Zwischendaten, -> B2) und werden bewusst
+      # NICHT committet. Nur das kleine Metadata-JSON bleibt als Lauf-Protokoll.
+      "output/ml-ts_metadata.json"
+      "use_cases/cycleway_complete_campaign"
+    )
+    ;;
+  mapillary-mk_worker)
+    # mk-Outputs in output/ sind in .gitignore ausgeschlossen → kein output/-Eintrag.
+    COMMIT_PATHS=(
+      "2b_get_mapillary_map_feature_points.ipynb"
+      "use_cases/cycleway_complete_marking_campaign"
+    )
+    ;;
+  *)
+    echo "❌ Unbekannter Service '$SERVICE' — Auto-Commit abgebrochen"
+    exit 2
+    ;;
+esac
+
+echo "➕ Stage nur die Pfade von $SERVICE…"
+# Jeden Pfad einzeln stagen. Ein Glob ohne Treffer lässt `git add` fehlschlagen
+# und würde unter `set -e` den ganzen Lauf abbrechen → daher pro Pfad abfangen
+# und sichtbar loggen (statt still zu maskieren).
+for p in "${COMMIT_PATHS[@]}"; do
+  git add -- $p || echo "⚠️  Kein Treffer für Pfad '$p' — übersprungen"
+done
 
 if git diff --cached --quiet; then
   echo "ℹ️ Keine Änderungen — nichts zu committen."
