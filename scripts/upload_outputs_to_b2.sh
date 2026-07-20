@@ -43,10 +43,14 @@ case "$SERVICE" in
     DEST="b2://vizsim-public-archive/mapillary_trafficsigns/"
     ;;
   mapillary-mk_worker)
-    # mk-Parquets (map-feature-points) noch nicht archiviert — bei Bedarf hier
-    # analog ergänzen (eigener Ziel-Ordner, z. B. mapillary_map-features/).
-    echo "ℹ️  B2-Archiv für $SERVICE noch nicht konfiguriert — übersprungen."
-    exit 0
+    # mk-Parquets (map-feature-points / Markierungen) — eigener Ziel-Ordner,
+    # bewusst getrennt von den traffic-signs, da anderer Datensatz.
+    SRC_DIR="output"
+    INCLUDE_REGEXES=(
+      ".*mapillary_map-feature-points_.*\.parquet$"
+      ".*ml-mf_metadata\.json$"
+    )
+    DEST="b2://vizsim-public-archive/mapillary_map-feature-points/"
     ;;
   *)
     echo "❌ Unbekannter Service '$SERVICE'"
