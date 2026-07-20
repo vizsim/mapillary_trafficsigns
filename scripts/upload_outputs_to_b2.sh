@@ -39,6 +39,7 @@ case "$SERVICE" in
     INCLUDE_REGEXES=(
       ".*mapillary_traffic-signs_.*\.parquet$"
       ".*ml-ts_metadata\.json$"
+      ".*LICENSE\.txt$"
     )
     DEST="b2://vizsim-public-archive/mapillary_trafficsigns/"
     ;;
@@ -49,6 +50,7 @@ case "$SERVICE" in
     INCLUDE_REGEXES=(
       ".*mapillary_map-feature-points_.*\.parquet$"
       ".*ml-mf_metadata\.json$"
+      ".*LICENSE\.txt$"
     )
     DEST="b2://vizsim-public-archive/mapillary_map-feature-points/"
     ;;

@@ -1,0 +1,23 @@
+Mapillary-derived datasets — License & Attribution
+===================================================
+
+The datasets in this folder are processed from detections provided via the
+Mapillary API (https://www.mapillary.com/developer/api-documentation) and are
+based on user-contributed imagery and Mapillary's own processing.
+
+    Attribution:  © Mapillary
+    License:      CC BY-SA 4.0
+                  https://creativecommons.org/licenses/by-sa/4.0/
+
+Per Mapillary's OpenStreetMap Wiki page
+(https://wiki.openstreetmap.org/wiki/Mapillary#License), these derived datasets
+may be shared under the same license, provided that:
+
+  - proper attribution is maintained ("© Mapillary"), and
+  - any redistribution follows the CC BY-SA 4.0 terms.
+
+Files are named mapillary_<dataset>_DE-<STATE>_latest.parquet (one per German
+federal state) and are refreshed automatically on a regular basis.
+
+Processed and published by vizsim — https://data.vizsim.de
+Source code: https://github.com/vizsim/mapillary_trafficsigns
