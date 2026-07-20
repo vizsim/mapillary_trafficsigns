@@ -34,7 +34,10 @@ Therefore, the processed detection data can be included here, provided that:
 - proper attribution is maintained (“© Mapillary”), and  
 - any redistribution follows the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) terms.
 
-The latest processed traffic sign detection datasets for each German federal state are available in the [`output/`](./output) folder.
+The latest processed datasets for each German federal state are published as Parquet files and available for download:
+
+- 🚦 **Traffic sign detections:** [data.vizsim.de/mapillary_trafficsigns](https://data.vizsim.de/mapillary_trafficsigns/)
+- 🖌️ **Map feature points (road markings):** [data.vizsim.de/mapillary_map-feature-points](https://data.vizsim.de/mapillary_map-feature-points/)
 
 ---
 
