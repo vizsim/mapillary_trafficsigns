@@ -25,3 +25,15 @@ The output has been created on **2026-07-23**.
 ## Statistics Plot
 
 ![Anzahl pro Monat](markings_by_month.svg)
+
+## Downloads
+
+The files in this folder are also published for direct download, so consumers do
+not need to clone this repository:
+
+| File | Download |
+| --- | --- |
+| 🗺️ Vector tiles (PMTiles) | <https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/mapillary_markings_bicycle_latest.pmtiles> |
+| 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/mapillary_markings_bicycle_latest.geojson.gz> |
+
+Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
