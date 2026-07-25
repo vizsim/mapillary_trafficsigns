@@ -129,13 +129,24 @@ case "$SERVICE" in
     ;;
 
   mapillary-mk_worker)
-    # mk-Parquets (map-feature-points / Markierungen) — eigener Ziel-Ordner,
-    # bewusst getrennt von den traffic-signs, da anderer Datensatz.
+    # 1) mk-Parquets (map-feature-points / Markierungen) — eigener Ziel-Ordner,
+    #    bewusst getrennt von den traffic-signs, da anderer Datensatz.
     sync_dir "output" \
       "b2://vizsim-public-archive/mapillary_map-feature-points/" \
       ".*mapillary_map-feature-points_.*\.parquet$" \
       ".*ml-mf_metadata\.json$" \
       ".*LICENSE\.txt$"
+
+    # 2) Fertige Kampagnen-Outputs (Radinfrastruktur-Markierungen) — analog zur
+    #    ts-Kampagne. Stehen aktuell ZUSÄTZLICH noch in git; sobald die
+    #    Konsumenten auf data.vizsim.de zeigen, können sie aus dem Repo fliegen
+    #    (.gitignore + COMMIT_PATHS in run_worker_with_vpn.sh).
+    sync_dir "use_cases/cycleway_complete_marking_campaign/mk_output" \
+      "b2://vizsim-public-archive/mapillary_map-feature-points/cycleway-campaign/" \
+      ".*mapillary_markings_bicycle_latest\.pmtiles$" \
+      ".*mapillary_markings_bicycle_latest\.geojson\.gz$" \
+      ".*markings_by_month\.svg$" \
+      ".*README\.md$"
     ;;
 esac
 

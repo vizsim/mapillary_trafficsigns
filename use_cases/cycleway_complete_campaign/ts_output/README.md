@@ -20,6 +20,10 @@ The output has been created on **2026-07-22**.
 | DE:1022-10 | Radfahrer frei | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_1022_10.svg" width="40"> | 15319 | `complementary--except-bicycles--g1` |
 | DE:1000-33 | Radverkehr im Gegenverkehr | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_1000_33.svg" width="40"> | 7738 | `complementary--bike-route--g1` |
 
+## Statistics Plot
+
+![Anzahl pro Monat](signs_by_month.svg)
+
 ## Downloads
 
 The files in this folder are also published for direct download, so consumers do
@@ -31,7 +35,3 @@ not need to clone this repository:
 | 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.geojson.gz> |
 
 Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-
-## Statistics Plot
-
-![Anzahl pro Monat](signs_by_month.svg)
