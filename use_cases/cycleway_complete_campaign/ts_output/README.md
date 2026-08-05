@@ -2,7 +2,7 @@
 # Bicycle Infrastucture Traffic Signs Output
 
 This folder contains the output file for detected traffic signs related to bicycle infrastructure from Mapillary.  
-The output has been created on **2026-07-29**.
+The output has been created on **2026-08-05**.
 
 ## Applied Filters
 
@@ -13,12 +13,12 @@ The output has been created on **2026-07-29**.
 
 | VZ-Code | Beschreibung | Verkehrszeichen | Anzahl | Mapillary Wording |
 |-------|-------------|:---------------:|-------:|-----------------|
-| DE:237 | Radweg | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_237.svg" width="40" alt="DE:237"> | 30943 | `regulatory--bicycles-only--g1` |
-| DE:240 | Gemeinsamer Geh- und Radweg | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_240.svg" width="40" alt="DE:240"> | 71748 | `regulatory--shared-path-pedestrians-and-bicycles--g1` |
-| DE:241 | Getrennter Geh- und Radweg | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_241_31.svg" width="40" alt="DE:241-31"> oder <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_241_30.svg" width="40" alt="DE:241-30"> | 24595 | `regulatory--dual-path-pedestrians-and-bicycles--g1`<br>`regulatory--dual-path-bicycles-and-pedestrians--g1` |
-| DE:244.2 | Ende Fahrradstraße | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_244_2.svg" width="40" alt="DE:244.2"> | 531 | `regulatory--end-of-bicycles-only--g2` |
-| DE:1022-10 | Radfahrer frei | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_1022_10.svg" width="40" alt="DE:1022-10"> | 15414 | `complementary--except-bicycles--g1` |
-| DE:1000-33 | Radverkehr im Gegenverkehr | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_1000_33.svg" width="40" alt="DE:1000-33"> | 7787 | `complementary--bike-route--g1` |
+| DE:237 | Radweg | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_237.svg" width="40" alt="DE:237"> | 31284 | `regulatory--bicycles-only--g1` |
+| DE:240 | Gemeinsamer Geh- und Radweg | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_240.svg" width="40" alt="DE:240"> | 72396 | `regulatory--shared-path-pedestrians-and-bicycles--g1` |
+| DE:241 | Getrennter Geh- und Radweg | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_241_31.svg" width="40" alt="DE:241-31"> oder <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_241_30.svg" width="40" alt="DE:241-30"> | 24804 | `regulatory--dual-path-pedestrians-and-bicycles--g1`<br>`regulatory--dual-path-bicycles-and-pedestrians--g1` |
+| DE:244.2 | Ende Fahrradstraße | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_244_2.svg" width="40" alt="DE:244.2"> | 535 | `regulatory--end-of-bicycles-only--g2` |
+| DE:1022-10 | Radfahrer frei | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_1022_10.svg" width="40" alt="DE:1022-10"> | 15538 | `complementary--except-bicycles--g1` |
+| DE:1000-33 | Radverkehr im Gegenverkehr | <img src="https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@0.6.0/dist/data-svgs/DE/svgs/DE_1000_33.svg" width="40" alt="DE:1000-33"> | 7838 | `complementary--bike-route--g1` |
 
 ## Statistics Plot
 
