@@ -13,12 +13,41 @@ if [[ -z "$SERVICE" ]]; then
 fi
 
 # ---------------------------
+# 🔒 Nur ein Worker gleichzeitig
+# ---------------------------
+# ts (Mi 15:00) und mk (Do 01:00) teilen sich Compose-Projekt, gluetun, output/
+# und den git-Index. `docker compose down` weiter unten ist projektweit: startet
+# mk, während ts noch läuft (nach VPN-Hängern mit langen Nachläufen durchaus
+# möglich), reißt es den ts-Lauf mit. Deshalb ein Lock — und bei Kollision
+# sichtbar aussteigen statt still zu kollidieren.
+LOCK_FILE="${MAPILLARY_WORKER_LOCK:-/tmp/mapillary_worker.lock}"
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+  echo "⏭️  Anderer Worker läuft noch (Lock $LOCK_FILE) — $SERVICE wird übersprungen, kein Commit."
+  exit 0
+fi
+
+# Obergrenze für den Worker-Lauf. Normal sind ~6 h. Hängt der Lauf (gestrandete
+# Sockets nach VPN-Reconnect, beobachtet 2026-07-01), würde er sonst über das
+# Lock jeden folgenden Worker blockieren. Bereits exportierte Bundesländer
+# bleiben erhalten — der Export passiert pro Land.
+WORKER_TIMEOUT="${WORKER_TIMEOUT:-16h}"
+
+# ---------------------------
 # 🌐 Compose-Setup
 # ---------------------------
 DC="docker compose -f docker/docker-compose.yml -f docker/docker-compose.vpn.yml"
 
-# Cleanup bei Exit (auch bei Fehler)
-trap '$DC down --remove-orphans 2>/dev/null || true' EXIT
+# Cleanup bei Exit (auch bei Fehler). Vorher die gluetun-Logs sichern: Compose
+# hängt nur an den Worker-Logs, VPN-Reconnects und Exit-IPs standen bisher
+# nirgends — beim Lauf vom 26.08. war deshalb nicht rekonstruierbar, was das
+# VPN getan hat.
+cleanup() {
+  mkdir -p logs
+  docker logs gluetun > "logs/gluetun-${SERVICE}.log" 2>&1 || true
+  $DC down --remove-orphans 2>/dev/null || true
+}
+trap cleanup EXIT
 
 # Container aufräumen
 $DC down --remove-orphans
@@ -41,9 +70,15 @@ fi
 # ---------------------------
 # Compose startet gluetun automatisch mit hoch und wartet auf den
 # Healthcheck (depends_on: condition: service_healthy in docker-compose.vpn.yml).
-echo "Starte Worker: $SERVICE (gluetun wird automatisch hochgefahren)"
-$DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" || {
-  echo "❌ Worker-Fehler — skippe Auto-Commit"
+echo "Starte Worker: $SERVICE (gluetun wird automatisch hochgefahren, Limit $WORKER_TIMEOUT)"
+timeout --signal=INT --kill-after=5m "$WORKER_TIMEOUT" \
+  $DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" || {
+  rc=$?
+  if [[ $rc -eq 124 ]]; then
+    echo "❌ Worker nach $WORKER_TIMEOUT abgebrochen (Hänger?) — skippe Auto-Commit"
+  else
+    echo "❌ Worker-Fehler (Exit $rc) — skippe Auto-Commit"
+  fi
   exit 1
 }
 
@@ -91,11 +126,19 @@ case "$SERVICE" in
 esac
 
 echo "➕ Stage nur die Pfade von $SERVICE…"
-# Jeden Pfad einzeln stagen. Ein Glob ohne Treffer lässt `git add` fehlschlagen
-# und würde unter `set -e` den ganzen Lauf abbrechen → daher pro Pfad abfangen
-# und sichtbar loggen (statt still zu maskieren).
+# Jeden Pfad einzeln stagen. Ein fehlender Pfad ist harmlos (überspringen).
+# Ein echter git-Fehler (index.lock eines parallelen Laufs, Rechte) ist es
+# nicht: vorher wurde beides als "kein Treffer" gemeldet und mit einem
+# Teil-Staging weitercommittet.
 for p in "${COMMIT_PATHS[@]}"; do
-  git add -- $p || echo "⚠️  Kein Treffer für Pfad '$p' — übersprungen"
+  if [[ ! -e "$p" ]]; then
+    echo "⚠️  Pfad '$p' existiert nicht — übersprungen"
+    continue
+  fi
+  git add -- "$p" || {
+    echo "❌ git add '$p' fehlgeschlagen (index.lock? Rechte?) — Auto-Commit abgebrochen"
+    exit 1
+  }
 done
 
 if git diff --cached --quiet; then
