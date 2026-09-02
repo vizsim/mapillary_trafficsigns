@@ -235,15 +235,20 @@ Tests nur, wenn jemand daran denkt.
 
 ---
 
-## Offene Frage, die vor Schritt 2 beantwortet sein sollte
+## Geklärt am 2026-09-02: woher die Antworten ohne MVT-Inhalt kamen
 
-Warum bekommt der Server überhaupt Antworten ohne MVT-Inhalt? Verdacht: der
-NordVPN-Exit wird von Mapillary geblockt oder gedrosselt. Von einem normalen
-Anschluss laden dieselben Tiles einwandfrei.
+Über den bisherigen VPN-Exit (Deutschland) kam ab Ende August für jede Tile
+HTTP 200 mit einer HTML-Seite statt eines MVT zurück — deshalb die 132.603
+Parse-Fehler am 26.08. und das stundenlange Kriechen am 02.09. (jede Tile 4
+Versuche mit Backoff). Von einem anderen Anschluss laden dieselben Tiles
+einwandfrei.
 
-Der Sammelbericht zeigt beim nächsten Lauf (Mi 15:00 ts, Do 01:00 mk) den echten
-Body. **Erst danach urteilen** — sonst wird umgebaut und die Ursache steht
-danach immer noch offen.
+Konsequenzen: Exit-Land auf Niederlande umgestellt (Berlin wäre die
+naheliegende Alternative gewesen, ist aber von Hetzner aus nicht erreichbar —
+Routing, 100 % Paketverlust nach 194.233.96.x), und `fetch_tiles` bricht nach
+30 Fehlern in Folge ab, statt jede Tile einzeln durchzuwiederholen. Damit
+scheitert ein solcher Lauf in Minuten, die Reißleine hält den alten Stand, und
+die Mitschrift zeigt den Body.
 
 Ebenfalls offen: warum der mk-Lauf vom 27.08. nur 7 von 16 Ländern erneuert hat.
 Aus `logs/cron-mk.log` nicht rekonstruierbar, weil die Notebook-Ausgabe dort
