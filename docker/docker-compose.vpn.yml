@@ -9,7 +9,12 @@ services:
       - VPN_SERVICE_PROVIDER=nordvpn
       - OPENVPN_USER=${NORD_USER}
       - OPENVPN_PASSWORD=${NORD_PASS}
-      - SERVER_COUNTRIES=Germany
+      # Exit-Land (seit 2026-09-02: Niederlande). Ueber die deutschen Exits kamen
+      # ab Ende August keine gueltigen Tile-Antworten mehr an (HTML statt MVT),
+      # und die Berliner Server (194.233.96.x) sind von Hetzner aus nicht
+      # erreichbar (Routing, 100 % Paketverlust). Die niederlaendischen Server
+      # sind vollstaendig erreichbar; fuer Mapillary ist das Exit-Land egal.
+      - SERVER_COUNTRIES=Netherlands
     volumes:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
