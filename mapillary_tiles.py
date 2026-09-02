@@ -32,6 +32,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
 import geopandas as gpd
+import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
 from tqdm import tqdm
@@ -178,13 +179,12 @@ def tile_features_to_gdf(features, tile) -> gpd.GeoDataFrame:
     # above 2**53. Nullable Int64 stays exact and NA-safe.
     if "id" in gdf.columns:
         gdf["id"] = gdf["id"].astype("Int64")
+    # Vektorisiert statt .apply(fromtimestamp) pro Zeile: bei 1,4 Mio Zeilen
+    # (DE-NW) ist das der Unterschied zwischen Sekunden und Millisekunden -
+    # und fromtimestamp(NaN) wuerde den ganzen Tile-Batch abbrechen.
     for col in ("first_seen_at", "last_seen_at"):
         if col in gdf.columns:
-            gdf[col] = (
-                gdf[col]
-                .apply(lambda x: datetime.fromtimestamp(x / 1000, tz=timezone.utc))
-                .dt.strftime("%Y-%m-%d")
-            )
+            gdf[col] = pd.to_datetime(gdf[col], unit="ms", utc=True).dt.strftime("%Y-%m-%d")
     gdf["tile_x"] = tile.x
     gdf["tile_y"] = tile.y
     return gdf
@@ -200,6 +200,8 @@ class TileBatch:
     errors: dict = field(default_factory=dict)  # Fehlerart -> Anzahl
     samples: dict = field(default_factory=dict)  # Fehlerart -> Beispiel-Body
     empty: int = 0
+    recovered: int = 0  # im Nachlauf doch noch geholt
+    rounds: int = 1  # Durchlaeufe inkl. Nachlaeufe
 
     @property
     def fail_ratio(self) -> float:
@@ -207,11 +209,16 @@ class TileBatch:
 
     def report(self, emit=print) -> None:
         """Ein Bericht statt 130.000 Einzelzeilen."""
-        emit(
+        line = (
             f"   {self.total:,} Tiles | {len(self.gdfs):,} mit Daten | "
             f"{self.empty:,} leer | {len(self.failed):,} fehlgeschlagen "
             f"({self.fail_ratio:.1%})"
         )
+        if self.recovered:
+            line += f" | {self.recovered:,} im Nachlauf erholt"
+        emit(line)
+        # errors/samples stammen aus dem ERSTEN Durchlauf - das ist die
+        # Diagnose, was zurueckkam. Ob es sich erholt hat, sagt `recovered`.
         for kind, count in sorted(self.errors.items(), key=lambda kv: -kv[1]):
             emit(f"   ↳ {count:>7,}x {kind}")
             if self.samples.get(kind):
@@ -270,5 +277,47 @@ def fetch_tiles(tiles, token, coverage, layer, max_workers=3, desc="") -> TileBa
                 batch.empty += 1
             else:
                 batch.gdfs.append(gdf_tile)
+
+    return batch
+
+
+def fetch_tiles_with_retry(
+    tiles,
+    token,
+    coverage,
+    layer,
+    max_workers=3,
+    desc="",
+    retry_rounds=1,
+    retry_pause=300,
+    emit=print,
+) -> TileBatch:
+    """Wie fetch_tiles, holt endgueltig gescheiterte Tiles aber nach einer Pause erneut.
+
+    load_tile wiederholt im Sekundenabstand - das faengt Einzelaussetzer.
+    Rate-Limits und VPN-Haenger dauern eher Minuten. Ohne diese Runde wuerde
+    ein Bundesland mit 3 % offenen Tiles komplett verworfen (Reissleine) und
+    eine Woche spaeter von vorn geholt, obwohl 97 % laengst da waren.
+    """
+    batch = fetch_tiles(tiles, token, coverage, layer, max_workers, desc)
+
+    for round_no in range(1, retry_rounds + 1):
+        retry_tiles = [tile for tile, _ in batch.failed if tile is not None]
+        if not retry_tiles:
+            break
+        emit(
+            f"   🔁 {len(retry_tiles):,} Tiles offen - Nachlauf {round_no}/{retry_rounds} "
+            f"in {retry_pause // 60} min"
+        )
+        time.sleep(retry_pause)
+
+        again = fetch_tiles(retry_tiles, token, coverage, layer, max_workers, f"{desc} retry-{round_no}")
+        batch.gdfs.extend(again.gdfs)
+        batch.empty += again.empty
+        batch.recovered += len(retry_tiles) - len(again.failed)
+        # Fehler ohne Tile-Referenz (unerwartete Exceptions) sind nicht
+        # wiederholbar und bleiben stehen.
+        batch.failed = again.failed + [f for f in batch.failed if f[0] is None]
+        batch.rounds = round_no + 1
 
     return batch
