@@ -1,0 +1,5 @@
+# Nur fuer Entwicklung/Tests, nicht im Worker-Image.
+#   venv/bin/pip install -r requirements-dev.txt
+#   venv/bin/pytest
+-r requirements.txt
+pytest==9.1.1
