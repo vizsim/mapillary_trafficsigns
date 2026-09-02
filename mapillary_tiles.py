@@ -202,6 +202,7 @@ class TileBatch:
     empty: int = 0
     recovered: int = 0  # im Nachlauf doch noch geholt
     rounds: int = 1  # Durchlaeufe inkl. Nachlaeufe
+    aborted: str = ""  # gesetzt, wenn nach Fehlern in Folge abgebrochen wurde
 
     @property
     def fail_ratio(self) -> float:
@@ -217,6 +218,8 @@ class TileBatch:
         if self.recovered:
             line += f" | {self.recovered:,} im Nachlauf erholt"
         emit(line)
+        if self.aborted:
+            emit(f"   🛑 abgebrochen: {self.aborted}")
         # errors/samples stammen aus dem ERSTEN Durchlauf - das ist die
         # Diagnose, was zurueckkam. Ob es sich erholt hat, sagt `recovered`.
         for kind, count in sorted(self.errors.items(), key=lambda kv: -kv[1]):
@@ -243,8 +246,18 @@ class TileBatch:
         emit(f"   ↳ Fehlerliste für Nachlauf: {fail_path}")
 
 
-def fetch_tiles(tiles, token, coverage, layer, max_workers=3, desc="") -> TileBatch:
-    """Alle Tiles eines Bundeslandes holen und zu GeoDataFrames verarbeiten."""
+def fetch_tiles(
+    tiles, token, coverage, layer, max_workers=3, desc="", emit=print, abort_after=30
+) -> TileBatch:
+    """Alle Tiles eines Bundeslandes holen und zu GeoDataFrames verarbeiten.
+
+    abort_after: nach so vielen Fehlern IN FOLGE wird abgebrochen und der Rest
+    als "nicht versucht" verbucht. Hintergrund: manche Fehlerzustaende treffen
+    jede Tile gleichermassen (z. B. HTTP 200 mit einer HTML-Seite statt MVT).
+    Mit 4 Versuchen und Backoff pro Tile haette DE-BY am 02.09.2026 so ~100
+    Stunden gebraucht. Lieber nach Minuten aufgeben, die Reissleine greifen
+    lassen und im Nachlauf pruefen, ob der Zustand vorbei ist.
+    """
     batch = TileBatch(total=len(tiles))
 
     def process_tile(tile):
@@ -259,24 +272,50 @@ def fetch_tiles(tiles, token, coverage, layer, max_workers=3, desc="") -> TileBa
         batch.errors[kind] = batch.errors.get(kind, 0) + 1
         batch.samples.setdefault(kind, detail)
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [executor.submit(process_tile, tile) for tile in tiles]
-        for future in tqdm(as_completed(futures), total=len(futures), desc=desc):
-            try:
-                tile, gdf_tile, error = future.result()
-            except Exception as exc:
-                kind = f"unerwartet: {type(exc).__name__}"
-                note(kind, str(exc)[:200])
-                batch.failed.append((None, TileError(kind, str(exc)[:200])))
-                continue
+    def record(future, tile):
+        """Ergebnis verbuchen; Rueckgabe: war es ein Fehler?"""
+        try:
+            _, gdf_tile, error = future.result()
+        except Exception as exc:
+            kind = f"unerwartet: {type(exc).__name__}"
+            note(kind, str(exc)[:200])
+            batch.failed.append((tile, TileError(kind, str(exc)[:200])))
+            return True
+        if error is not None:
+            batch.failed.append((tile, error))
+            note(error.kind, error.detail)
+            return True
+        if gdf_tile is None:
+            batch.empty += 1
+        else:
+            batch.gdfs.append(gdf_tile)
+        return False
 
-            if error is not None:
-                batch.failed.append((tile, error))
-                note(error.kind, error.detail)
-            elif gdf_tile is None:
-                batch.empty += 1
-            else:
-                batch.gdfs.append(gdf_tile)
+    consecutive = 0
+    recorded = set()
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(process_tile, tile): tile for tile in tiles}
+        for future in tqdm(as_completed(futures), total=len(futures), desc=desc):
+            recorded.add(future)
+            consecutive = consecutive + 1 if record(future, futures[future]) else 0
+            if abort_after and consecutive >= abort_after:
+                pending = [f for f in futures if f not in recorded and f.cancel()]
+                top_kind = max(batch.errors.items(), key=lambda kv: kv[1])[0]
+                batch.aborted = (
+                    f"{consecutive} Fehler in Folge ({top_kind}) - "
+                    f"{len(pending):,} Tiles nicht mehr versucht"
+                )
+                emit(f"   🛑 {desc}: {batch.aborted}")
+                for f in pending:
+                    recorded.add(f)
+                    batch.failed.append((futures[f], TileError("nicht versucht", batch.aborted)))
+                break
+
+    # Beim Abbruch liefen bis zu max_workers Tiles noch - die sind jetzt fertig
+    # und gehoeren mit verbucht, sonst gehen die Zahlen nicht auf.
+    for future, tile in futures.items():
+        if future not in recorded:
+            record(future, tile)
 
     return batch
 
@@ -299,7 +338,7 @@ def fetch_tiles_with_retry(
     ein Bundesland mit 3 % offenen Tiles komplett verworfen (Reissleine) und
     eine Woche spaeter von vorn geholt, obwohl 97 % laengst da waren.
     """
-    batch = fetch_tiles(tiles, token, coverage, layer, max_workers, desc)
+    batch = fetch_tiles(tiles, token, coverage, layer, max_workers, desc, emit=emit)
 
     for round_no in range(1, retry_rounds + 1):
         retry_tiles = [tile for tile, _ in batch.failed if tile is not None]
@@ -311,7 +350,9 @@ def fetch_tiles_with_retry(
         )
         time.sleep(retry_pause)
 
-        again = fetch_tiles(retry_tiles, token, coverage, layer, max_workers, f"{desc} retry-{round_no}")
+        again = fetch_tiles(
+            retry_tiles, token, coverage, layer, max_workers, f"{desc} retry-{round_no}", emit=emit
+        )
         batch.gdfs.extend(again.gdfs)
         batch.empty += again.empty
         batch.recovered += len(retry_tiles) - len(again.failed)
@@ -319,5 +360,8 @@ def fetch_tiles_with_retry(
         # wiederholbar und bleiben stehen.
         batch.failed = again.failed + [f for f in batch.failed if f[0] is None]
         batch.rounds = round_no + 1
+        if again.aborted:
+            batch.aborted = f"auch im Nachlauf {round_no}: {again.aborted}"
+            break
 
     return batch

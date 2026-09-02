@@ -5,6 +5,8 @@ aus dem Vorfall vom 26.08.2026 folgt (Antworten ohne MVT-Inhalt wurden still
 verworfen, der Export lief trotzdem).
 """
 
+import time
+
 import mercantile
 import pytest
 
@@ -184,7 +186,7 @@ def test_nachlauf_holt_gescheiterte_tiles_nach(monkeypatch):
     tiles = _tiles(4)
     rounds = []
 
-    def fake_fetch(subset, token, coverage, layer, max_workers=3, desc=""):
+    def fake_fetch(subset, token, coverage, layer, max_workers=3, desc="", **kwargs):
         rounds.append(list(subset))
         batch = mt.TileBatch(total=len(subset))
         if len(rounds) == 1:
@@ -224,3 +226,59 @@ def test_report_ist_ein_bericht_kein_zeilenstrom():
     batch.report(lines.append)
     assert lines[0] == "   100 Tiles | 90 mit Daten | 5 leer | 5 fehlgeschlagen (5.0%) | 3 im Nachlauf erholt"
     assert len(lines) == 3 and "Bad Gateway" in lines[2]
+
+
+# --- Abbruch bei Fehlerserie ------------------------------------------------
+
+
+def _slow_block(tile, *a, **k):
+    # kurze echte Wartezeit, damit der Hauptthread die Fehlerserie sieht, bevor
+    # der Pool alle Tiles durch hat (time.sleep ist in den Tests abgeschaltet)
+    t = time.perf_counter()
+    while time.perf_counter() - t < 0.003:
+        pass
+    return None, mt.TileError("kein MVT (Content-Type text/html)", "<!DOCTYPE html> ...")
+
+
+def test_abbruch_nach_fehlern_in_folge_statt_stundenlangem_kriechen(monkeypatch):
+    # 02.09.2026: HTML-Fehlerseite fuer jede Tile, 4 Versuche mit Backoff pro Tile
+    # -> DE-BY haette ~100 h gebraucht. Jetzt: nach 10 Fehlern in Folge Schluss.
+    tiles = _tiles(200)
+    attempted = []
+    monkeypatch.setattr(mt, "load_tile", lambda tile, *a, **k: attempted.append(tile) or _slow_block(tile))
+    log = []
+
+    batch = mt.fetch_tiles(tiles, "t", COVERAGE, LAYER, max_workers=2, emit=log.append, abort_after=10)
+
+    assert "10 Fehler in Folge (kein MVT (Content-Type text/html))" in batch.aborted
+    assert len(attempted) < 200  # der Rest wurde gar nicht erst angefragt
+    assert len(batch.failed) == 200 and batch.fail_ratio == 1.0  # aber alles als fehlend verbucht
+    assert len(batch.gdfs) + batch.empty + len(batch.failed) == batch.total
+    assert any("🛑" in line and "nicht mehr versucht" in line for line in log)
+    assert batch.samples["kein MVT (Content-Type text/html)"].startswith("<!DOCTYPE html>")
+
+
+def test_erfolg_setzt_die_fehlerserie_zurueck(monkeypatch):
+    tiles = _tiles(40)
+    ok = ([{"type": "Feature", "geometry": {"type": "Point", "coordinates": [1, 2]}, "properties": {"id": 1}}], None)
+    bad = (None, mt.TileError("HTTP 503", ""))
+    monkeypatch.setattr(mt, "load_tile", lambda tile, *a, **k: bad if tile.x % 2 else ok)
+
+    batch = mt.fetch_tiles(tiles, "t", COVERAGE, LAYER, max_workers=1, abort_after=3)
+
+    assert batch.aborted == ""
+    assert len(batch.gdfs) == 20 and len(batch.failed) == 20
+
+
+def test_nachlauf_bricht_ab_wenn_fehlerserie_bleibt(monkeypatch):
+    tiles = _tiles(50)
+    monkeypatch.setattr(mt, "load_tile", _slow_block)
+    log = []
+
+    batch = mt.fetch_tiles_with_retry(
+        tiles, "t", COVERAGE, LAYER, max_workers=2, retry_rounds=3, retry_pause=0, emit=log.append
+    )
+
+    assert batch.aborted.startswith("auch im Nachlauf 1:")
+    assert batch.rounds == 2  # nach dem ersten erfolglosen Nachlauf ist Schluss, nicht erst nach drei
+    assert batch.recovered == 0 and len(batch.failed) == 50
