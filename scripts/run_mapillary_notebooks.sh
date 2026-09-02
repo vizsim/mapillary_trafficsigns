@@ -77,12 +77,20 @@ maybe_drop_caches() {
 LOGGER_PID=$!
 trap 'kill $LOGGER_PID 2>/dev/null || true' EXIT
 
-echo "🚦 Pipeline $PIPELINE: ${#NOTEBOOKS[@]} Notebooks"
+# Ausgeführte Kopien landen unter logs/executed/ (gitignored) statt in-place:
+# die getrackten Notebooks bleiben unverändert, der Working Tree sauber. Der
+# Kernel läuft trotzdem im Verzeichnis des Quell-Notebooks, relative Pfade
+# (../../output, ts_output/) funktionieren wie bisher.
+EXECUTED_DIR="logs/executed"
+mkdir -p "$EXECUTED_DIR"
+
+echo "🚦 Pipeline $PIPELINE: ${#NOTEBOOKS[@]} Notebooks (ausgeführte Kopien: $EXECUTED_DIR/)"
 echo
 
 for nb in "${NOTEBOOKS[@]}"; do
   echo "▶️  $nb"
-  jupyter nbconvert --to notebook --inplace --execute "$nb"
+  jupyter nbconvert --to notebook --execute "$nb" \
+    --output-dir "$EXECUTED_DIR" --output "$(basename "$nb")"
   echo "✅ $nb"
   echo
   maybe_sleep "$SLEEP_BETWEEN_STEPS"

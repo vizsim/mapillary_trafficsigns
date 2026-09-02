@@ -91,67 +91,17 @@ timeout --signal=INT --kill-after=5m "$WORKER_TIMEOUT" \
   echo "⚠️  B2-Upload meldete einen Fehler — Lauf wird trotzdem fortgesetzt."
 
 # ---------------------------
-# 🔄 Auto-Commit nach erfolgreicher Ausführung
+# 📝 Lauf-Protokoll
 # ---------------------------
-BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-
-# ---------------------------
-# 📦 Nur worker-eigene Pfade stagen
-# ---------------------------
-# WICHTIG: kein `git add -A`. Sonst werden liegengebliebene Dateien des ANDEREN
-# Workers (z. B. Reste eines fehlgeschlagenen Vorlaufs) mit committet.
-# Gescoped wird auf Verzeichnis-Ebene, damit neue Output-Dateien automatisch
-# erfasst werden, ohne dass diese Liste gepflegt werden muss.
-case "$SERVICE" in
-  mapillary-ts_worker)
-    COMMIT_PATHS=(
-      "2_get_mapillary_traffic_signs.ipynb"
-      # ts-Parquets sind in .gitignore (Zwischendaten, -> B2) und werden bewusst
-      # NICHT committet. Nur das kleine Metadata-JSON bleibt als Lauf-Protokoll.
-      "output/ml-ts_metadata.json"
-      "use_cases/cycleway_complete_campaign"
-    )
-    ;;
-  mapillary-mk_worker)
-    # mk-Outputs in output/ sind in .gitignore ausgeschlossen → kein output/-Eintrag.
-    COMMIT_PATHS=(
-      "2b_get_mapillary_map_feature_points.ipynb"
-      "use_cases/cycleway_complete_marking_campaign"
-    )
-    ;;
-  *)
-    echo "❌ Unbekannter Service '$SERVICE' — Auto-Commit abgebrochen"
-    exit 2
-    ;;
-esac
-
-echo "➕ Stage nur die Pfade von $SERVICE…"
-# Jeden Pfad einzeln stagen. Ein fehlender Pfad ist harmlos (überspringen).
-# Ein echter git-Fehler (index.lock eines parallelen Laufs, Rechte) ist es
-# nicht: vorher wurde beides als "kein Treffer" gemeldet und mit einem
-# Teil-Staging weitercommittet.
-for p in "${COMMIT_PATHS[@]}"; do
-  if [[ ! -e "$p" ]]; then
-    echo "⚠️  Pfad '$p' existiert nicht — übersprungen"
-    continue
-  fi
-  git add -- "$p" || {
-    echo "❌ git add '$p' fehlgeschlagen (index.lock? Rechte?) — Auto-Commit abgebrochen"
-    exit 1
-  }
+# Kein Auto-Commit mehr (seit 2026-09-02). Die Daten landen auf B2 /
+# data.vizsim.de, die Lauf-Mitschrift liegt in logs/<pipeline>_run_latest.log,
+# die ausgeführten Notebook-Kopien in logs/executed/. Nichts davon ist getrackt,
+# der Working Tree bleibt sauber und `git pull` auf dem Server geht ohne Reset.
+# Vorher wuchsen die Notebooks mit Outputs (bis 17,5 MB) und pmtiles/gz
+# (~34 MB/Woche) in die History - siehe git-history-rewrite 2026-07.
+echo
+echo "📝 Lauf-Bilanz ($SERVICE):"
+for f in logs/*_run_latest.log; do
+  [[ -e "$f" ]] && grep -aE "Lauf beendet|Nicht aktualisiert|NICHT exportiert" "$f" | sed 's/^/   /'
 done
-
-if git diff --cached --quiet; then
-  echo "ℹ️ Keine Änderungen — nichts zu committen."
-  exit 0
-fi
-
-COMMIT_MSG="Auto-update [$SERVICE]: outputs, notebooks, metadata ($(date -Iseconds))"
-
-echo "✍️ Committe: $COMMIT_MSG"
-git commit -m "$COMMIT_MSG"
-
-echo "🚀 Push nach GitHub..."
-git push origin "$BRANCH"
-
 echo "🎉 Fertig!"

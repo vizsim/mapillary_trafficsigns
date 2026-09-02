@@ -29,6 +29,15 @@ output/ml-mf_metadata.json
 # mittelfristig nach B2 (data.vizsim.de). Siehe docs/worker_mix_fehleranalyse_und_todos.md
 output/mapillary_traffic-signs_*.parquet
 
+# Lauf-Artefakte gehören nicht mehr in git (seit 2026-09-02, kein Auto-Commit
+# mehr): alles hier landet per upload_outputs_to_b2.sh auf data.vizsim.de.
+# Getrackt bleiben nur Code, Notebooks (ohne Ausführung) und statische Docs.
+output/ml-ts_metadata.json
+use_cases/cycleway_complete_campaign/ts_output/
+use_cases/cycleway_complete_marking_campaign/mk_output/
+# Ausgeführte Notebook-Kopien und Lauf-Mitschriften (run_mapillary_notebooks.sh)
+logs/
+
 # output/archive/*
 # output/*
 # # But keep the tile_cache folder
