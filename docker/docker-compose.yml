@@ -10,11 +10,11 @@ services:
   mapillary-ts_worker:
     <<: *worker_base
     container_name: mapillary-ts_worker
-    command: ["bash", "/app/scripts/run_mapillary-ts_notebooks.sh", "ts"]
+    command: ["bash", "/app/scripts/run_mapillary_notebooks.sh", "ts"]
     mem_limit: 6g
 
   mapillary-mk_worker:
     <<: *worker_base
     container_name: mapillary-mk_worker
-    command: ["bash", "/app/scripts/run_mapillary-mk_notebooks.sh", "mk"]
+    command: ["bash", "/app/scripts/run_mapillary_notebooks.sh", "mk"]
     mem_limit: 6.5g
