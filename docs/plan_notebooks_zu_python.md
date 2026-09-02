@@ -2,8 +2,9 @@
 
 **Repo:** `vizsim/mapillary_trafficsigns`
 **Branch:** `feature/docker-notebook`
-**Stand:** 2026-08-31
-**Status:** Plan, nicht begonnen. Schritt 0 (gemeinsames Tile-Modul) ist erledigt.
+**Stand:** 2026-09-02
+**Status:** Schritte 0 und 1 erledigt, Schritt 2 zur Hälfte — alles auf Branch
+`feature/pipeline-hardening`, Merge nach dem ts-Lauf vom 02.09.
 
 > Vorlage ist das Schwesterrepo `mapillary_coverage`. Das ist denselben Weg
 > bereits gegangen (0 Notebooks, 11 Module unter `src/`, uv + `pyproject.toml`,
@@ -38,12 +39,57 @@ mit vielen Tile-Fehlern bläht die Datei von ~26 KB auf 17,5 MB
 | # | Thema | Aufwand | Status |
 |---|---|---|---|
 | 0 | Gemeinsames Tile-Modul `mapillary_tiles.py` | klein | ✅ **erledigt** (2026-08-31) |
-| 1 | Tests für die Export-Entscheidung | klein | offen |
-| 2 | Paketstruktur `src/mapillary_trafficsigns/` | mittel | offen |
+| 1 | Tests für die Export-Entscheidung | klein | ✅ **erledigt** (2026-09-02, 21 Tests, `venv/bin/pytest`) |
+| 2 | Paketstruktur `src/mapillary_trafficsigns/` | mittel | 🟡 **halb** — Module im Repo-Root, Notebooks auf 3 Zellen; `src/`-Layout offen |
 | 3 | CLI + Config statt Notebook-Konstanten | mittel | offen |
 | 4 | uv statt `requirements.txt` | klein | offen |
 | 5 | Notebook-Outputs aus git | klein | offen |
 | 6 | CI | klein | offen |
+
+### Zusätzlich erledigt am 2026-09-02 (Branch `feature/pipeline-hardening`)
+
+Ergebnis einer Durchsicht des ganzen Repos, nicht nur der Download-Notebooks:
+
+- **Nachlauf** (`fetch_tiles_with_retry`): endgültig gescheiterte Tiles werden nach 5 min
+  Pause noch einmal geholt, bevor die Reißleine ein ganzes Bundesland kippt. Ohne das
+  hätte ein Land mit 3 % Lücken komplett gewartet, obwohl 97 % da waren.
+- **Live-Mitschrift** (`RunLog`): `logs/{ts,mk}_run_latest.log` im Bind-Mount, während des
+  Laufs lesbar. nbconvert schreibt Zell-Ausgaben erst am Ende — deshalb war der mk-Lauf
+  vom 27.08. nicht rekonstruierbar.
+- **Nur ein Worker gleichzeitig** (`flock` in `run_worker_with_vpn.sh`): `docker compose down`
+  ist projektweit; ein mk-Start während eines laufenden ts-Laufs hätte ihn gekillt.
+  Dazu `timeout 16h`, damit ein Hänger nicht über das Lock alle Folgeläufe blockiert.
+- **gluetun-Logs** werden vor dem `down` nach `logs/gluetun-<service>.log` gesichert.
+- **Ein Runner statt zwei** (`scripts/run_mapillary_notebooks.sh ts|mk`): die beiden
+  Skripte waren bis auf drei Pfade byteidentisch, und das Argument aus
+  `docker-compose.yml` hat keines von beiden je gelesen.
+- **`git add`-Fehler** (index.lock, Rechte) brechen den Auto-Commit ab, statt als
+  „kein Treffer" durchzugehen.
+- **Secrets nicht mehr im Image** (`.dockerignore`: `config.json`, `config.py`,
+  `config_mapillary_privat.json`) — zur Laufzeit kommt alles vom Bind-Mount.
+- **Downstream `generateOutput` (ts)**: Vollständigkeits-Guard (16 von 16 Parquets, sonst
+  Abbruch statt Teil-Publish — `all([])` war `True`), spaltenselektives Laden mit frühem
+  Filter wie im mk-Notebook (296.970 Zeilen in 9 s statt alle 16 Länder komplett im
+  6g-Container), `delta_days_seen` vektorisiert statt `strptime` pro Zeile.
+- **id-Regressionscheck** (ts + mk) prüft ein 4-MB-Fenster per Regex statt die ganze
+  GeoJSON am RAM-Peak ein zweites Mal zu parsen.
+- **Secrets-Pfad** im ts-`1_merge`-Notebook auf `../utils/` wie im mk-Zwilling — sonst
+  existieren zwei Kopien der Zugangsdaten.
+
+### Bewusst NICHT angefasst (aus der Durchsicht, für später)
+
+- `upload_outputs_to_b2.sh` warnt nur, wenn b2/Creds fehlen, der Commit läuft trotzdem
+  und die README zeigt B2-Links. Verhalten ist so gewollt („defensiv") — aber ein
+  Hinweis in der Commit-Message, wenn nichts hochgeladen wurde, wäre ehrlich.
+- `*.pmtiles` / `*_latest.geojson.gz` werden weiter committet (~34 MB/Woche) — siehe
+  Git-History-Rewrite; erst wenn die Konsumenten auf `data.vizsim.de` zeigen.
+- Die 100-Zeilen-Funktion `gzgjson_to_pmtiles_dual_layer` liegt in beiden
+  pmtiles-Notebooks identisch. Ein gemeinsames Modul bräuchte `sys.path`-Anpassung in
+  den use_case-Notebooks (nbconvert setzt cwd auf das Notebook-Verzeichnis).
+- `docs/` steht in `.gitignore`, zwei Dateien sind trotzdem getrackt.
+- `--abort-on-container-exit` reißt den Lauf, sobald *irgendein* Container im
+  Projekt-Netz endet (so ist am 31.08. der coverage-Lauf gestorben). Mit dem Lock ist
+  das Risiko klein; eine Umstellung auf `up -d` + `wait` wäre sauberer.
 
 ---
 
@@ -82,11 +128,16 @@ def test_id_bleibt_exakt_ueber_2_hoch_53():
     # Regression zu ab5e8b1 (Float-Rundung von Mapillary-IDs)
 ```
 
-`pytest` + `responses` oder `requests-mock`, keine echten Requests. Läuft in
-Sekunden.
+**Erledigt 2026-09-02:** `tests/test_mapillary_tiles.py` (13) und
+`tests/test_mapillary_pipeline.py` (8), ohne Netz — Session und Parser werden
+per `monkeypatch` ersetzt, keine Zusatzabhängigkeit außer `pytest`
+(`requirements-dev.txt`, `pytest.ini`). Der erste Pipeline-Test ist der
+NW-Fall vom 26.08.: 100 Tiles, 60 scheitern → weder Parquet noch Metadaten
+angefasst. Gegen den alten Code wäre er rot. Laufzeit ~1,5 s.
 
-**Akzeptanzkriterium:** `pytest` grün, und der NW-Fall vom 26.08. ist als Test
-formuliert, der gegen den alten Code rot wäre.
+Noch nicht dabei: ein echter Ende-zu-Ende-Test des Notebooks per nbconvert
+(braucht das Docker-Image); der Import im Worker-Image wurde am 31.08. manuell
+verifiziert.
 
 ---
 
@@ -94,7 +145,7 @@ formuliert, der gegen den alten Code rot wäre.
 
 Nach dem Vorbild von `mapillary_coverage`:
 
-```
+```text
 src/mapillary_trafficsigns/
 ├── __init__.py
 ├── cli.py            # Einstiegspunkt, ersetzt die Notebook-Ausführung
