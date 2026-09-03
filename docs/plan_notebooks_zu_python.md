@@ -53,6 +53,13 @@ Ergebnis einer Durchsicht des ganzen Repos, nicht nur der Download-Notebooks:
 - **Nachlauf** (`fetch_tiles_with_retry`): endgültig gescheiterte Tiles werden nach 5 min
   Pause noch einmal geholt, bevor die Reißleine ein ganzes Bundesland kippt. Ohne das
   hätte ein Land mit 3 % Lücken komplett gewartet, obwohl 97 % da waren.
+- **Abbruch nach Fehlerserie** (`fetch_tiles`, `abort_after=30`): trifft ein Fehlerzustand
+  jede Tile (etwa HTML statt MVT), wird nach 30 Fehlern in Folge abgebrochen statt jede
+  Tile einzeln durchzuwiederholen; der Rest gilt als „nicht versucht", die Reißleine greift.
+- **VPN neu verbinden** (`reconnect_vpn`, 2026-09-03): wurde wegen ungültiger Antworten
+  abgebrochen, verbindet der Worker den Tunnel vor dem Nachlauf über die gluetun-Steuer-API
+  neu. Braucht `GLUETUN_API_KEY` in `docker/.env` (Vorlage in `.env.example`); ohne Key ein
+  No-op.
 - **Live-Mitschrift** (`RunLog`): `logs/{ts,mk}_run_latest.log` im Bind-Mount, während des
   Laufs lesbar. nbconvert schreibt Zell-Ausgaben erst am Ende — deshalb war der mk-Lauf
   vom 27.08. nicht rekonstruierbar.
