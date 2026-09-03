@@ -37,8 +37,6 @@ use_cases/cycleway_complete_campaign/ts_output/
 use_cases/cycleway_complete_marking_campaign/mk_output/
 # Ausgeführte Notebook-Kopien und Lauf-Mitschriften (run_mapillary_notebooks.sh)
 logs/
-# Fehlerlisten pro Bundesland aus einem Lauf (mapillary_tiles.TileBatch.write_failed)
-prep/tile_cache/failed/
 
 # output/archive/*
 # output/*
@@ -55,6 +53,9 @@ docker/.env
 config.py
 
 !prep/**
+# ... aber nicht die Fehlerlisten eines Laufs (mapillary_tiles.TileBatch.write_failed).
+# Muss NACH !prep/** stehen, sonst gewinnt die Wieder-Einschluss-Regel.
+prep/tile_cache/failed/
 
 __pycache__/
 *.pyc
