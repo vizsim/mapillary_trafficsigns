@@ -241,8 +241,8 @@ def _slow_block(tile, *a, **k):
 
 
 def test_abbruch_nach_fehlern_in_folge_statt_stundenlangem_kriechen(monkeypatch):
-    # 02.09.2026: HTML-Fehlerseite fuer jede Tile, 4 Versuche mit Backoff pro Tile
-    # -> DE-BY haette ~100 h gebraucht. Jetzt: nach 10 Fehlern in Folge Schluss.
+    # Trifft ein Fehlerzustand jede Tile, wuerden 4 Versuche mit Backoff pro Tile
+    # den Lauf um Groessenordnungen verlaengern. Jetzt: nach 10 Fehlern in Folge Schluss.
     tiles = _tiles(200)
     attempted = []
     monkeypatch.setattr(mt, "load_tile", lambda tile, *a, **k: attempted.append(tile) or _slow_block(tile))
@@ -282,3 +282,88 @@ def test_nachlauf_bricht_ab_wenn_fehlerserie_bleibt(monkeypatch):
     assert batch.aborted.startswith("auch im Nachlauf 1:")
     assert batch.rounds == 2  # nach dem ersten erfolglosen Nachlauf ist Schluss, nicht erst nach drei
     assert batch.recovered == 0 and len(batch.failed) == 50
+
+
+# --- VPN neu verbinden ------------------------------------------------------
+
+
+def test_reconnect_vpn_ohne_konfiguration_ist_noop(monkeypatch):
+    monkeypatch.delenv("GLUETUN_CONTROL_URL", raising=False)
+    monkeypatch.delenv("GLUETUN_API_KEY", raising=False)
+    monkeypatch.setattr(mt.requests, "put", lambda *a, **k: pytest.fail("darf ohne Konfiguration nichts senden"))
+    assert mt.reconnect_vpn(emit=lambda m: None) is False
+
+
+def test_reconnect_vpn_wartet_auf_anderen_exit(monkeypatch):
+    monkeypatch.setenv("GLUETUN_CONTROL_URL", "http://gluetun:8000")
+    monkeypatch.setenv("GLUETUN_API_KEY", "geheim")
+    calls = []
+    state = {"ip": "1.1.1.1"}
+
+    class Resp:
+        def __init__(self, data):
+            self._data = data
+
+        def json(self):
+            return self._data
+
+    def fake_put(url, json=None, headers=None, timeout=None):
+        calls.append((url, json["status"], headers["X-API-Key"]))
+        if json["status"] == "running":
+            state["ip"] = "2.2.2.2"  # neuer Exit nach dem Neustart
+        return Resp({})
+
+    def fake_get(url, headers=None, timeout=None):
+        assert headers["X-API-Key"] == "geheim"
+        return Resp({"public_ip": state["ip"]})
+
+    monkeypatch.setattr(mt.requests, "put", fake_put)
+    monkeypatch.setattr(mt.requests, "get", fake_get)
+    log = []
+
+    assert mt.reconnect_vpn(emit=log.append, timeout=30) is True
+    assert [c[1] for c in calls] == ["stopped", "running"]
+    assert all(c[0].endswith("/v1/vpn/status") and c[2] == "geheim" for c in calls)
+    assert any("1.1.1.1 -> 2.2.2.2" in line for line in log)
+
+
+def test_nachlauf_verbindet_neu_wenn_antworten_ungueltig_waren(monkeypatch):
+    tiles = _tiles(20)
+    rounds = []
+    reconnects = []
+
+    def fake_fetch(subset, token, coverage, layer, max_workers=3, desc="", **kwargs):
+        rounds.append(len(subset))
+        batch = mt.TileBatch(total=len(subset))
+        if len(rounds) == 1:
+            batch.aborted = "30 Fehler in Folge (kein MVT (Content-Type text/html)) - 0 Tiles nicht mehr versucht"
+            batch.failed = [(t, mt.TileError("kein MVT (Content-Type text/html)", "")) for t in subset]
+        else:
+            batch.gdfs = ["gdf"] * len(subset)
+        return batch
+
+    monkeypatch.setattr(mt, "fetch_tiles", fake_fetch)
+    monkeypatch.setattr(mt, "reconnect_vpn", lambda emit=print, timeout=180: reconnects.append(1) or True)
+
+    batch = mt.fetch_tiles_with_retry(tiles, "t", COVERAGE, LAYER, retry_rounds=1, retry_pause=0)
+
+    assert reconnects == [1]  # genau einmal, vor dem Nachlauf
+    assert batch.failed == [] and batch.recovered == 20
+
+
+def test_nachlauf_verbindet_nicht_neu_bei_einzelfehlern(monkeypatch):
+    tiles = _tiles(5)
+    reconnects = []
+
+    def fake_fetch(subset, token, coverage, layer, max_workers=3, desc="", **kwargs):
+        batch = mt.TileBatch(total=len(subset))
+        batch.failed = [(subset[0], mt.TileError("HTTP 404", ""))] if len(subset) == 5 else []
+        batch.gdfs = ["gdf"] * (len(subset) - len(batch.failed))
+        return batch
+
+    monkeypatch.setattr(mt, "fetch_tiles", fake_fetch)
+    monkeypatch.setattr(mt, "reconnect_vpn", lambda emit=print, timeout=180: reconnects.append(1))
+
+    mt.fetch_tiles_with_retry(tiles, "t", COVERAGE, LAYER, retry_rounds=1, retry_pause=0)
+
+    assert reconnects == []  # ein einzelnes 404 ist kein Grund, den Tunnel umzuwerfen

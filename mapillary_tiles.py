@@ -252,11 +252,11 @@ def fetch_tiles(
     """Alle Tiles eines Bundeslandes holen und zu GeoDataFrames verarbeiten.
 
     abort_after: nach so vielen Fehlern IN FOLGE wird abgebrochen und der Rest
-    als "nicht versucht" verbucht. Hintergrund: manche Fehlerzustaende treffen
-    jede Tile gleichermassen (z. B. HTTP 200 mit einer HTML-Seite statt MVT).
-    Mit 4 Versuchen und Backoff pro Tile haette DE-BY am 02.09.2026 so ~100
-    Stunden gebraucht. Lieber nach Minuten aufgeben, die Reissleine greifen
-    lassen und im Nachlauf pruefen, ob der Zustand vorbei ist.
+    als "nicht versucht" verbucht. Manche Fehlerzustaende treffen jede Tile
+    gleichermassen (z. B. HTTP 200 mit einer HTML-Seite statt MVT); 4 Versuche
+    mit Backoff pro Tile wuerden den Lauf dann um Groessenordnungen verlaengern.
+    Lieber nach Minuten aufgeben, die Reissleine greifen lassen und im Nachlauf
+    pruefen, ob der Zustand vorbei ist.
     """
     batch = TileBatch(total=len(tiles))
 
@@ -320,6 +320,45 @@ def fetch_tiles(
     return batch
 
 
+def reconnect_vpn(emit=print, timeout=180) -> bool:
+    """Tunnel ueber die gluetun-Steuer-API neu verbinden.
+
+    Nur aktiv, wenn GLUETUN_CONTROL_URL und GLUETUN_API_KEY gesetzt sind (siehe
+    docker-compose.vpn.yml, Key in docker/.env). Ohne beides ein No-op.
+    Rueckgabe: True, wenn danach eine andere Exit-IP gemeldet wird.
+    """
+    url = os.environ.get("GLUETUN_CONTROL_URL")
+    key = os.environ.get("GLUETUN_API_KEY")
+    if not url or not key:
+        return False
+    headers = {"X-API-Key": key}
+
+    def public_ip():
+        try:
+            return requests.get(f"{url}/v1/publicip/ip", headers=headers, timeout=10).json().get("public_ip")
+        except Exception:
+            return None
+
+    before = public_ip()
+    try:
+        requests.put(f"{url}/v1/vpn/status", json={"status": "stopped"}, headers=headers, timeout=10)
+        time.sleep(3)
+        requests.put(f"{url}/v1/vpn/status", json={"status": "running"}, headers=headers, timeout=10)
+    except requests.RequestException as exc:
+        emit(f"   ⚠️ VPN-Neustart fehlgeschlagen: {type(exc).__name__}: {str(exc)[:120]}")
+        return False
+
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        time.sleep(5)
+        ip = public_ip()
+        if ip and ip != before:
+            emit(f"   🔌 VPN neu verbunden: Exit {before or '?'} -> {ip}")
+            return True
+    emit(f"   ⚠️ VPN nach Neustart nicht innerhalb von {timeout}s mit anderem Exit verbunden")
+    return False
+
+
 def fetch_tiles_with_retry(
     tiles,
     token,
@@ -348,6 +387,10 @@ def fetch_tiles_with_retry(
             f"   🔁 {len(retry_tiles):,} Tiles offen - Nachlauf {round_no}/{retry_rounds} "
             f"in {retry_pause // 60} min"
         )
+        # Wurde wegen ungueltiger Antworten abgebrochen, liegt es am aktuellen
+        # Exit, nicht an den Tiles - vor dem Nachlauf neu verbinden.
+        if batch.aborted and "kein MVT" in batch.aborted:
+            reconnect_vpn(emit)
         time.sleep(retry_pause)
 
         again = fetch_tiles(
