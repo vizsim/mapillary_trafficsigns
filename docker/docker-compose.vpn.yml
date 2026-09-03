@@ -15,6 +15,13 @@ services:
       # erreichbar (Routing, 100 % Paketverlust). Die niederlaendischen Server
       # sind vollstaendig erreichbar; fuer Mapillary ist das Exit-Land egal.
       - SERVER_COUNTRIES=Netherlands
+      # Der OpenVPN-Handshake braucht oft >6 s; mit dem gluetun-Default startete
+      # der Healthcheck den Tunnel beim Hochfahren 3-8x neu, bevor er stand.
+      - HEALTH_VPN_DURATION_INITIAL=60s
+      # Steuer-API (Port 8000 im geteilten Netz-Namespace): der Worker verbindet
+      # den Tunnel neu, wenn der aktuelle Exit keine gueltigen Tile-Antworten
+      # mehr liefert (siehe mapillary_tiles.reconnect_vpn). Key in docker/.env.
+      - HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE={"auth":"apikey","apikey":"${GLUETUN_API_KEY}"}
     volumes:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
@@ -27,12 +34,18 @@ services:
 
   mapillary-ts_worker:
     network_mode: "service:gluetun"
+    environment:
+      - GLUETUN_CONTROL_URL=http://127.0.0.1:8000
+      - GLUETUN_API_KEY=${GLUETUN_API_KEY}
     depends_on:
       gluetun:
         condition: service_healthy
 
   mapillary-mk_worker:
     network_mode: "service:gluetun"
+    environment:
+      - GLUETUN_CONTROL_URL=http://127.0.0.1:8000
+      - GLUETUN_API_KEY=${GLUETUN_API_KEY}
     depends_on:
       gluetun:
         condition: service_healthy

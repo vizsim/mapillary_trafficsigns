@@ -101,7 +101,11 @@ timeout --signal=INT --kill-after=5m "$WORKER_TIMEOUT" \
 # (~34 MB/Woche) in die History - siehe git-history-rewrite 2026-07.
 echo
 echo "📝 Lauf-Bilanz ($SERVICE):"
-for f in logs/*_run_latest.log; do
-  [[ -e "$f" ]] && grep -aE "Lauf beendet|Nicht aktualisiert|NICHT exportiert" "$f" | sed 's/^/   /'
-done
+PIPELINE="${SERVICE#mapillary-}"; PIPELINE="${PIPELINE%_worker}"   # mapillary-ts_worker -> ts
+RUN_LOG="logs/${PIPELINE}_run_latest.log"
+if [[ -e "$RUN_LOG" ]]; then
+  grep -aE "Lauf beendet|Nicht aktualisiert|NICHT exportiert|VPN neu verbunden" "$RUN_LOG" | sed 's/^/   /'
+else
+  echo "   (keine Mitschrift unter $RUN_LOG)"
+fi
 echo "🎉 Fertig!"
