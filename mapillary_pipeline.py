@@ -253,6 +253,47 @@ def process_bundesland(
 # --- Der ganze Lauf ---------------------------------------------------------
 
 
+def data_age_days(metadata: dict, bundesland_id: str, now: datetime | None = None) -> float:
+    """Alter des letzten Exports in Tagen; unendlich, wenn es noch keinen gab."""
+    stamp = metadata.get("bundeslaender", {}).get(bundesland_id)
+    if not stamp:
+        return float("inf")
+    exported = datetime.fromisoformat(stamp)
+    if exported.tzinfo is None:
+        exported = exported.replace(tzinfo=timezone.utc)
+    return ((now or datetime.now(timezone.utc)) - exported).total_seconds() / 86400
+
+
+def plan_bundeslaender(
+    ids: list[str],
+    metadata: dict,
+    max_file_age_days: float | None = None,
+    now: datetime | None = None,
+) -> tuple[list[str], list[str], dict[str, float]]:
+    """Reihenfolge und Auswahl fuer einen Lauf: aelteste Daten zuerst, frische ueberspringen.
+
+    Aelteste zuerst, weil ein Lauf nicht immer alle Laender schafft: bricht er
+    mittendrin ab, sind so wenigstens die Laender erneuert, die es am noetigsten
+    hatten - statt jede Woche dieselben am Ende der alphabetischen Liste.
+
+    max_file_age_days: Laender, deren Daten juenger sind, werden ausgelassen.
+    Damit holt ein Nachlauf am Folgetag nur, was beim letzten Mal fehlte.
+
+    Rueckgabe: (zu verarbeiten, uebersprungen, Alter in Tagen je Land).
+    """
+    ages = {b: data_age_days(metadata, b, now) for b in ids}
+    ordered = sorted(ids, key=lambda b: (-ages[b], b))
+    if max_file_age_days is None:
+        return ordered, [], ages
+    todo = [b for b in ordered if ages[b] >= max_file_age_days]
+    fresh = [b for b in ordered if ages[b] < max_file_age_days]
+    return todo, fresh, ages
+
+
+def _age_label(age: float) -> str:
+    return "noch nie" if age == float("inf") else f"{age:.1f} d"
+
+
 def run_pipeline(
     pipeline: Pipeline,
     bundeslaender: list[str] | None = None,
@@ -260,20 +301,37 @@ def run_pipeline(
     input_folder: str = "prep/tile_cache",
     output_folder: str = "output",
     log_path: str | None = None,
+    max_file_age_days: float | None = 5,
     **kwargs,
 ) -> dict[str, bool]:
     """Alle Bundeslaender verarbeiten, Bilanz ziehen, Metadaten finalisieren.
 
-    Rueckgabe: {bundesland_id: exportiert?}. kwargs gehen an process_bundesland
-    (max_workers, limit_tiles, max_fail_ratio, retry_rounds, retry_pause).
+    Rueckgabe: {bundesland_id: exportiert?} fuer die verarbeiteten Laender.
+    kwargs gehen an process_bundesland (max_workers, limit_tiles,
+    max_fail_ratio, retry_rounds, retry_pause).
+
+    max_file_age_days gilt nur fuer die automatisch ermittelte Liste. Wer
+    Laender explizit angibt, bekommt sie auch - nur in Altersreihenfolge.
     """
     emit = RunLog(log_path or os.path.join("logs", f"{pipeline.name}_run_latest.log"))
+    metadata_path = os.path.join(output_folder, pipeline.metadata_file)
+    explicit = bundeslaender is not None
     ids = bundeslaender or bundeslaender_mit_tiles(input_folder)
+    todo, fresh, ages = plan_bundeslaender(
+        ids, _read_metadata(metadata_path), None if explicit else max_file_age_days
+    )
     token = load_access_token()
-    emit(f"🚦 Pipeline {pipeline.name}: {len(ids)} Bundesländer, Mitschrift in {emit.path}")
+
+    emit(f"🚦 Pipeline {pipeline.name}: {len(todo)} von {len(ids)} Bundesländern, Mitschrift in {emit.path}")
+    if fresh:
+        emit(
+            f"⏭️ Übersprungen, Daten jünger als {max_file_age_days} Tage: "
+            + ", ".join(f"{b} ({_age_label(ages[b])})" for b in fresh)
+        )
+    emit("📋 Reihenfolge nach Datenalter: " + ", ".join(f"{b} ({_age_label(ages[b])})" for b in todo))
 
     results: dict[str, bool] = {}
-    for bundesland_id in ids:
+    for bundesland_id in todo:
         results[bundesland_id] = process_bundesland(
             pipeline,
             bundesland_id,
@@ -288,9 +346,14 @@ def run_pipeline(
     aktualisiert = [b for b, ok in results.items() if ok]
     uebersprungen = [b for b, ok in results.items() if not ok]
     emit("")
-    emit(f"===== Lauf beendet: {len(aktualisiert)}/{len(results)} Bundesländer aktualisiert =====")
+    bilanz = f"===== Lauf beendet: {len(aktualisiert)}/{len(todo)} Bundesländer aktualisiert"
+    if fresh:
+        bilanz += f", {len(fresh)} frisch übersprungen"
+    emit(bilanz + " =====")
     if uebersprungen:
         emit(f"❌ Nicht aktualisiert, alter Stand bleibt stehen: {', '.join(uebersprungen)}")
 
-    finalize_metadata(os.path.join(output_folder, pipeline.metadata_file), uebersprungen, emit)
+    # Frisch uebersprungene Laender zaehlen nicht als unvollstaendig - ihre
+    # Daten sind per Definition juenger als die Grenze.
+    finalize_metadata(metadata_path, uebersprungen, emit)
     return results

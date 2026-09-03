@@ -60,6 +60,12 @@ Ergebnis einer Durchsicht des ganzen Repos, nicht nur der Download-Notebooks:
   abgebrochen, verbindet der Worker den Tunnel vor dem Nachlauf über die gluetun-Steuer-API
   neu. Braucht `GLUETUN_API_KEY` in `docker/.env` (Vorlage in `.env.example`); ohne Key ein
   No-op.
+- **Älteste Daten zuerst, frische überspringen** (`plan_bundeslaender`, 2026-09-03): die
+  Länder werden nach Alter des letzten Exports sortiert (noch nie exportierte ganz vorn);
+  mit `max_file_age_days=5` (Default in `run_pipeline`) werden Länder ausgelassen, deren
+  Daten jünger sind. Ein Nachlauf am Folgetag holt so nur, was fehlte — und wenn ein Lauf
+  mittendrin abbricht, trifft es nicht jede Woche denselben Schwanz der alphabetischen Liste.
+  Explizit übergebene Länder werden immer verarbeitet.
 - **Live-Mitschrift** (`RunLog`): `logs/{ts,mk}_run_latest.log` im Bind-Mount, während des
   Laufs lesbar. nbconvert schreibt Zell-Ausgaben erst am Ende — deshalb war der mk-Lauf
   vom 27.08. nicht rekonstruierbar.
