@@ -154,3 +154,65 @@ def test_run_pipeline_bilanz_und_mitschrift(repo, monkeypatch):
     assert "1/2 Bundesländer aktualisiert" in log
     assert "Nicht aktualisiert, alter Stand bleibt stehen: DE-BY" in log
     assert "NICHT exportiert: 50.0%" in log
+
+
+# --- Reihenfolge und Auswahl --------------------------------------------------
+
+from datetime import datetime, timedelta, timezone  # noqa: E402
+
+NOW = datetime(2026, 9, 3, 12, 0, tzinfo=timezone.utc)
+
+
+def _meta(**ages_in_days):
+    return {"bundeslaender": {b: (NOW - timedelta(days=d)).isoformat() for b, d in ages_in_days.items()}}
+
+
+def test_aelteste_daten_zuerst_nie_verarbeitete_ganz_vorn():
+    meta = _meta(**{"DE-BW": 0.5, "DE-BY": 14.0, "DE-HE": 7.0})
+    todo, fresh, ages = mp.plan_bundeslaender(["DE-BW", "DE-BY", "DE-HE", "DE-TH"], meta, now=NOW)
+    assert todo == ["DE-TH", "DE-BY", "DE-HE", "DE-BW"]  # TH hat noch nie Daten
+    assert fresh == []
+    assert ages["DE-TH"] == float("inf") and ages["DE-BY"] == 14.0
+
+
+def test_frische_laender_werden_uebersprungen():
+    meta = _meta(**{"DE-BW": 0.5, "DE-BY": 14.0, "DE-HE": 4.9, "DE-MV": 5.0})
+    todo, fresh, _ = mp.plan_bundeslaender(["DE-BW", "DE-BY", "DE-HE", "DE-MV"], meta, max_file_age_days=5, now=NOW)
+    assert todo == ["DE-BY", "DE-MV"]  # 5.0 Tage ist nicht mehr frisch
+    assert fresh == ["DE-HE", "DE-BW"]
+
+
+def test_gleich_alte_laender_alphabetisch():
+    todo, _, _ = mp.plan_bundeslaender(["DE-TH", "DE-BB", "DE-NW"], {"bundeslaender": {}}, now=NOW)
+    assert todo == ["DE-BB", "DE-NW", "DE-TH"]
+
+
+def test_run_pipeline_holt_nur_veraltete_und_in_altersreihenfolge(repo, monkeypatch):
+    # BW ist von heute, BY von vor zwei Wochen -> nur BY, und der Lauf gilt als komplett
+    mp._write_metadata(os.path.join(repo["out"], "ml-ts_metadata.json"), _meta(**{"DE-BW": 0.3, "DE-BY": 14.0}))
+    monkeypatch.setattr(mp, "datetime", type("dt", (), {"now": staticmethod(lambda tz=None: NOW),
+                                                        "fromisoformat": staticmethod(datetime.fromisoformat)}))
+    _install_fetch(monkeypatch, {"DE-BY": _batch(total=10, gdfs=[_gdf()])})
+
+    results = mp.run_pipeline(
+        mp.PIPELINE_TS, input_folder=repo["cache"], output_folder=repo["out"], log_path=repo["log"]
+    )
+
+    assert results == {"DE-BY": True}  # BW wurde gar nicht erst angefragt
+    meta = json.load(open(os.path.join(repo["out"], "ml-ts_metadata.json")))
+    assert meta["last_run_incomplete"] == []
+    assert meta["processed_date"] is not None  # frisch uebersprungen ist nicht unvollstaendig
+    log = open(repo["log"], encoding="utf-8").read()
+    assert "Übersprungen, Daten jünger als 5 Tage: DE-BW (0.3 d)" in log
+    assert "1/1 Bundesländer aktualisiert, 1 frisch übersprungen" in log
+
+
+def test_explizite_liste_ignoriert_die_altersgrenze(repo, monkeypatch):
+    mp._write_metadata(os.path.join(repo["out"], "ml-ts_metadata.json"), _meta(**{"DE-BW": 0.3}))
+    _install_fetch(monkeypatch, {"DE-BW": _batch(total=10, gdfs=[_gdf()])})
+
+    results = mp.run_pipeline(
+        mp.PIPELINE_TS, ["DE-BW"], input_folder=repo["cache"], output_folder=repo["out"], log_path=repo["log"]
+    )
+
+    assert results == {"DE-BW": True}

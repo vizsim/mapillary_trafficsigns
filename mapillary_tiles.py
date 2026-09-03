@@ -27,7 +27,7 @@ import os
 import random
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
@@ -295,7 +295,11 @@ def fetch_tiles(
     recorded = set()
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(process_tile, tile): tile for tile in tiles}
-        for future in tqdm(as_completed(futures), total=len(futures), desc=desc):
+        # In Einreihungsreihenfolge verbuchen, nicht per as_completed: das
+        # liefert bereits fertige Futures in beliebiger Reihenfolge, und "Fehler
+        # in Folge" waere dann vom Zufall abhaengig. Der Pool arbeitet trotzdem
+        # parallel weiter, nur die Buchhaltung ist geordnet.
+        for future in tqdm(futures, total=len(futures), desc=desc):
             recorded.add(future)
             consecutive = consecutive + 1 if record(future, futures[future]) else 0
             if abort_after and consecutive >= abort_after:
