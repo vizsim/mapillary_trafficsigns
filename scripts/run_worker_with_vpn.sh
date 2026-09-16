@@ -53,6 +53,24 @@ trap cleanup EXIT
 $DC down --remove-orphans
 
 # ---------------------------
+# 🗺️ VPN-Serverliste aktualisieren
+# ---------------------------
+# Die in gluetun eingebaute Serverliste veraltet: gluetun wählt zufällig auch
+# Server, die es nicht mehr gibt, und braucht dann etliche Anläufe (je ~60 s
+# TLS-Timeout), bis der Tunnel steht. Das Update schreibt eine aktuelle
+# servers.json nach data/gluetun/, die docker-compose.vpn.yml einbindet.
+# Scheitert es, geht es mit der zuletzt gespeicherten Liste weiter.
+GLUETUN_IMAGE="$(grep -oE 'qmcgaw/gluetun:[^[:space:]]+' docker/docker-compose.vpn.yml | head -1)"
+echo "🗺️  Aktualisiere VPN-Serverliste ($GLUETUN_IMAGE)..."
+mkdir -p data/gluetun
+if timeout 300 docker run --rm -v "$PWD/data/gluetun:/gluetun" \
+     "$GLUETUN_IMAGE" update -enduser -providers nordvpn >/dev/null 2>&1; then
+  echo "✅ Serverliste aktualisiert"
+else
+  echo "⚠️  Serverliste nicht aktualisiert — nutze die vorhandene"
+fi
+
+# ---------------------------
 # 🔎 Preflight: ist das Working Directory sauber?
 # ---------------------------
 # Ist beim Start schon was uncommitted, liegt vermutlich Müll eines
