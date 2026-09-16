@@ -24,6 +24,13 @@ env/
 
 .env
 
+# Secrets: nie ins Image backen. Zur Laufzeit liegt das Repo per Bind-Mount
+# unter /app, der Token kommt also ohnehin vom Host - im Image-Layer würde er
+# nur jede spätere Änderung überleben.
+config.json
+config.py
+**/config_mapillary_privat.json
+
 # ignore docker files
 # docker/
 
