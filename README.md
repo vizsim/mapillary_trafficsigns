@@ -1,9 +1,5 @@
 # mapillary_trafficsigns
 
-> **Note:** Current development/production is taking place in the  
-> **mapillary_trafficsigns** repository on the branch  
-> [feature/docker-notebook](https://github.com/vizsim/mapillary_trafficsigns/tree/feature/docker-notebook).
-
 ## 📖 Overview
 
 This project provides code to download and process **traffic sign detections and road markings from Mapillary** in Germany, using the Mapillary vector tile layer API and the Map Features API.
@@ -11,6 +7,75 @@ This project provides code to download and process **traffic sign detections and
 It is intended to support **OpenStreetMap (OSM)** mapping tasks such as identifying missing cycleways or pedestrian crossings, based on automatically detected signs (e.g. `DE:237`, `DE:240`, `DE:241`) and pavement markings (e.g. bicycle symbols, zebra crossings).
 
 All use-cases are currently focused on **Germany**. The detection data is updated automatically on a regular basis.
+
+---
+
+## 📥 Data Access
+
+The latest detections are published per German federal state as **GeoParquet** files (points, EPSG:4326):
+
+| Dataset | Directory | File name |
+| --- | --- | --- |
+| 🚦 Traffic signs | [data.vizsim.de/mapillary_trafficsigns](https://data.vizsim.de/mapillary_trafficsigns/) | `mapillary_traffic-signs_DE-XX_latest.parquet` |
+| 🖌️ Map feature points (road markings, traffic lights, street lights, bike racks, …) | [data.vizsim.de/mapillary_map-feature-points](https://data.vizsim.de/mapillary_map-feature-points/) | `mapillary_map-feature-points_DE-XX_latest.parquet` |
+
+`DE-XX` is the ISO 3166-2 code of the federal state (`DE-BB`, `DE-BE`, `DE-BW`, `DE-BY`, `DE-HB`, `DE-HE`, `DE-HH`, `DE-MV`, `DE-NI`, `DE-NW`, `DE-RP`, `DE-SH`, `DE-SL`, `DE-SN`, `DE-ST`, `DE-TH`). Each file is built from the zoom-14 tiles assigned to that state, so files do not overlap, but points near a border may lie just across it.
+
+### Columns
+
+| Column | Content |
+| --- | --- |
+| `id` | Mapillary feature ID (int64 — keep it as integer or string, a float/JavaScript number loses precision) |
+| `value` | Detection class, e.g. `regulatory--maximum-speed-limit-30--g1`, `marking--discrete--crosswalk-zebra`, `object--traffic-light--pedestrians` |
+| `first_seen_at`, `last_seen_at` | First/last capture date of an image showing the feature (`YYYY-MM-DD`) |
+| `tile_x`, `tile_y` | Zoom-14 tile the feature was fetched from |
+| `geometry` | Point, EPSG:4326 |
+
+### Data freshness
+
+Each directory contains a metadata file (`ml-ts_metadata.json` / `ml-mf_metadata.json`) with a timestamp per federal state under `bundeslaender`. `ml_data_from` is the oldest of these timestamps. If a state could not be updated completely in the latest run, it is listed under `last_run_incomplete` and its previous file stays in place.
+
+```bash
+curl -s https://data.vizsim.de/mapillary_trafficsigns/ml-ts_metadata.json
+```
+
+### Download all states
+
+```bash
+BASE=https://data.vizsim.de/mapillary_trafficsigns
+for s in BB BE BW BY HB HE HH MV NI NW RP SH SL SN ST TH; do
+  curl -fLO "$BASE/mapillary_traffic-signs_DE-${s}_latest.parquet"
+done
+```
+
+For map feature points, use `BASE=https://data.vizsim.de/mapillary_map-feature-points` and `mapillary_map-feature-points_DE-${s}_latest.parquet`.
+
+### Query without downloading (DuckDB)
+
+[DuckDB](https://duckdb.org/) reads only the parts of a file it needs over HTTP:
+
+```sql
+INSTALL spatial; LOAD spatial;
+
+SELECT id, value, last_seen_at, ST_X(geometry) AS lon, ST_Y(geometry) AS lat
+FROM 'https://data.vizsim.de/mapillary_trafficsigns/mapillary_traffic-signs_DE-BE_latest.parquet'
+WHERE value LIKE 'regulatory--maximum-speed-limit-30--%';
+```
+
+HTTP does not support wildcards, so list several states explicitly: `FROM read_parquet(['https://…_DE-HB_latest.parquet', 'https://…_DE-HH_latest.parquet'])`.
+
+### Python (GeoPandas)
+
+```python
+import geopandas as gpd
+
+gdf = gpd.read_parquet("mapillary_map-feature-points_DE-BE_latest.parquet")
+zebra = gdf[gdf["value"] == "marking--discrete--crosswalk-zebra"]
+```
+
+### Campaign layers
+
+Ready-made layers (PMTiles, GeoJSON, monthly statistics) for the cycleway campaigns are published in [mapillary_trafficsigns/cycleway-campaign](https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/) and [mapillary_map-feature-points/cycleway-campaign](https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/).
 
 ---
 
@@ -29,15 +94,12 @@ This project uses traffic sign detections provided via the [Mapillary API](https
 
 According to [Mapillary’s OpenStreetMap Wiki page](https://wiki.openstreetmap.org/wiki/Mapillary#License), these derived datasets may be shared under the same license.
 
-Therefore, the processed detection data can be included here, provided that:
+The processed detection data used for the use-cases is available here (see [Data Access](#-data-access)). When using it, please make sure that:
 
 - proper attribution is maintained (“© Mapillary”), and  
 - any redistribution follows the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) terms.
 
-The latest processed datasets for each German federal state are published as Parquet files and available for download:
-
-- 🚦 **Traffic sign detections:** [data.vizsim.de/mapillary_trafficsigns](https://data.vizsim.de/mapillary_trafficsigns/)
-- 🖌️ **Map feature points (road markings):** [data.vizsim.de/mapillary_map-feature-points](https://data.vizsim.de/mapillary_map-feature-points/)
+Each data directory contains a `LICENSE.txt`.
 
 ---
 
