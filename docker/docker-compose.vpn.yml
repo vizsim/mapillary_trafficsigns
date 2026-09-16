@@ -24,6 +24,8 @@ services:
       - HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE={"auth":"apikey","apikey":"${GLUETUN_API_KEY}"}
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      # servers.json, von scripts/run_worker_with_vpn.sh vor jedem Start erneuert
+      - ../data/gluetun:/gluetun
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9999/v1/openvpn/status"]

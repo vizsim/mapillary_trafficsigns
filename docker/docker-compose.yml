@@ -1,3 +1,9 @@
+# Expliziter Projektname. Ohne ihn leitet Compose ihn vom Verzeichnis der
+# Compose-Datei ab ("docker") - denselben Namen hatte mapillary_coverage auf
+# demselben Server, und `docker compose down --remove-orphans` beim Start des
+# einen Workers stoppte dann die Container des anderen.
+name: mapillary-trafficsigns
+
 x-worker-base: &worker_base
   build:
     context: ..
