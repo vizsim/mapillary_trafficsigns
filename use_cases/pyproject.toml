@@ -1,0 +1,33 @@
+[project]
+name = "mapillary-trafficsigns-use-cases"
+version = "0.1.0"
+description = "Shared runtime for Mapillary traffic-sign use-case notebooks"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastparquet==2024.11.0",
+    "folium==0.20.0",
+    "geopandas==1.1.1",
+    "ipykernel==6.30.0",
+    "jupyter-client==8.6.3",
+    "jupyter-core==5.8.1",
+    "mapillary==1.0.15",
+    "matplotlib==3.10.5",
+    "networkx==3.5",
+    "numpy==2.3.2",
+    "osm2geojson==0.3.1",
+    "pandas==2.3.1",
+    "pyarrow==21.0.0",
+    "pyogrio==0.11.1",
+    "requests==2.32.4",
+    "scikit-learn==1.7.1",
+    "scipy==1.16.1",
+    "seaborn==0.13.2",
+    "shapely==2.1.1",
+    "tqdm==4.67.1",
+    "turfpy==0.0.7",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+]
