@@ -23,6 +23,7 @@ import os
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
@@ -35,13 +36,32 @@ import requests
 
 DATA_URL = "https://data.vizsim.de/mapillary_trafficsigns/"
 
-# Mapillary-Klasse -> deutsche Verkehrszeichennummer.
+# Mapillary-Klasse -> (VZ-Code, Beschreibung). Eine Quelle fuer beide Notebooks:
+# 1b_ baut daraus MapRoulette-Aufgaben, xb_ den Export fuer radinfra.de.
 # https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237 usw.
+ZEICHEN = {
+    "regulatory--bicycles-only--g1": ("DE:237", "Radweg"),
+    "regulatory--shared-path-pedestrians-and-bicycles--g1": ("DE:240", "Gemeinsamer Geh- und Radweg"),
+    # DE:241-30 und DE:241-31 unterscheiden nur die Anordnung der Symbole.
+    "regulatory--dual-path-bicycles-and-pedestrians--g1": ("DE:241", "Getrennter Geh- und Radweg"),
+    "regulatory--dual-path-pedestrians-and-bicycles--g1": ("DE:241", "Getrennter Geh- und Radweg"),
+    "regulatory--end-of-bicycles-only--g2": ("DE:244.2", "Ende Fahrradstraße"),
+    "complementary--except-bicycles--g1": ("DE:1022-10", "Radfahrer frei"),
+    "complementary--bike-route--g1": ("DE:1000-33", "Radverkehr im Gegenverkehr"),
+}
+
+# Untermenge fuer die MapRoulette-Kampagne: die Zeichen, die eine eigene
+# Radinfrastruktur anordnen. Zusatzzeichen wie DE:1022-10 gehoeren nicht dazu -
+# sie erlauben Radverkehr, ohne dass eine Radinfra fehlen muesste.
+# Wert ist die nackte Nummer, weil die Aufgabentexte sie so einsetzen.
 RADWEG_ZEICHEN = {
-    "regulatory--bicycles-only--g1": 237,                      # Radweg
-    "regulatory--shared-path-pedestrians-and-bicycles--g1": 240,  # gemeinsamer Geh- und Radweg
-    "regulatory--dual-path-bicycles-and-pedestrians--g1": 241,    # getrennter Rad- und Gehweg
-    "regulatory--dual-path-pedestrians-and-bicycles--g1": 241,    # dito, andere Anordnung
+    value: int(ZEICHEN[value][0].removeprefix("DE:"))
+    for value in (
+        "regulatory--bicycles-only--g1",
+        "regulatory--shared-path-pedestrians-and-bicycles--g1",
+        "regulatory--dual-path-bicycles-and-pedestrians--g1",
+        "regulatory--dual-path-pedestrians-and-bicycles--g1",
+    )
 }
 
 # Metrisches CRS fuer alle Abstandsrechnungen. UTM 33N wie im Vorgaenger-
@@ -127,29 +147,60 @@ def sync_traffic_signs(folder, data_url=DATA_URL, verbose=True):
     return metadata
 
 
-def load_traffic_signs(folder, values=None, verbose=True):
+def load_traffic_signs(folder, values=None, columns=None, expect_files=None, verbose=True):
     """Alle Bundesland-Parquets einlesen und zu einem GeoDataFrame verbinden.
 
-    Gefiltert wird pro Datei, nicht erst nach dem Zusammenfuegen: die Dateien
-    enthalten alle Zeichenklassen, die vier Radwegzeichen sind davon ein
-    Bruchteil. So liegt nie der gesamte Bundesdatensatz gleichzeitig im RAM.
+    Gefiltert und dedupliziert wird pro Datei, nicht erst nach dem
+    Zusammenfuegen: die Dateien enthalten alle Zeichenklassen, die
+    radverkehrsbezogenen sind davon ein Bruchteil. So liegt nie der gesamte
+    Bundesdatensatz gleichzeitig im RAM - der ts-Lauf auf dem Server hat nur
+    6 GB. `columns` schraenkt zusaetzlich ein, was ueberhaupt gelesen wird.
+
+    `expect_files` ist der Vollstaendigkeits-Guard: fehlt eine Bundesland-Datei,
+    fehlt sie auch im publizierten Ergebnis. Am 26.08.2026 ist genau das still
+    durchgelaufen, deshalb hier ein Abbruch statt einer Warnung.
+
+    Bei doppelten ids gewinnt das erste Vorkommen in alphabetischer
+    Dateireihenfolge; die Zeilenreihenfolge bleibt die der Dateien.
     """
     paths = sorted(glob.glob(str(Path(folder) / "mapillary_traffic-signs_*.parquet")))
     if not paths:
         raise FileNotFoundError(f"Keine Verkehrszeichen-Parquets in {folder}")
+    if expect_files is not None and len(paths) != expect_files:
+        raise RuntimeError(
+            f"nur {len(paths)} von {expect_files} Bundesland-Dateien in {folder} - nicht weiterverarbeiten"
+        )
 
     frames = []
+    gesehen = set()
     for path in paths:
-        gdf = gpd.read_parquet(path)
+        gdf = gpd.read_parquet(path, columns=columns)
         if values is not None:
             gdf = gdf[gdf["value"].isin(values)]
-        frames.append(gdf)
+        gdf = gdf.drop_duplicates(subset=["id"])
+        neu = ~gdf["id"].isin(gesehen)
+        if not neu.any():
+            continue
+        gesehen.update(gdf.loc[neu, "id"].tolist())
+        frames.append(gdf.loc[neu].copy())
+
+    if not frames:
+        raise RuntimeError(f"keine Zeichen der gesuchten Klassen in {folder}")
 
     signs = gpd.GeoDataFrame(pd.concat(frames, ignore_index=True), crs=frames[0].crs)
-    signs = signs.drop_duplicates(subset=["id"]).reset_index(drop=True)
     if verbose:
         print(f"{len(paths)} Dateien, {len(signs):,} Zeichen".replace(",", "."))
     return signs
+
+
+def count_expected_states(tile_cache_glob):
+    """Zahl der Bundeslaender laut Tile-Cache, als Sollwert fuer `expect_files`.
+
+    Gibt None zurueck, wenn kein Tile-Cache da ist (etwa auf einem Rechner, der
+    nur die fertigen Parquets gespiegelt hat) - dann greift der Guard nicht.
+    """
+    treffer = len(glob.glob(str(tile_cache_glob)))
+    return treffer or None
 
 
 def load_boundary(path):
@@ -197,10 +248,21 @@ def filter_stable_signs(signs, seen_after, min_months, verbose=True):
 
     `min_months` siebt temporaere Beschilderung aus (Baustellen, Umleitungen):
     ein Schild, das ueber viele Monate hinweg immer wieder auf Bildern
-    auftaucht, steht dort wirklich.
+    auftaucht, steht dort wirklich. `min_months=0` laesst alles durch.
+
+    Der Index wird bewusst **nicht** neu vergeben. GeoDataFrame.to_json()
+    schreibt ihn als Top-Level-`id` der Features, tippecanoe uebernimmt die in
+    die Vector Tiles, und radinfra.de haengt daran. Ein Neudurchnummerieren
+    wuerde die ids aller Features stillschweigend verschieben.
     """
     recent = signs[signs["last_seen_at"] > seen_after]
-    stable = recent[months_seen(recent) >= min_months].reset_index(drop=True)
+    if min_months > 0:
+        # Unparsbare Daten werden NaT, die Differenz NaN, und NaN >= n ist
+        # False - die Zeile faellt also raus. Bei min_months=0 soll dagegen
+        # wirklich nichts wegfallen, deshalb hier gar nicht erst rechnen.
+        stable = recent[months_seen(recent) >= min_months]
+    else:
+        stable = recent
     if verbose:
         print(
             f"zuletzt gesehen nach {seen_after}: {len(recent):,}  ->  "
@@ -654,6 +716,237 @@ def compare_task_sets(alt, neu_collection):
         "nur_neu": sorted(neu_bilder.keys() - alt_bilder.keys()),
         "anderes_bild": sorted(anderes_bild),
     }
+
+
+# --- 8. Export fuer radinfra.de ---------------------------------------------
+
+HINWEIS_EINMALIG = "Nur einmalig detektiert, ggf. temporär wie z.B. Baustelle."
+
+HINWEIS_1000_33 = (
+    "Das Zusatzzeichen 1000-33 zeigt an, dass mit Radverkehr aus beiden Richtungen zu rechnen ist. "
+    "Es wird häufig genutzt, um Einbahnstraßen für Radfahrer im Gegenverkehr freizugeben oder auf kreuzenden Radverkehr hinzuweisen. "
+    "In radinfra.de ist die Darstellung des jeweiligen Einsatzkontexts aktuell noch eingeschränkt."
+)
+
+ZEICHEN_1000_33 = "complementary--bike-route--g1"
+
+# Spalten und Reihenfolge der veroeffentlichten GeoJSON. Verbraucher (radinfra.de,
+# das pmtiles-Notebook) haengen daran - Reihenfolge nicht beilaeufig aendern.
+EXPORT_SPALTEN = [
+    "traffic_sign",
+    "traffic_sign_description",
+    "Hinweis",
+    "first_seen_at",
+    "last_seen_at",
+    "id",
+    "value",
+    "geometry",
+]
+
+
+def add_sign_labels(signs):
+    """Spalten `traffic_sign` (VZ-Code) und `traffic_sign_description` ergaenzen."""
+    signs = signs.copy()
+    signs["traffic_sign"] = signs["value"].map(lambda v: ZEICHEN[v][0] if v in ZEICHEN else None)
+    signs["traffic_sign_description"] = signs["value"].map(lambda v: ZEICHEN[v][1] if v in ZEICHEN else None)
+    return signs
+
+
+def add_hinweis(signs):
+    """Spalte `Hinweis` fuer die Anzeige in radinfra.de.
+
+    Zwei Faelle: erste und letzte Sichtung am selben Tag (einmalige Erkennung,
+    also moeglicherweise eine Baustelle), und das Zusatzzeichen DE:1000-33, das
+    ohne Erklaerung leicht falsch gelesen wird. Unparsbare Daten werden NaT und
+    damit NaN - die vergleichen sich nicht mit 0, es bleibt also leer.
+    """
+    signs = signs.copy()
+    erste = pd.to_datetime(signs["first_seen_at"], errors="coerce")
+    letzte = pd.to_datetime(signs["last_seen_at"], errors="coerce")
+    tage = (letzte - erste).dt.days
+
+    signs["Hinweis"] = np.where(tage == 0, HINWEIS_EINMALIG, "")
+
+    ziel = signs["value"].eq(ZEICHEN_1000_33)
+    belegt = signs["Hinweis"].str.strip().ne("")
+    signs.loc[ziel & belegt, "Hinweis"] = signs.loc[ziel & belegt, "Hinweis"] + "\n" + HINWEIS_1000_33
+    signs.loc[ziel & ~belegt, "Hinweis"] = HINWEIS_1000_33
+    return signs
+
+
+def write_geojson_gz(gdf, path, string_columns=("id", "image_id"), verbose=True):
+    """Gezippte GeoJSON schreiben, mit den grossen ids als JSON-Strings.
+
+    Mapillary-ids uebersteigen Number.MAX_SAFE_INTEGER (2**53). Als JSON-Zahl
+    rundet sie jeder JavaScript-Verbraucher - MapLibre, tippecanoe, die Webkarte -
+    auf den naechsten double, und die Mapillary-Links zeigen ins Leere.
+    """
+    export = gdf.copy()
+    for spalte in string_columns:
+        if spalte in export.columns:
+            export[spalte] = export[spalte].astype("string")
+
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    with gzip.open(tmp, "wt", encoding="utf-8") as f:
+        f.write(export.to_json())
+    tmp.replace(path)
+    if verbose:
+        print(f"{len(export):,} Features -> {path} ({path.stat().st_size / 1e6:.1f} MB)".replace(",", "."))
+
+
+def assert_ids_are_strings(path, fenster=4_000_000, verbose=True):
+    """Nachsehen, dass die ids als JSON-Strings auf der Platte liegen.
+
+    Geprueft wird ein Fenster vom Dateianfang per Regex, nicht die ganze Datei
+    per json.load: das baute eine zweite Kopie aller Features genau am RAM-Peak.
+
+    Auf einen double gerundete Werte >= 2**53 sind immer gerade - eine
+    ueberlebende ungerade id beweist also den exakten Wert.
+    """
+    with gzip.open(path, "rt", encoding="utf-8") as f:
+        kopf = f.read(fenster)
+
+    als_zahl = re.findall(r'"id":\s*(\d{15,})', kopf)
+    als_string = re.findall(r'"id":\s*"(\d+)"', kopf)
+    if als_zahl:
+        raise AssertionError(f"{len(als_zahl)} ids als JSON-Zahl geschrieben - werden in JS gerundet")
+    if not als_string:
+        raise AssertionError("keine String-ids im Stichproben-Fenster gefunden - Export pruefen")
+
+    gross = [i for i in als_string if int(i) >= 2**53]
+    ungerade = [i for i in gross if int(i) % 2 == 1]
+    if verbose:
+        print(
+            f"Stichprobe: {len(als_string)} ids, {len(gross)} >= 2^53, "
+            f"{len(ungerade)} davon ungerade (Beweis exakter Werte)"
+        )
+    return len(als_string), len(gross), len(ungerade)
+
+
+# --- README fuer den Ausgabeordner ------------------------------------------
+
+# Die Zeichen-SVGs stammen aus dem npm-Paket @osm-traffic-signs/converter
+# (Repo osmberlin/osm-traffic-sign-tool), ausgeliefert ueber jsDelivr. Die
+# Version ist bewusst gepinnt, denn npm-Releases sind unveraenderlich.
+#
+# Vorher zeigten die Links auf trafficsigns.osm-verkehrswende.org unter
+# /_next/static/media/... - in diesen Pfaden steckt ein Next.js-Build-Hash, der
+# sich bei jedem Deploy aendert. Genau deshalb lieferten irgendwann alle Bilder
+# 404. Ein gepinntes npm-Artefakt kann so nicht kaputtgehen.
+SVG_PKG_VERSION = "0.6.0"
+SVG_BASE = (
+    f"https://cdn.jsdelivr.net/npm/@osm-traffic-signs/converter@{SVG_PKG_VERSION}"
+    "/dist/data-svgs/DE/svgs"
+)
+
+# Reihenfolge und Metadaten der README-Tabelle. Die letzten Felder sind die
+# VZ-Codes der anzuzeigenden Zeichen - meist mit dem ersten identisch, DE:241
+# hat zwei Varianten. Bild-URLs werden daraus abgeleitet, nicht gepflegt.
+README_ZEICHEN = [
+    ("DE:237", "regulatory--bicycles-only--g1", "Radweg", "DE:237"),
+    ("DE:240", "regulatory--shared-path-pedestrians-and-bicycles--g1", "Gemeinsamer Geh- und Radweg", "DE:240"),
+    (
+        "DE:241",
+        "regulatory--dual-path-pedestrians-and-bicycles--g1`<br>`regulatory--dual-path-bicycles-and-pedestrians--g1",
+        "Getrennter Geh- und Radweg",
+        "DE:241-31",
+        "DE:241-30",
+    ),
+    ("DE:244.2", "regulatory--end-of-bicycles-only--g2", "Ende Fahrradstraße", "DE:244.2"),
+    ("DE:1022-10", "complementary--except-bicycles--g1", "Radfahrer frei", "DE:1022-10"),
+    ("DE:1000-33", "complementary--bike-route--g1", "Radverkehr im Gegenverkehr", "DE:1000-33"),
+]
+
+
+def svg_url(sign_id):
+    """VZ-Code -> SVG-URL, z. B. "DE:1022-10" -> ".../DE_1022_10.svg".
+
+    Bildet createSvgImportname() des Pakets nach: eckige Klammern werden zu
+    "__", alles uebrige Nicht-Alphanumerische zu "_".
+    """
+    value_part = sign_id.split(":", 1)[-1]
+    ident = value_part.replace("[", "__").replace("]", "__")
+    ident = re.sub(r"[^a-zA-Z0-9_]", "_", ident)
+    return f"{SVG_BASE}/DE_{ident}.svg"
+
+
+def build_readme(counts, stand, seit="2023-01-01", autobahn_abstand_m=30):
+    """README-Text fuer ts_output/.
+
+    `counts` zaehlt je `traffic_sign_description`, `stand` ist das Datum des
+    Datensatzes als YYYY-MM-DD.
+    """
+    zeilen = []
+    for code, wording, beschreibung, *bilder in README_ZEICHEN:
+        bild_md = " oder ".join(f'<img src="{svg_url(s)}" width="40" alt="{s}">' for s in bilder)
+        zeilen.append(f"| {code} | {beschreibung} | {bild_md} | {counts.get(beschreibung, 0)} | `{wording}` |")
+
+    tabelle = "\n".join(
+        [
+            "| VZ-Code | Beschreibung | Verkehrszeichen | Anzahl | Mapillary Wording |",
+            "|-------|-------------|:---------------:|-------:|-----------------|",
+            *zeilen,
+        ]
+    )
+
+    return f"""
+# Bicycle Infrastucture Traffic Signs Output
+
+This folder contains the output file for detected traffic signs related to bicycle infrastructure from Mapillary.{_BR}
+The output has been created on **{stand}**.
+
+## Applied Filters
+
+- Only detections newer than **{seit}**
+- Excluded all signs located within **{autobahn_abstand_m} m of motorways** (to reduce false positives)
+
+## Signs
+
+{tabelle}
+
+## Statistics Plot
+
+![Anzahl pro Monat](signs_by_month.svg)
+
+## Downloads
+
+The files in this folder are also published for direct download, so consumers do
+not need to clone this repository:
+
+| File | Download |
+| --- | --- |
+| 🗺️ Vector tiles (PMTiles) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.pmtiles> |
+| 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.geojson.gz> |
+
+Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+"""
+
+
+def read_dataset_metadata(path):
+    """ml-ts_metadata.json lesen; gibt (ml_data_from, processed_date, bundeslaender) zurueck.
+
+    Fehlt die Datei - etwa auf einem Rechner, der nur die Parquets gespiegelt
+    hat -, kommt (None, None, {}) zurueck.
+    """
+    path = Path(path)
+    if not path.exists():
+        return None, None, {}
+    with open(path, encoding="utf-8") as f:
+        meta = json.load(f)
+    return meta.get("ml_data_from"), meta.get("processed_date"), meta.get("bundeslaender", {})
+
+
+def dataset_stand(dates, fallback=None):
+    """Juengstes Datum aus `dates` als YYYY-MM-DD, sonst `fallback` bzw. heute."""
+    gueltig = [d for d in dates if d]
+    if gueltig:
+        try:
+            return sorted(pd.to_datetime(gueltig))[-1].strftime("%Y-%m-%d")
+        except (ValueError, TypeError):
+            pass
+    return fallback or datetime.now().strftime("%Y-%m-%d")
 
 
 def print_comparison(vergleich):

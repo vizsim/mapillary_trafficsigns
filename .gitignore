@@ -34,6 +34,8 @@ output/mapillary_traffic-signs_*.parquet
 # Getrackt bleiben nur Code, Notebooks (ohne Ausführung) und statische Docs.
 output/ml-ts_metadata.json
 use_cases/cycleway_complete_campaign/ts_output/
+# Referenzlauf von x_, gegen den xb_ sich vergleicht (letzte Zelle in xb_).
+use_cases/cycleway_complete_campaign/ts_output_ref/
 use_cases/cycleway_complete_marking_campaign/mk_output/
 # Ausgeführte Notebook-Kopien und Lauf-Mitschriften (run_mapillary_notebooks.sh)
 logs/

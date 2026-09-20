@@ -7,6 +7,7 @@ unsortierten Liste nahm.
 Lauf: `uv run --project .. pytest test_cw_campaign.py` im Kampagnenordner.
 """
 
+import gzip
 import json
 
 import geopandas as gpd
@@ -402,6 +403,297 @@ def test_read_geojson_vor_dem_ueberschreiben(tmp_path):
 def test_compare_task_sets_ohne_vorherigen_stand(tmp_path):
     with pytest.raises(FileNotFoundError):
         cw.compare_task_sets(tmp_path / "gibt_es_nicht.geojson", {"features": []})
+
+
+# --- Zeichentabelle ---------------------------------------------------------
+
+
+def test_radweg_zeichen_leitet_sich_aus_der_tabelle_ab():
+    """Eine Quelle fuer 1b_ und xb_ - die Nummern duerfen nicht auseinanderlaufen."""
+    assert cw.RADWEG_ZEICHEN == {
+        "regulatory--bicycles-only--g1": 237,
+        "regulatory--shared-path-pedestrians-and-bicycles--g1": 240,
+        "regulatory--dual-path-bicycles-and-pedestrians--g1": 241,
+        "regulatory--dual-path-pedestrians-and-bicycles--g1": 241,
+    }
+    # Zusatzzeichen ordnen keine eigene Radinfra an, gehoeren also nicht in die Kampagne.
+    assert "complementary--except-bicycles--g1" in cw.ZEICHEN
+    assert "complementary--except-bicycles--g1" not in cw.RADWEG_ZEICHEN
+
+
+def test_readme_zeichen_deckt_die_tabelle_ab():
+    aus_tabelle = {code for code, _ in cw.ZEICHEN.values()}
+    aus_readme = {eintrag[0] for eintrag in cw.README_ZEICHEN}
+    assert aus_tabelle == aus_readme
+
+
+# --- Laden: Guard, Spalten, Reihenfolge -------------------------------------
+
+
+def _write_signs(folder, name, rows):
+    gdf = gpd.GeoDataFrame(
+        {
+            "id": [r[0] for r in rows],
+            "value": [r[1] for r in rows],
+            "first_seen_at": ["2025-01-01"] * len(rows),
+            "last_seen_at": ["2026-01-01"] * len(rows),
+            "extra": ["ungenutzt"] * len(rows),
+            "geometry": [Point(13, 52)] * len(rows),
+        },
+        crs="EPSG:4326",
+    )
+    gdf.to_parquet(folder / f"mapillary_traffic-signs_{name}_latest.parquet")
+
+
+def test_load_traffic_signs_guard_schlaegt_bei_fehlender_datei_an(tmp_path):
+    """Der Vorfall vom 26.08.2026: ein Bundesland fehlt und niemand merkt es."""
+    _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
+
+    with pytest.raises(RuntimeError, match="1 von 16"):
+        cw.load_traffic_signs(tmp_path, expect_files=16, verbose=False)
+
+    # Ohne Sollwert laeuft es durch.
+    assert len(cw.load_traffic_signs(tmp_path, verbose=False)) == 1
+
+
+def test_load_traffic_signs_liest_nur_die_gewuenschten_spalten(tmp_path):
+    _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
+    spalten = ["id", "value", "geometry"]
+
+    geladen = cw.load_traffic_signs(tmp_path, columns=spalten, verbose=False)
+    assert "extra" not in geladen.columns
+    assert set(spalten) <= set(geladen.columns)
+
+
+def test_load_traffic_signs_erstes_vorkommen_gewinnt(tmp_path):
+    # Dieselbe id in zwei Bundeslaendern - Punkte an der Grenze gibt es wirklich.
+    _write_signs(tmp_path, "DE-BB", [(7, "regulatory--bicycles-only--g1")])
+    _write_signs(tmp_path, "DE-BE", [(7, "regulatory--shared-path-pedestrians-and-bicycles--g1")])
+
+    geladen = cw.load_traffic_signs(tmp_path, verbose=False)
+    assert len(geladen) == 1
+    # DE-BB kommt alphabetisch zuerst.
+    assert geladen.iloc[0]["value"] == "regulatory--bicycles-only--g1"
+
+
+def test_load_traffic_signs_ohne_treffer(tmp_path):
+    _write_signs(tmp_path, "DE-HB", [(1, "regulatory--stop--g1")])
+    with pytest.raises(RuntimeError, match="keine Zeichen"):
+        cw.load_traffic_signs(tmp_path, values=cw.ZEICHEN, verbose=False)
+
+
+def test_count_expected_states(tmp_path):
+    assert cw.count_expected_states(tmp_path / "DE-*_tiles.json") is None
+    (tmp_path / "DE-HB_tiles.json").write_text("{}")
+    (tmp_path / "DE-BE_tiles.json").write_text("{}")
+    assert cw.count_expected_states(tmp_path / "DE-*_tiles.json") == 2
+
+
+def test_filter_stable_signs_behaelt_den_index():
+    """Der Index wird beim Export zur Top-Level-id der GeoJSON-Features.
+
+    Neu durchnummerieren wuerde die ids aller Features stillschweigend
+    verschieben - tippecanoe traegt sie in die Vector Tiles.
+    """
+    signs = gpd.GeoDataFrame(
+        {
+            "id": [1, 2, 3],
+            "first_seen_at": ["2020-01-01"] * 3,
+            "last_seen_at": ["2026-06-01", "2020-01-01", "2026-06-01"],
+            "geometry": [Point(13, 52)] * 3,
+        },
+        crs="EPSG:4326",
+    )
+    uebrig = cw.filter_stable_signs(signs, "2025-07-01", min_months=0, verbose=False)
+
+    assert list(uebrig.index) == [0, 2]  # nicht [0, 1]
+
+
+def test_filter_stable_signs_ohne_mindestzeit_wirft_nichts_weg():
+    """min_months=0 darf auch Zeilen mit unparsbarem Datum behalten.
+
+    Sonst faellt so eine Zeile still raus: die Monatsdifferenz waere NaN, und
+    NaN >= 0 ist False.
+    """
+    signs = gpd.GeoDataFrame(
+        {
+            "id": [1, 2],
+            "first_seen_at": ["2020-01-01", "kaputt"],
+            "last_seen_at": ["2026-06-01", "2026-06-01"],
+            "geometry": [Point(13, 52)] * 2,
+        },
+        crs="EPSG:4326",
+    )
+    assert list(cw.filter_stable_signs(signs, "2025-07-01", 0, verbose=False)["id"]) == [1, 2]
+
+
+# --- Hinweise und Beschriftung ----------------------------------------------
+
+
+def _sign_frame(values, first, last):
+    return gpd.GeoDataFrame(
+        {
+            "id": list(range(len(values))),
+            "value": values,
+            "first_seen_at": first,
+            "last_seen_at": last,
+            "geometry": [Point(13, 52)] * len(values),
+        },
+        crs="EPSG:4326",
+    )
+
+
+def test_add_hinweis_markiert_einmalige_erkennung():
+    frame = _sign_frame(
+        ["regulatory--bicycles-only--g1"] * 2,
+        ["2026-01-01", "2026-01-01"],
+        ["2026-01-01", "2026-06-01"],
+    )
+    hinweise = cw.add_hinweis(frame)["Hinweis"]
+
+    assert hinweise.iloc[0] == cw.HINWEIS_EINMALIG  # gleicher Tag
+    assert hinweise.iloc[1] == ""
+
+
+def test_add_hinweis_haengt_erklaerung_an_1000_33():
+    frame = _sign_frame(
+        [cw.ZEICHEN_1000_33, cw.ZEICHEN_1000_33],
+        ["2026-01-01", "2026-01-01"],
+        ["2026-06-01", "2026-01-01"],  # zweites nur einmalig gesehen
+    )
+    hinweise = cw.add_hinweis(frame)["Hinweis"]
+
+    assert hinweise.iloc[0] == cw.HINWEIS_1000_33
+    # Beide Hinweise, durch einen Zeilenumbruch getrennt.
+    assert hinweise.iloc[1] == cw.HINWEIS_EINMALIG + "\n" + cw.HINWEIS_1000_33
+
+
+def test_add_hinweis_vertraegt_unparsbare_daten():
+    frame = _sign_frame(["regulatory--bicycles-only--g1"], ["kaputt"], ["2026-06-01"])
+    assert cw.add_hinweis(frame)["Hinweis"].iloc[0] == ""
+
+
+def test_add_sign_labels():
+    frame = _sign_frame(
+        ["regulatory--bicycles-only--g1", "complementary--bike-route--g1"],
+        ["2026-01-01"] * 2,
+        ["2026-06-01"] * 2,
+    )
+    beschriftet = cw.add_sign_labels(frame)
+
+    assert list(beschriftet["traffic_sign"]) == ["DE:237", "DE:1000-33"]
+    assert beschriftet["traffic_sign_description"].iloc[1] == "Radverkehr im Gegenverkehr"
+
+
+# --- Export -----------------------------------------------------------------
+
+
+def _export_frame():
+    frame = _sign_frame(
+        ["regulatory--bicycles-only--g1"], ["2026-01-01"], ["2026-06-01"]
+    )
+    # Eine ungerade id oberhalb von 2**53: als double gerundet waere sie gerade.
+    frame["id"] = [9007199254740993]
+    frame = cw.add_sign_labels(cw.add_hinweis(frame))
+    return frame[cw.EXPORT_SPALTEN]
+
+
+def test_write_geojson_gz_haelt_grosse_ids_exakt(tmp_path):
+    """Regression zu den toten Mapillary-Links: ids ueber 2**53 als JSON-Zahl
+    rundet jeder JavaScript-Verbraucher auf den naechsten double."""
+    ziel = tmp_path / "out.geojson.gz"
+    cw.write_geojson_gz(_export_frame(), ziel, verbose=False)
+
+    with gzip.open(ziel, "rt", encoding="utf-8") as f:
+        roh = f.read()
+    assert '"id": "9007199254740993"' in roh or '"id":"9007199254740993"' in roh
+
+    # anzahl zaehlt zwei: die Top-Level-id des Features (der Index, hier "0")
+    # und die Mapillary-id in den properties. Nur letztere ist gross und ungerade.
+    anzahl, gross, ungerade = cw.assert_ids_are_strings(ziel, verbose=False)
+    assert (anzahl, gross, ungerade) == (2, 1, 1)
+
+
+def test_assert_ids_are_strings_schlaegt_bei_zahlen_an(tmp_path):
+    ziel = tmp_path / "kaputt.geojson.gz"
+    with gzip.open(ziel, "wt", encoding="utf-8") as f:
+        f.write('{"features": [{"properties": {"id": 9007199254740992}}]}')
+
+    with pytest.raises(AssertionError, match="JSON-Zahl"):
+        cw.assert_ids_are_strings(ziel, verbose=False)
+
+
+def test_write_geojson_gz_schreibt_atomar(tmp_path):
+    ziel = tmp_path / "unter" / "out.geojson.gz"
+    cw.write_geojson_gz(_export_frame(), ziel, verbose=False)
+
+    assert ziel.exists()
+    assert not list(ziel.parent.glob("*.tmp"))
+
+
+def test_export_spalten_reihenfolge_ist_festgenagelt():
+    """radinfra.de und das pmtiles-Notebook haengen an dieser Reihenfolge."""
+    assert cw.EXPORT_SPALTEN == [
+        "traffic_sign",
+        "traffic_sign_description",
+        "Hinweis",
+        "first_seen_at",
+        "last_seen_at",
+        "id",
+        "value",
+        "geometry",
+    ]
+
+
+# --- README -----------------------------------------------------------------
+
+
+def test_svg_url_bildet_den_paketnamen_nach():
+    assert cw.svg_url("DE:237").endswith("/DE_237.svg")
+    assert cw.svg_url("DE:1022-10").endswith("/DE_1022_10.svg")
+    assert cw.svg_url("DE:244.2").endswith("/DE_244_2.svg")
+    # Gepinnte npm-Version - die frueheren Next.js-Pfade lieferten nach jedem
+    # Deploy 404, weil ein Build-Hash darin steckte.
+    assert f"converter@{cw.SVG_PKG_VERSION}" in cw.svg_url("DE:237")
+
+
+def test_build_readme_zaehlt_und_haelt_den_zeilenumbruch():
+    readme = cw.build_readme({"Radweg": 42}, "2026-09-20")
+
+    assert "| DE:237 | Radweg |" in readme
+    assert "| 42 |" in readme
+    assert "| 0 |" in readme  # nicht gezaehlte Zeichen erscheinen mit 0
+    assert "created on **2026-09-20**" in readme
+
+    zeile = next(z for z in readme.splitlines() if "detected traffic signs" in z)
+    assert zeile.endswith("  "), "harter Markdown-Umbruch fehlt"
+
+
+def test_build_readme_uebernimmt_die_filterwerte():
+    readme = cw.build_readme({}, "2026-09-20", seit="2024-02-03", autobahn_abstand_m=45)
+    assert "newer than **2024-02-03**" in readme
+    assert "**45 m of motorways**" in readme
+
+
+# --- Metadaten --------------------------------------------------------------
+
+
+def test_read_dataset_metadata(tmp_path):
+    assert cw.read_dataset_metadata(tmp_path / "fehlt.json") == (None, None, {})
+
+    pfad = tmp_path / "ml-ts_metadata.json"
+    pfad.write_text(json.dumps({
+        "ml_data_from": "2026-09-01", "processed_date": "2026-09-15",
+        "bundeslaender": {"DE-HB": "x"},
+    }))
+    assert cw.read_dataset_metadata(pfad) == ("2026-09-01", "2026-09-15", {"DE-HB": "x"})
+
+
+def test_dataset_stand_nimmt_das_juengste_datum():
+    assert cw.dataset_stand(["2026-09-01", "2026-09-15"]) == "2026-09-15"
+    assert cw.dataset_stand([None, "2026-09-01"]) == "2026-09-01"
+    assert cw.dataset_stand([], fallback="2020-01-01") == "2020-01-01"
+    assert cw.dataset_stand(["keindatum"], fallback="2020-01-01") == "2020-01-01"
 
 
 # --- Grenzverschnitt --------------------------------------------------------
