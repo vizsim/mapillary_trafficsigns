@@ -713,6 +713,87 @@ def test_build_readme_uebernimmt_die_filterwerte():
 # --- Metadaten --------------------------------------------------------------
 
 
+def test_load_features_filtert_beim_lesen_und_praegt_den_index(tmp_path):
+    """Frueh filtern bestimmt den Index - und der wird zur Feature-id.
+
+    Wer erst nach dem Zusammenfuegen filtert, bekommt dieselben Zeilen mit
+    anderen ids, und tippecanoe traegt die in die Vector Tiles.
+    """
+    gdf = gpd.GeoDataFrame(
+        {
+            "id": [1, 2, 3],
+            "value": ["marking--discrete--symbol--bicycle"] * 3,
+            "first_seen_at": ["2020-01-01", "1970-01-01", "2020-01-01"],
+            "last_seen_at": ["2026-01-01", "2026-01-01", "2022-01-01"],
+            "geometry": [Point(13, 52)] * 3,
+        },
+        crs="EPSG:4326",
+    )
+    gdf.to_parquet(tmp_path / "mapillary_map-feature-points_DE-HB_latest.parquet")
+
+    geladen = cw.load_features(
+        tmp_path,
+        prefix=cw.PREFIX_MARKIERUNGEN,
+        seen_after="2023-01-01",
+        first_seen_after="2000-01-01",
+        verbose=False,
+    )
+    # id 2 faellt am first_seen_at raus, id 3 am last_seen_at.
+    assert list(geladen["id"]) == [1]
+    # Dicht durchnummeriert ab 0, weil vor dem Zusammenfuegen gefiltert wurde.
+    assert list(geladen.index) == [0]
+
+
+def test_clip_to_boundary_behaelt_den_index():
+    """Wie filter_stable_signs: der Index wird beim Export zur Feature-id."""
+    punkte = _points([(13.0, 52.0), (20.0, 52.0), (13.5, 52.0)], ids=[1, 2, 3])
+    grenze = gpd.GeoDataFrame(
+        geometry=[Polygon([(12, 51), (14, 51), (14, 53), (12, 53)])], crs="EPSG:4326"
+    )
+    drin = cw.clip_to_boundary(punkte, grenze, verbose=False)
+
+    assert list(drin["id"]) == [1, 3]
+    assert list(drin.index) == [0, 2]  # nicht [0, 1]
+
+
+def test_filter_by_days_seen():
+    frame = _sign_frame(
+        ["marking--discrete--symbol--bicycle"] * 3,
+        ["2025-01-01", "2025-01-01", "2025-01-01"],
+        ["2025-07-01", "2025-06-29", "2026-01-01"],
+    )
+    uebrig = cw.filter_by_days_seen(frame, 180, verbose=False)
+
+    # 181 Tage bleibt, 179 faellt raus, 365 bleibt.
+    assert list(uebrig["id"]) == [0, 2]
+    assert list(uebrig.index) == [0, 2]
+
+
+def test_add_marking_label():
+    frame = _sign_frame(["marking--discrete--symbol--bicycle"], ["2025-01-01"], ["2026-01-01"])
+    assert cw.add_marking_label(frame)["MapFeaturePoint"].iloc[0] == "Lane marking - symbol (bicycle)"
+
+
+def test_build_readme_markierungen():
+    readme = cw.build_readme_markierungen(
+        anzahl=35250, stand="2026-09-17", datensatz_von="2026-09-17",
+        zeitraum="2014-03-30 00:00:00 - 2026-09-15 00:00:00",
+    )
+    assert "**Total detections**: 35250" in readme
+    assert "created on **2026-09-17**" in readme
+    assert "min. 180 days apart" in readme
+    assert "Lane marking - symbol (bicycle)" in readme
+
+    zeile = next(z for z in readme.splitlines() if "detected bicycle markings" in z)
+    assert zeile.endswith("  "), "harter Markdown-Umbruch fehlt"
+
+
+def test_export_spalten_markierungen_ist_festgenagelt():
+    assert cw.EXPORT_SPALTEN_MARKIERUNGEN == [
+        "MapFeaturePoint", "first_seen_at", "last_seen_at", "id", "value", "geometry",
+    ]
+
+
 def test_sync_features_spiegelt_auch_das_manifest(tmp_path, monkeypatch):
     """Parquets und Manifest muessen denselben Stand beschreiben.
 
