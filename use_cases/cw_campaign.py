@@ -178,6 +178,15 @@ def sync_features(folder, prefix=PREFIX_ZEICHEN, verbose=True):
         if verbose:
             print(f"{state}: geladen ({local_path.stat().st_size / 1e6:.1f} MB)")
 
+    # Das Manifest mitspiegeln, sonst ist der lokale Stand in sich widersprueclich:
+    # Parquets vom Server, Metadatendatei von irgendwann. Genau das war am
+    # 20.09.2026 der Fall - Parquets vom 17.09., ml-mf_metadata.json vom 01.07.
+    # xb_ zieht aus dieser Datei das Datum fuer die veroeffentlichte README.
+    manifest = folder / metadata_file
+    tmp_manifest = manifest.with_name(metadata_file + ".tmp")
+    tmp_manifest.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
+    tmp_manifest.replace(manifest)
+
     if metadata.get("last_run_incomplete"):
         print(f"WARNUNG: unvollstaendig im letzten Lauf: {metadata['last_run_incomplete']}")
     return metadata
