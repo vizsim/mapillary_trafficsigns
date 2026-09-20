@@ -3,10 +3,11 @@
 **Stand:** 2026-09-20 · betrifft `xb_mapillary-markings_generateOutput_2radinfra.ipynb`
 und [`../cw_campaign.py`](../cw_campaign.py)
 
-`x_mapillary-markings_generateOutput_2radinfra.ipynb` **läuft unverändert weiter**. Es
-ist in [`scripts/run_mapillary_notebooks.sh`](../../scripts/run_mapillary_notebooks.sh)
-Teil der wöchentlichen mk-Pipeline (donnerstags 01:00 UTC). `xb_` ist die Gegenprobe,
-nicht der Ersatz.
+Seit dem 20.09.2026 führt die wöchentliche mk-Pipeline (donnerstags 01:00 UTC)
+`xb_` aus. `x_mapillary-markings_generateOutput_2radinfra.ipynb` bleibt unverändert
+daneben liegen, bis `xb_` ein paar Wochen sauber gelaufen ist — zurückschalten heißt:
+in [`scripts/run_mapillary_notebooks.sh`](../../scripts/run_mapillary_notebooks.sh)
+wieder `x_` eintragen.
 
 Das Vorbild ist die Verkehrszeichen-Kampagne, die den Umstieg am 20.09.2026 gemacht hat:
 [`../cycleway_complete_campaign/xb_unterschiede.md`](../cycleway_complete_campaign/xb_unterschiede.md).
@@ -71,7 +72,6 @@ sich darin genauso; die Vergleichszelle normiert beides weg.
 | | `x_` | `xb_` |
 | --- | --- | --- |
 | Laden | Schleife über die Parquets im Notebook | `load_features(prefix=…, seen_after=…)` |
-| Datenstand | was lokal liegt | `sync_features` holt von data.vizsim.de |
 | Vollständigkeits-Guard | seit 20.09. zwei `assert` im Notebook | `expect_files`, wirft `RuntimeError` |
 | Grenzverschnitt | sjoin im Notebook | `clip_to_boundary` |
 | Standzeit-Filter | `delta_days_seen > 180` im Notebook | `filter_by_days_seen` |
@@ -80,6 +80,18 @@ sich darin genauso; die Vergleichszelle normiert beides weg.
 | README | ~60 Zeilen im Notebook | `build_readme_markierungen` |
 | `import mapillary as mly` | vorhanden, **nie benutzt** | entfällt |
 | Zellen | 32 | 9 Code-Zellen |
+
+### Kein `sync_features` — und warum das wichtig ist
+
+Beim Bau hatte ich das Sync-Muster aus den `1b_`-Notebooks übernommen. Für ein Notebook,
+das auf dem Server läuft, ist das nicht nur überflüssig, sondern schädlich: dort
+**entstehen** die Parquets in Schritt 1 derselben Pipeline und werden erst danach nach B2
+geladen. Die Last-Modified der veröffentlichten Kopie ist damit immer jünger als die
+lokale Datei — `sync_features` würde also jede Woche die frisch geholten Daten durch die
+Vorwochen-Fassung ersetzen. Die Zelle ist wieder raus.
+
+Für die `1b_`-Notebooks bleibt der Sync richtig: die laufen von Hand auf einem Rechner,
+der die Daten nicht selbst erzeugt.
 
 Unverändert bleiben die Filterwerte (`last_seen_at > 2023-01-01`, `first_seen_at >
 2000-01-01`, mehr als 180 Tage Standzeit) und `EXPORT_SPALTEN_MARKIERUNGEN`.
@@ -110,7 +122,7 @@ jupyter nbconvert --to notebook --execute xb_mapillary-markings_generateOutput_2
 
 ---
 
-## Umstieg, wenn es soweit ist
+## Umstieg am 20.09.2026
 
 Eine Zeile in [`scripts/run_mapillary_notebooks.sh`](../../scripts/run_mapillary_notebooks.sh),
 im `mk)`-Zweig:
@@ -120,10 +132,11 @@ im `mk)`-Zweig:
 +      "use_cases/cycleway_complete_marking_campaign/xb_mapillary-markings_generateOutput_2radinfra.ipynb"
 ```
 
-Die Voraussetzungen sind dieselben wie bei ts und dort am 20.09.2026 in Produktion
-bestätigt: der Pfad steht nur an dieser Stelle, `import cw_campaign` funktioniert im
-Container über `sys.path.insert(0, "..")`, und es braucht keinen Image-Neubau.
+Mehr war nicht nötig — dieselben Voraussetzungen wie bei ts, dort am selben Tag in
+Produktion bestätigt: der Pfad steht nur an dieser Stelle, `import cw_campaign`
+funktioniert im Container über `sys.path.insert(0, "..")`, und es braucht keinen
+Image-Neubau.
 
-Klemmt der nächste Wochenlauf: Zeile zurück, `x_` läuft wieder. Scheitert das Notebook,
-bricht `run_worker_with_vpn.sh` **vor** dem B2-Upload ab — der Schaden ist eine
-ausgefallene Wochenaktualisierung, keine kaputten Daten.
+**Rückweg:** Zeile zurück auf `x_`, pushen, auf dem Server ziehen. Scheitert das
+Notebook im Wochenlauf, bricht `run_worker_with_vpn.sh` **vor** dem B2-Upload ab — der
+Schaden ist eine ausgefallene Wochenaktualisierung, keine kaputten Daten.
