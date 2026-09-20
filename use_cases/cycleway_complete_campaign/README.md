@@ -21,9 +21,9 @@ daraus Aufgaben für die MapRoulette-Challenge 52916.
 | **Zusätzlich nötig** | `osmium` als CLI, MapRoulette-API-Key, Mapillary-Token |
 
 ```
-0_prepare_network_pbf_get_cycleways.ipynb
+../0_prepare_osm_network.ipynb                             ← gemeinsam mit der Marking-Kampagne
     Geofabrik-PBF laden → osmium tags-filter → GeoParquet
-    →  processed_osm_files/processed_cycleways_germany_<datum>.parquet   (~600 MB)
+    →  ../utils/processed_osm_files/processed_cycleways_germany_<datum>.parquet   (~600 MB)
 
 1b_merge_mapillary-trafficsigns_osm-cycleways.ipynb        ← aktuell
     Zeichen + OSM-Radinfra verschneiden, neuestes Mapillary-Bild holen
@@ -34,9 +34,11 @@ daraus Aufgaben für die MapRoulette-Challenge 52916.
 die Vergleichszelle in `1b_` misst sich daran. Unterschiede und Messwerte:
 [`1b_unterschiede.md`](1b_unterschiede.md).
 
-> **Achtung, `set_date`:** Das Datum steht in `0_prepare` **und** in `1b_` und muss
-> übereinstimmen. Geofabrik hält Tagesstände nur rund 90 Tage vor — ist ein PBF weder
-> lokal noch dort, lässt sich der Stand nicht mehr neu ableiten.
+> **Achtung, `set_date`:** Das Datum steht in [`../0_prepare_osm_network.ipynb`](../0_prepare_osm_network.ipynb)
+> **und** in `1b_` und muss übereinstimmen — seit dem 20.09.2026 zusätzlich im
+> `1_merge` der Marking-Kampagne, die dieselbe Datei liest. Geofabrik hält Tagesstände
+> nur rund 90 Tage vor: ist ein PBF weder lokal noch dort, lässt sich der Stand nicht
+> mehr neu ableiten.
 
 ---
 
@@ -91,6 +93,7 @@ nur die `▶️`-Zeile.
 | | |
 | --- | --- |
 | [`cw_campaign.py`](cw_campaign.py) | die Logik beider Stränge, 48 Tests in [`test_cw_campaign.py`](test_cw_campaign.py) |
+| `../utils/processed_osm_files/` | das Radwegnetz, erzeugt von [`../0_prepare_osm_network.ipynb`](../0_prepare_osm_network.ipynb), gelesen auch von der Marking-Kampagne |
 | `../../output/mapillary_traffic-signs_DE-*.parquet` | Zeichen je Bundesland |
 | `../utils/processed_motorways_germany_251215.parquet` | Autobahnen, ändert sich kaum |
 | `../utils/config_mapillary_privat.json` | Mapillary-Token und MapRoulette-Key |
@@ -132,6 +135,6 @@ den Umgebungsvariablen `MAPILLARY_ACCESS_TOKEN` und `MAPROULETTE_API_KEY`.
 | | |
 | --- | --- |
 | `blogpost.md` | Text zur Kampagne |
-| `processed_osm_files/` | abgeleitete OSM-Auszüge, nicht in git |
+| `processed_osm_files/` | ältere OSM-Auszüge aus der Zeit vor dem gemeinsamen `0_`, nicht in git |
 | `ts_output/` | Ausgabe von Strang B, nicht in git |
 | `ts_output_ref/` | Referenzlauf von `x_` für die Gegenprobe in `xb_`, nicht in git |
