@@ -1,16 +1,31 @@
-"""Radweg-Kampagne: aus Mapillary-Verkehrszeichen MapRoulette-Aufgaben bauen.
+"""Radinfra-Kampagnen: aus Mapillary-Erkennungen MapRoulette-Aufgaben bauen.
 
-Der Ablauf in einem Satz: Verkehrszeichen von data.vizsim.de holen, auf
-radverkehrsbezogene Zeichen und laenger stehende Schilder filtern, die ohne
-OSM-Radinfra in der Naehe heraussuchen, zu jedem das neueste Mapillary-Bild
-besorgen und als GeoJSON fuer MapRoulette schreiben.
+Der Ablauf in einem Satz: Mapillary-Erkennungen von data.vizsim.de holen, auf
+die radverkehrsbezogenen und laenger sichtbaren filtern, die ohne OSM-Radinfra
+in der Naehe heraussuchen, zu jeder das neueste Bild besorgen und als GeoJSON
+fuer MapRoulette schreiben. Dazu der Export fuer radinfra.de.
 
-Das Notebook 1b_merge_mapillary-trafficsigns_osm-cycleways.ipynb ruft nur noch
-diese Funktionen auf. Die Logik liegt hier, damit sie ohne Jupyter testbar ist
-und spaeter als Skript laufen kann.
+Bedient beide Cycleway-Kampagnen:
 
-Unterschiede zum Vorgaenger 1_merge_mapillary-trafficsigns_osm-cycleways.ipynb
-sind in 1b_unterschiede.md aufgefuehrt.
+    cycleway_complete_campaign/          Verkehrszeichen (DE:237, 240, 241, ...)
+    cycleway_complete_marking_campaign/  Fahrbahnmarkierungen (Fahrrad-Symbol)
+
+Das Modul liegt in use_cases/, weil beide Kampagnenordner es brauchen. Der
+Name bleibt `cw_campaign`: beide Kampagnen drehen sich um Radinfrastruktur,
+die eine erkennt sie an Verkehrszeichen, die andere an Fahrbahnmarkierungen.
+Die Notebooks holen es sich mit
+
+    import sys; sys.path.insert(0, "..")
+    import cw_campaign as cw
+
+Das `..` ist keine Zauberei: nbconvert und der Jupyter-Kernel setzen das
+Arbeitsverzeichnis auf das Notebook-Verzeichnis - dieselbe Annahme, auf der
+auch die Pfade `../../output/` und `../utils/` in den Notebooks beruhen. Mit
+einem einzigen uv-Env fuers Repo (Schritt 4 in docs/plan_notebooks_zu_python.md)
+faellt die sys.path-Zeile weg.
+
+Unterschiede zu den Vorgaenger-Notebooks stehen in
+cycleway_complete_campaign/1b_unterschiede.md und xb_unterschiede.md.
 """
 
 from __future__ import annotations
@@ -35,6 +50,21 @@ import requests
 # --- Konfiguration ----------------------------------------------------------
 
 DATA_URL = "https://data.vizsim.de/mapillary_trafficsigns/"
+
+# Dateipraefix der beiden Datensaetze in output/.
+PREFIX_ZEICHEN = "mapillary_traffic-signs"
+PREFIX_MARKIERUNGEN = "mapillary_map-feature-points"
+
+# Woher die beiden Datensaetze kommen und wie ihr Manifest heisst.
+DATENQUELLE = {
+    PREFIX_ZEICHEN: (DATA_URL, "ml-ts_metadata.json"),
+    PREFIX_MARKIERUNGEN: ("https://data.vizsim.de/mapillary_map-feature-points/", "ml-mf_metadata.json"),
+}
+
+# Fahrbahnmarkierungen der Marking-Kampagne: Mapillary-Klasse -> Bezeichnung.
+MARKIERUNGEN = {
+    "marking--discrete--symbol--bicycle": "Lane marking - symbol (bicycle)",
+}
 
 # Mapillary-Klasse -> (VZ-Code, Beschreibung). Eine Quelle fuer beide Notebooks:
 # 1b_ baut daraus MapRoulette-Aufgaben, xb_ den Export fuer radinfra.de.
@@ -88,26 +118,32 @@ AUTOBAHN_ABSTAND_M = 30.0
 GRAPH_URL = "https://graph.mapillary.com/"
 
 
-# --- 1. Verkehrszeichen laden -----------------------------------------------
+# --- 1. Erkennungen laden ---------------------------------------------------
 
 
-def sync_traffic_signs(folder, data_url=DATA_URL, verbose=True):
+def sync_features(folder, prefix=PREFIX_ZEICHEN, verbose=True):
     """Aktuelle Parquets (pro Bundesland) nach `folder` spiegeln.
 
-    Geladen wird nur, was lokal fehlt oder auf dem Server neuer ist.
-    `ml-ts_metadata.json` listet die Bundeslaender des letzten Laufs und dient
-    als Manifest - ohne das Manifest wuerde ein Bundesland, das im letzten Lauf
-    ausgefallen ist, still mit veralteten Daten mitlaufen.
+    Geladen wird nur, was lokal fehlt oder auf dem Server neuer ist. Die
+    Metadatendatei listet die Bundeslaender des letzten Laufs und dient als
+    Manifest - ohne sie wuerde ein Bundesland, das im letzten Lauf ausgefallen
+    ist, still mit veralteten Daten mitlaufen.
+
+    `prefix` waehlt den Datensatz. Ohne diesen Schritt rechnet ein Notebook auf
+    dem, was zufaellig lokal liegt: beim Bau des Marking-Notebooks am
+    20.09.2026 waren das Parquets vom 01.07., waehrend der Server den 17.09.
+    hatte - elf Wochen Unterschied, ohne jeden Hinweis.
     """
+    data_url, metadata_file = DATENQUELLE[prefix]
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True)
 
-    response = requests.get(data_url + "ml-ts_metadata.json", timeout=60)
+    response = requests.get(data_url + metadata_file, timeout=60)
     response.raise_for_status()
     metadata = response.json()
 
     for state in sorted(metadata["bundeslaender"]):
-        name = f"mapillary_traffic-signs_{state}_latest.parquet"
+        name = f"{prefix}_{state}_latest.parquet"
         local_path = folder / name
 
         head = requests.head(data_url + name, timeout=60)
@@ -147,8 +183,11 @@ def sync_traffic_signs(folder, data_url=DATA_URL, verbose=True):
     return metadata
 
 
-def load_traffic_signs(folder, values=None, columns=None, expect_files=None, verbose=True):
-    """Alle Bundesland-Parquets einlesen und zu einem GeoDataFrame verbinden.
+def load_features(folder, prefix=PREFIX_ZEICHEN, values=None, columns=None, expect_files=None, verbose=True):
+    """Alle Bundesland-Parquets eines Datensatzes einlesen und verbinden.
+
+    `prefix` waehlt den Datensatz: PREFIX_ZEICHEN fuer die Verkehrszeichen,
+    PREFIX_MARKIERUNGEN fuer die Fahrbahnmarkierungen.
 
     Gefiltert und dedupliziert wird pro Datei, nicht erst nach dem
     Zusammenfuegen: die Dateien enthalten alle Zeichenklassen, die
@@ -163,9 +202,9 @@ def load_traffic_signs(folder, values=None, columns=None, expect_files=None, ver
     Bei doppelten ids gewinnt das erste Vorkommen in alphabetischer
     Dateireihenfolge; die Zeilenreihenfolge bleibt die der Dateien.
     """
-    paths = sorted(glob.glob(str(Path(folder) / "mapillary_traffic-signs_*.parquet")))
+    paths = sorted(glob.glob(str(Path(folder) / f"{prefix}_*.parquet")))
     if not paths:
-        raise FileNotFoundError(f"Keine Verkehrszeichen-Parquets in {folder}")
+        raise FileNotFoundError(f"Keine {prefix}-Parquets in {folder}")
     if expect_files is not None and len(paths) != expect_files:
         raise RuntimeError(
             f"nur {len(paths)} von {expect_files} Bundesland-Dateien in {folder} - nicht weiterverarbeiten"
@@ -185,11 +224,11 @@ def load_traffic_signs(folder, values=None, columns=None, expect_files=None, ver
         frames.append(gdf.loc[neu].copy())
 
     if not frames:
-        raise RuntimeError(f"keine Zeichen der gesuchten Klassen in {folder}")
+        raise RuntimeError(f"keine Erkennungen der gesuchten Klassen in {prefix}-Parquets unter {folder}")
 
     signs = gpd.GeoDataFrame(pd.concat(frames, ignore_index=True), crs=frames[0].crs)
     if verbose:
-        print(f"{len(paths)} Dateien, {len(signs):,} Zeichen".replace(",", "."))
+        print(f"{len(paths)} Dateien, {len(signs):,} Erkennungen".replace(",", "."))
     return signs
 
 
@@ -295,12 +334,18 @@ _RADINFRA_DESIGNATED = (
 )
 
 
-def filter_cycle_infrastructure(ways, verbose=True):
+def filter_cycle_infrastructure(ways, designated_werte=("designated",), verbose=True):
     """Aus dem vorgefilterten OSM-Netz die Wege mit echter Radinfrastruktur ziehen.
+
+    `designated_werte` legt fest, was in den bicycle-/sidewalk-Spalten als
+    Radinfrastruktur zaehlt. Die Verkehrszeichen-Kampagne nimmt nur
+    "designated", die Marking-Kampagne zusaetzlich "yes" - dort geht es um
+    Fahrbahnmarkierungen, die auch auf freigegebenen Wegen liegen koennen.
 
     Fehlende Spalten werden uebersprungen statt einen KeyError zu werfen -
     welche Tags im Parquet landen, haengt an der osmconf-ini von Notebook 0.
     """
+    designated_werte = list(designated_werte)
     treffer = ways["highway"] == "cycleway"
     genutzt = ["highway=cycleway"]
 
@@ -311,7 +356,7 @@ def filter_cycle_infrastructure(ways, verbose=True):
 
     for spalte in _RADINFRA_DESIGNATED:
         if spalte in ways.columns:
-            treffer |= ways[spalte] == "designated"
+            treffer |= ways[spalte].isin(designated_werte)
             genutzt.append(spalte)
 
     fehlend = [s for s in _RADINFRA_VORHANDEN + _RADINFRA_DESIGNATED if s not in ways.columns]
@@ -319,6 +364,7 @@ def filter_cycle_infrastructure(ways, verbose=True):
     if verbose:
         print(f"Radinfra: {len(radinfra):,} von {len(ways):,} Wegen".replace(",", "."))
         print(f"  genutzte Tags: {', '.join(genutzt)}")
+        print(f"  als Radinfra gewertet: {', '.join(designated_werte)}")
         if fehlend:
             print(f"  nicht im Parquet: {', '.join(fehlend)}")
     return radinfra
@@ -566,14 +612,19 @@ def drop_near_existing_tasks(signs, existing, radius_m=30.0, metric_crs=METRISCH
 _BR = "  "
 
 
-def _instruction(zeichen, abstand_m, aufnahme, image_url, tilda_url):
+def _bild_zeile(image_url, aufnahme, was):
+    """Die Bildzeile der Aufgabenbeschreibung, oder ein Hinweis, wenn kein Bild da ist."""
+    if not image_url:
+        return "- 📷 Kein Mapillary-Bild verfügbar."
     aufnahme_text = aufnahme.strftime("%d.%m.%Y") if pd.notna(aufnahme) else "unbekannt"
-    bild_zeile = (
+    return (
         f"- 📷 [**Mapillary-Bild anzeigen**]({image_url}){_BR}\n"
-        f"(Das ist die neueste Aufnahme, auf der das Zeichen erkannt wurde: **{aufnahme_text}**.)"
-        if image_url
-        else "- 📷 Kein Mapillary-Bild verfügbar."
+        f"(Das ist die neueste Aufnahme, auf der {was} erkannt wurde: **{aufnahme_text}**.)"
     )
+
+
+def _instruction_zeichen(zeichen, abstand_m, aufnahme, image_url, tilda_url):
+    bild_zeile = _bild_zeile(image_url, aufnahme, "das Zeichen")
     return f"""
 ### 🚧 Aufgabe: Verkehrszeichen **DE:{zeichen}** überprüfen und Radinfra hinzufügen
 
@@ -615,51 +666,140 @@ _HERVORHEBEN = (
 
 _MAPILLARY_HIGHLIGHT = "".join(f"&trafficSign[]={v}" for v in _HERVORHEBEN)
 
+# Die Marking-Kampagne hebt das Fahrrad-Symbol statt der Verkehrszeichen hervor.
+_MAPILLARY_HIGHLIGHT_MARKIERUNG = "".join(f"&mapFeature[]={v}" for v in MARKIERUNGEN)
 
-def build_maproulette_geojson(tasks):
+_INSTRUCTION_MARKIERUNG_LINKS = f"""
+### 📚 Nützliche Links
+
+- OSM-Wiki: [Radinfra auf der Fahrbahn (Übersicht)](https://wiki.openstreetmap.org/wiki/Template:DE:Map_Features:cycleway)
+- OSM-Wiki: [Radverkehrsanlagen kartieren](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren)
+
+---
+
+### Kopiervorlage
+
+- Schutzstreifen:{_BR}
+    `cycleway:[right|left|both]=lane`{_BR}
+    `cycleway:[right|left|both]:lane=advisory`
+
+- Radfahrstreifen:{_BR}
+    `cycleway:[right|left|both]=lane`{_BR}
+    `cycleway:[right|left|both]:lane=exclusive`
+
+- Piktogrammketten:{_BR}
+    `cycleway:[right|left|both]=shared_lane`{_BR}
+    `cycleway:[right|left|both]:lane=pictogram`
+"""
+
+
+def _instruction_markierung(abstand_m, aufnahme, image_url, tilda_url):
+    bild_zeile = _bild_zeile(image_url, aufnahme, "das Symbol")
+    return f"""
+### 🚧 Aufgabe: Erkanntes Fahrrad-Symbol überprüfen und Radinfra hinzufügen
+
+Bitte schaue dir den Bereich rund um dieses erkannte Map Feature an. Vermutlich fehlt hier eine Radinfrastruktur, die du hinzufügen kannst. Die nächste OSM-Radinfra ist **{abstand_m}** entfernt.
+
+---
+
+### 🖼️ Bild & Karte
+
+{bild_zeile}
+
+- 🗺️ [**In radinfra.de bzw. TILDA ansehen**]({tilda_url}){_BR}
+(Hinweis: Ist hilfreich um den aktuellen Stand der Radinfrastruktur vor Ort zu prüfen.)
+
+---
+{_INSTRUCTION_MARKIERUNG_LINKS}
+---
+
+Viel Erfolg beim Prüfen und Mappen! 🗺️
+"""
+
+
+def _abstand_text(abstand, suchradius=None):
+    """"ca. 27 m", oder "mehr als 30 m", wenn im Suchradius nichts lag."""
+    if np.isfinite(abstand):
+        return f"ca. {abstand:.0f} m"
+    grenze = suchradius if suchradius is not None else max(s for s, _ in PRIO_AB_DISTANZ)
+    return f"mehr als {grenze:.0f} m"
+
+
+def _bild_url(image_id, hervorhebung):
+    if not image_id:
+        return None
+    return f"https://www.mapillary.com/app/?pKey={image_id}&focus=photo{hervorhebung}"
+
+
+def _tilda_url(lat, lon, daten):
+    return (
+        f"https://tilda-geo.de/regionen/radinfra?map=17.4/{lat}/{lon}"
+        f"&config=pdqyyt.7h3d.16g9vk&v=2&data={daten}"
+    )
+
+
+def aufgabe_verkehrszeichen(row):
+    """MapRoulette-Properties einer Aufgabe der Verkehrszeichen-Kampagne."""
+    lat, lon = round(row.geometry.y, 6), round(row.geometry.x, 6)
+    image_id = row["image_id"] if pd.notna(row["image_id"]) else None
+    image_url = _bild_url(image_id, _MAPILLARY_HIGHLIGHT)
+    tilda_url = _tilda_url(lat, lon, "mapillary-cycleway-traffic-signs")
+
+    return {
+        "image_id": image_id,
+        "Verkehrzeichen": str(row["VZ"]),
+        "instruction": _instruction_zeichen(
+            row["VZ"], _abstand_text(row["dist_cw_m"]), row["image_captured_at"], image_url, tilda_url
+        ),
+        "priority": int(row["prio"]),
+        "name": row["prio_text"],
+    }
+
+
+def aufgabe_markierung(row):
+    """MapRoulette-Properties einer Aufgabe der Marking-Kampagne."""
+    lat, lon = round(row.geometry.y, 6), round(row.geometry.x, 6)
+    image_id = row["image_id"] if pd.notna(row["image_id"]) else None
+    image_url = _bild_url(image_id, _MAPILLARY_HIGHLIGHT_MARKIERUNG)
+    # Die Marking-Karte blendet zusaetzlich die Verkehrszeichen ein, damit man
+    # Symbol und Beschilderung zusammen sieht.
+    tilda_url = _tilda_url(lat, lon, "mapillary-cycleway-markings,mapillary-cycleway-traffic-signs")
+
+    return {
+        "image_id": image_id,
+        "MapFeaturePoint": row["MapFeaturePoint"],
+        "instruction": _instruction_markierung(
+            _abstand_text(row["dist_cw_m"]), row["image_captured_at"], image_url, tilda_url
+        ),
+        "priority": int(row["prio"]),
+        "name": row["prio_text"],
+    }
+
+
+def build_maproulette_geojson(tasks, aufgabe=aufgabe_verkehrszeichen):
     """GeoJSON-FeatureCollection fuer den MapRoulette-Import.
 
-    Erwartet die Spalten id, VZ, dist_cw_m, prio, prio_text, image_id,
-    image_captured_at und Punktgeometrie in EPSG:4326.
+    `aufgabe` baut aus einer Zeile die MapRoulette-Properties - je Kampagne
+    unterschiedlich, weil Aufgabentext, Mapillary-Hervorhebung und TILDA-Ebenen
+    sich unterscheiden. Gemeinsam bleiben Geometrie und die Feature-id, die die
+    Mapillary-id der Erkennung ist.
+
+    Erwartet die Spalten id, dist_cw_m, prio, prio_text, image_id,
+    image_captured_at und Punktgeometrie; dazu, was `aufgabe` braucht.
     """
     tasks = tasks.to_crs(4326)
-    features = []
-
-    for _, row in tasks.iterrows():
-        lat, lon = round(row.geometry.y, 6), round(row.geometry.x, 6)
-
-        image_id = row["image_id"] if pd.notna(row["image_id"]) else None
-        image_url = (
-            f"https://www.mapillary.com/app/?pKey={image_id}&focus=photo{_MAPILLARY_HIGHLIGHT}"
-            if image_id
-            else None
-        )
-        tilda_url = (
-            f"https://tilda-geo.de/regionen/radinfra?map=17.4/{lat}/{lon}"
-            "&config=pdqyyt.7h3d.16g9vk&v=2&data=mapillary-cycleway-traffic-signs"
-        )
-
-        abstand = row["dist_cw_m"]
-        abstand_text = "mehr als 30 m" if not np.isfinite(abstand) else f"ca. {abstand:.0f} m"
-
-        features.append(
+    return {
+        "type": "FeatureCollection",
+        "features": [
             {
                 "type": "Feature",
                 "id": str(row["id"]),
                 "geometry": row.geometry.__geo_interface__,
-                "properties": {
-                    "image_id": image_id,
-                    "Verkehrzeichen": str(row["VZ"]),
-                    "instruction": _instruction(
-                        row["VZ"], abstand_text, row["image_captured_at"], image_url, tilda_url
-                    ),
-                    "priority": int(row["prio"]),
-                    "name": row["prio_text"],
-                },
+                "properties": aufgabe(row),
             }
-        )
-
-    return {"type": "FeatureCollection", "features": features}
+            for _, row in tasks.iterrows()
+        ],
+    }
 
 
 def write_geojson(collection, path, verbose=True):
