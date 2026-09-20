@@ -14,7 +14,11 @@ case "$PIPELINE" in
   ts)
     NOTEBOOKS=(
       "2_get_mapillary_traffic_signs.ipynb"
-      "use_cases/cycleway_complete_campaign/x_mapillary-trafficsigns_generateOutput_2radinfra.ipynb"
+      # Umgestellt am 20.09.2026 von x_ auf xb_ (gleiche Ausgabe, Logik in
+      # cw_campaign.py). Zurueck geht es, indem hier wieder x_... steht;
+      # das Notebook liegt unveraendert daneben. Nachweis der Gleichheit:
+      # use_cases/cycleway_complete_campaign/xb_unterschiede.md
+      "use_cases/cycleway_complete_campaign/xb_mapillary-trafficsigns_generateOutput_2radinfra.ipynb"
       "use_cases/cycleway_complete_campaign/2_create_pmtiles_from_geojson_trafficsigns.ipynb"
     )
     ;;
