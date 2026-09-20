@@ -463,7 +463,7 @@ def _write_markings(folder, name, rows):
     gdf.to_parquet(folder / f"mapillary_map-feature-points_{name}_latest.parquet")
 
 
-def test_load_traffic_signs_guard_schlaegt_bei_fehlender_datei_an(tmp_path):
+def test_load_features_guard_schlaegt_bei_fehlender_datei_an(tmp_path):
     """Der Vorfall vom 26.08.2026: ein Bundesland fehlt und niemand merkt es."""
     _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
 
@@ -474,7 +474,7 @@ def test_load_traffic_signs_guard_schlaegt_bei_fehlender_datei_an(tmp_path):
     assert len(cw.load_features(tmp_path, verbose=False)) == 1
 
 
-def test_load_traffic_signs_liest_nur_die_gewuenschten_spalten(tmp_path):
+def test_load_features_liest_nur_die_gewuenschten_spalten(tmp_path):
     _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
     spalten = ["id", "value", "geometry"]
 
@@ -483,7 +483,7 @@ def test_load_traffic_signs_liest_nur_die_gewuenschten_spalten(tmp_path):
     assert set(spalten) <= set(geladen.columns)
 
 
-def test_load_traffic_signs_erstes_vorkommen_gewinnt(tmp_path):
+def test_load_features_erstes_vorkommen_gewinnt(tmp_path):
     # Dieselbe id in zwei Bundeslaendern - Punkte an der Grenze gibt es wirklich.
     _write_signs(tmp_path, "DE-BB", [(7, "regulatory--bicycles-only--g1")])
     _write_signs(tmp_path, "DE-BE", [(7, "regulatory--shared-path-pedestrians-and-bicycles--g1")])
