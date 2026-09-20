@@ -192,7 +192,16 @@ def sync_features(folder, prefix=PREFIX_ZEICHEN, verbose=True):
     return metadata
 
 
-def load_features(folder, prefix=PREFIX_ZEICHEN, values=None, columns=None, expect_files=None, verbose=True):
+def load_features(
+    folder,
+    prefix=PREFIX_ZEICHEN,
+    values=None,
+    columns=None,
+    expect_files=None,
+    seen_after=None,
+    first_seen_after=None,
+    verbose=True,
+):
     """Alle Bundesland-Parquets eines Datensatzes einlesen und verbinden.
 
     `prefix` waehlt den Datensatz: PREFIX_ZEICHEN fuer die Verkehrszeichen,
@@ -207,6 +216,11 @@ def load_features(folder, prefix=PREFIX_ZEICHEN, values=None, columns=None, expe
     `expect_files` ist der Vollstaendigkeits-Guard: fehlt eine Bundesland-Datei,
     fehlt sie auch im publizierten Ergebnis. Am 26.08.2026 ist genau das still
     durchgelaufen, deshalb hier ein Abbruch statt einer Warnung.
+
+    `seen_after` / `first_seen_after` filtern schon beim Lesen, je Datei.
+    Das spart nicht nur RAM - es bestimmt auch den Zeilenindex, und der wird
+    beim Export zur Top-Level-id der GeoJSON-Features. Wer erst nach dem
+    Zusammenfuegen filtert, bekommt dieselben Zeilen mit anderen ids.
 
     Bei doppelten ids gewinnt das erste Vorkommen in alphabetischer
     Dateireihenfolge; die Zeilenreihenfolge bleibt die der Dateien.
@@ -225,6 +239,13 @@ def load_features(folder, prefix=PREFIX_ZEICHEN, values=None, columns=None, expe
         gdf = gpd.read_parquet(path, columns=columns)
         if values is not None:
             gdf = gdf[gdf["value"].isin(values)]
+        # ISO-Datumsstrings lassen sich lexikografisch vergleichen.
+        if seen_after is not None:
+            gdf = gdf[gdf["last_seen_at"] > seen_after]
+        if first_seen_after is not None:
+            gdf = gdf[gdf["first_seen_at"] > first_seen_after]
+        if gdf.empty:
+            continue
         gdf = gdf.drop_duplicates(subset=["id"])
         neu = ~gdf["id"].isin(gesehen)
         if not neu.any():
@@ -269,9 +290,13 @@ def clip_to_boundary(points, boundary, verbose=True):
 
     Die Parquets sind nach Zoom-14-Kacheln geschnitten, Kacheln am Rand ragen
     ueber die Grenze hinaus.
+
+    Der Index wird wie bei `filter_stable_signs` bewusst nicht neu vergeben:
+    GeoDataFrame.to_json() schreibt ihn als Top-Level-id der Features, und
+    tippecanoe traegt die in die Vector Tiles.
     """
     inside = gpd.sjoin(points, boundary[["geometry"]].to_crs(points.crs), predicate="within", how="inner")
-    inside = inside.drop(columns=["index_right"]).reset_index(drop=True)
+    inside = inside.drop(columns=["index_right"])
     if verbose:
         print(f"innerhalb der Grenze: {len(inside):,} von {len(points):,}".replace(",", "."))
     return inside
@@ -1068,6 +1093,96 @@ not need to clone this repository:
 | --- | --- |
 | 🗺️ Vector tiles (PMTiles) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.pmtiles> |
 | 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.geojson.gz> |
+
+Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+"""
+
+
+# --- 9. Export der Markierungen fuer radinfra.de ----------------------------
+
+# Spalten und Reihenfolge der veroeffentlichten Markierungs-GeoJSON.
+EXPORT_SPALTEN_MARKIERUNGEN = [
+    "MapFeaturePoint",
+    "first_seen_at",
+    "last_seen_at",
+    "id",
+    "value",
+    "geometry",
+]
+
+
+def add_marking_label(features):
+    """Spalte `MapFeaturePoint` mit der lesbaren Bezeichnung ergaenzen."""
+    features = features.copy()
+    features["MapFeaturePoint"] = features["value"].map(MARKIERUNGEN)
+    return features
+
+
+def filter_by_days_seen(features, min_days, verbose=True):
+    """Nur Erkennungen behalten, zwischen deren erster und letzter Sichtung
+    mehr als `min_days` Tage liegen.
+
+    Die Marking-Kampagne rechnet in Tagen, die Verkehrszeichen-Kampagne in
+    Monaten (`filter_stable_signs`) - beides gewachsen, beides beibehalten,
+    damit die veroeffentlichten Staende vergleichbar bleiben.
+
+    Der Index wird nicht neu vergeben, er wird beim Export zur Feature-id.
+    """
+    erste = pd.to_datetime(features["first_seen_at"], errors="coerce")
+    letzte = pd.to_datetime(features["last_seen_at"], errors="coerce")
+    uebrig = features[(letzte - erste).dt.days > min_days]
+    if verbose:
+        print(f"mehr als {min_days} Tage zwischen erster und letzter Sichtung: "
+              f"{len(uebrig):,} von {len(features):,}".replace(",", "."))
+    return uebrig
+
+
+def build_readme_markierungen(
+    anzahl,
+    stand,
+    datensatz_von,
+    zeitraum,
+    seit="2023-01-01",
+    min_days=180,
+):
+    """README-Text fuer mk_output/."""
+    return f"""
+# Bicycle Marking Detections Output
+
+This folder contains the output file for detected bicycle markings from Mapillary.{_BR}
+The output has been created on **{stand}**.
+
+## Overview
+
+- **Total detections**: {anzahl}
+- **Mapillary dataset from**: {datensatz_von}
+- **Detection period**: {zeitraum}
+- **Marking type**: {", ".join(MARKIERUNGEN.values())}
+
+## Applied Filters
+
+- Only detections with **2+ observations** (min. {min_days} days apart)
+- Only detections seen after **{seit}**
+- Restricted to **Germany** boundaries
+
+## Output Files
+
+- `mapillary_markings_bicycle_latest.geojson.gz` - Compressed GeoJSON with all markings
+- `markings_by_month.svg` - Detection frequency over time
+
+## Statistics Plot
+
+![Anzahl pro Monat](markings_by_month.svg)
+
+## Downloads
+
+The files in this folder are also published for direct download, so consumers do
+not need to clone this repository:
+
+| File | Download |
+| --- | --- |
+| 🗺️ Vector tiles (PMTiles) | <https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/mapillary_markings_bicycle_latest.pmtiles> |
+| 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/mapillary_markings_bicycle_latest.geojson.gz> |
 
 Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 """
