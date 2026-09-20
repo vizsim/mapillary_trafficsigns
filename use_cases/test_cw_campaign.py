@@ -4,7 +4,7 @@ Der wichtigste Test ist `test_newest_image_ids_nimmt_neuestes_bild`: er
 beschreibt genau den Fehler des Vorgaengers, der das letzte Element einer
 unsortierten Liste nahm.
 
-Lauf: `uv run --project .. pytest test_cw_campaign.py` im Kampagnenordner.
+Lauf: `uv run pytest test_cw_campaign.py` in use_cases/.
 """
 
 import ast
@@ -449,22 +449,36 @@ def _write_signs(folder, name, rows):
     gdf.to_parquet(folder / f"mapillary_traffic-signs_{name}_latest.parquet")
 
 
+def _write_markings(folder, name, rows):
+    gdf = gpd.GeoDataFrame(
+        {
+            "id": [r[0] for r in rows],
+            "value": [r[1] for r in rows],
+            "first_seen_at": ["2025-01-01"] * len(rows),
+            "last_seen_at": ["2026-01-01"] * len(rows),
+            "geometry": [Point(13, 52)] * len(rows),
+        },
+        crs="EPSG:4326",
+    )
+    gdf.to_parquet(folder / f"mapillary_map-feature-points_{name}_latest.parquet")
+
+
 def test_load_traffic_signs_guard_schlaegt_bei_fehlender_datei_an(tmp_path):
     """Der Vorfall vom 26.08.2026: ein Bundesland fehlt und niemand merkt es."""
     _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
 
     with pytest.raises(RuntimeError, match="1 von 16"):
-        cw.load_traffic_signs(tmp_path, expect_files=16, verbose=False)
+        cw.load_features(tmp_path, expect_files=16, verbose=False)
 
     # Ohne Sollwert laeuft es durch.
-    assert len(cw.load_traffic_signs(tmp_path, verbose=False)) == 1
+    assert len(cw.load_features(tmp_path, verbose=False)) == 1
 
 
 def test_load_traffic_signs_liest_nur_die_gewuenschten_spalten(tmp_path):
     _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
     spalten = ["id", "value", "geometry"]
 
-    geladen = cw.load_traffic_signs(tmp_path, columns=spalten, verbose=False)
+    geladen = cw.load_features(tmp_path, columns=spalten, verbose=False)
     assert "extra" not in geladen.columns
     assert set(spalten) <= set(geladen.columns)
 
@@ -474,16 +488,33 @@ def test_load_traffic_signs_erstes_vorkommen_gewinnt(tmp_path):
     _write_signs(tmp_path, "DE-BB", [(7, "regulatory--bicycles-only--g1")])
     _write_signs(tmp_path, "DE-BE", [(7, "regulatory--shared-path-pedestrians-and-bicycles--g1")])
 
-    geladen = cw.load_traffic_signs(tmp_path, verbose=False)
+    geladen = cw.load_features(tmp_path, verbose=False)
     assert len(geladen) == 1
     # DE-BB kommt alphabetisch zuerst.
     assert geladen.iloc[0]["value"] == "regulatory--bicycles-only--g1"
 
 
-def test_load_traffic_signs_ohne_treffer(tmp_path):
+def test_load_features_ohne_treffer(tmp_path):
     _write_signs(tmp_path, "DE-HB", [(1, "regulatory--stop--g1")])
-    with pytest.raises(RuntimeError, match="keine Zeichen"):
-        cw.load_traffic_signs(tmp_path, values=cw.ZEICHEN, verbose=False)
+    with pytest.raises(RuntimeError, match="keine Erkennungen"):
+        cw.load_features(tmp_path, values=cw.ZEICHEN, verbose=False)
+
+
+def test_load_features_waehlt_den_datensatz_ueber_den_prefix(tmp_path):
+    """Beide Datensaetze liegen im selben Ordner - der Prefix trennt sie.
+
+    Beim Bau des mk-Notebooks las load_features zuerst die Verkehrszeichen und
+    suchte darin nach Markierungen. Der Guard hat das laut gemeldet, still
+    leer zurueckzugeben waere schlimmer gewesen.
+    """
+    _write_signs(tmp_path, "DE-HB", [(1, "regulatory--bicycles-only--g1")])
+    _write_markings(tmp_path, "DE-HB", [(2, "marking--discrete--symbol--bicycle")])
+
+    zeichen = cw.load_features(tmp_path, prefix=cw.PREFIX_ZEICHEN, verbose=False)
+    marks = cw.load_features(tmp_path, prefix=cw.PREFIX_MARKIERUNGEN, verbose=False)
+
+    assert list(zeichen["id"]) == [1]
+    assert list(marks["id"]) == [2]
 
 
 def test_count_expected_states(tmp_path):
@@ -729,7 +760,7 @@ def _pakete_aus_pyproject(pfad):
 # Importname -> Name auf PyPI, wo beide auseinandergehen.
 _PAKETNAME = {"dateutil": "python-dateutil", "yaml": "pyyaml", "PIL": "pillow"}
 
-_REPO = Path(__file__).resolve().parents[2]
+_REPO = Path(__file__).resolve().parents[1]
 
 
 @pytest.mark.skipif(

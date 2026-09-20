@@ -1,12 +1,13 @@
 # `1b_` gegenüber `1_` — was anders ist und warum
 
 **Stand:** 2026-09-20 · betrifft `1b_merge_mapillary-trafficsigns_osm-cycleways.ipynb`
-und `cw_campaign.py`
+und `../cw_campaign.py`
 
 `1_merge_mapillary-trafficsigns_osm-cycleways.ipynb` bleibt unverändert liegen.
 `1b_` ist eine zweite Fassung mit derselben Aufgabe: aus Mapillary-Verkehrszeichen
 MapRoulette-Aufgaben für fehlende Radinfrastruktur bauen. Die Rechenschritte liegen in
-`cw_campaign.py` und sind mit `pytest test_cw_campaign.py` prüfbar (23 Tests, ohne Netz).
+[`../cw_campaign.py`](../cw_campaign.py) und sind mit `pytest test_cw_campaign.py` in
+`use_cases/` prüfbar (49 Tests, ohne Netz).
 
 ---
 
@@ -214,7 +215,7 @@ eine doppelt anzulegen. Anpassbar über das Argument `radius_m`.
 cd use_cases/cycleway_complete_campaign
 
 # Tests (ohne Netz, ~1 s)
-uv run --project .. pytest test_cw_campaign.py
+uv run pytest test_cw_campaign.py   # in use_cases/
 
 # Notebook
 uv run --project .. jupyter lab 1b_merge_mapillary-trafficsigns_osm-cycleways.ipynb

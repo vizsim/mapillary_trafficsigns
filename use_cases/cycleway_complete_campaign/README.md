@@ -92,7 +92,7 @@ nur die `▶️`-Zeile.
 
 | | |
 | --- | --- |
-| [`cw_campaign.py`](cw_campaign.py) | die Logik beider Stränge, 48 Tests in [`test_cw_campaign.py`](test_cw_campaign.py) |
+| [`../cw_campaign.py`](../cw_campaign.py) | die Logik beider Stränge und der Marking-Kampagne, 49 Tests in [`../test_cw_campaign.py`](../test_cw_campaign.py) |
 | `../utils/processed_osm_files/` | das Radwegnetz, erzeugt von [`../0_prepare_osm_network.ipynb`](../0_prepare_osm_network.ipynb), gelesen auch von der Marking-Kampagne |
 | `../../output/mapillary_traffic-signs_DE-*.parquet` | Zeichen je Bundesland |
 | `../utils/processed_motorways_germany_251215.parquet` | Autobahnen, ändert sich kaum |
@@ -100,8 +100,13 @@ nur die `▶️`-Zeile.
 
 ### Die Regel, die man leicht übersieht
 
-`cw_campaign.py` wird **aus beiden Umgebungen importiert** — aus dem uv-Env von Strang A
-und aus dem pip-Env des Worker-Images in Strang B.
+`../cw_campaign.py` liegt seit dem 20.09.2026 eine Ebene höher, weil auch die
+Marking-Kampagne es nutzt. Die Notebooks holen es sich mit `sys.path.insert(0, "..")` —
+das funktioniert, weil Jupyter und nbconvert das Arbeitsverzeichnis auf das
+Notebook-Verzeichnis setzen, dieselbe Annahme wie bei `../../output/` und `../utils/`.
+
+Es wird **aus beiden Umgebungen importiert** — aus dem uv-Env von Strang A und aus dem
+pip-Env des Worker-Images in Strang B.
 
 > Jedes Paket, das `cw_campaign.py` importiert, muss in **beiden** Abhängigkeitslisten
 > stehen, auf derselben Version.
@@ -119,12 +124,13 @@ ist die Invariante strukturell erfüllt und der Test kann weg.
 ## Bedienung
 
 ```bash
+cd use_cases
+
 # Tests (ohne Netz, ~1 s)
-cd use_cases/cycleway_complete_campaign
-uv run --project .. pytest test_cw_campaign.py
+uv run pytest test_cw_campaign.py
 
 # Strang A von Hand
-uv run --project .. jupyter lab
+uv run jupyter lab
 ```
 
 Zugangsdaten kommen aus `../utils/config_mapillary_privat.json` oder, wenn gesetzt, aus

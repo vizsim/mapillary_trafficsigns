@@ -1,7 +1,7 @@
 # `xb_` gegenüber `x_` — Gegenprobe und Umstiegsweg
 
 **Stand:** 2026-09-20 · betrifft `xb_mapillary-trafficsigns_generateOutput_2radinfra.ipynb`
-und `cw_campaign.py`
+und `../cw_campaign.py`
 
 `x_mapillary-trafficsigns_generateOutput_2radinfra.ipynb` **läuft unverändert weiter**.
 Es ist in [`scripts/run_mapillary_notebooks.sh`](../../scripts/run_mapillary_notebooks.sh)
@@ -73,7 +73,7 @@ davon sind die Dateien Zeile für Zeile gleich.
 | | `x_` | `xb_` |
 | --- | --- | --- |
 | Zeichentabelle | sieben Konstanten plus zwei Mapping-Dicts im Notebook | `cw_campaign.ZEICHEN`, geteilt mit `1b_` |
-| Laden | Schleife über die Parquets im Notebook | `load_traffic_signs(columns=…, expect_files=…)` |
+| Laden | Schleife über die Parquets im Notebook | `load_features(prefix=…, columns=…, expect_files=…)` |
 | Vollständigkeits-Guard | zwei `assert` im Notebook | `expect_files`, wirft `RuntimeError` |
 | Autobahn-Ausschluss | gepufferter Zweitdatensatz + `mark_intersections` | `distance_to_nearest` |
 | Hinweistexte | drei Zellen | `add_hinweis` |
@@ -120,9 +120,10 @@ Eine Zeile in [`scripts/run_mapillary_notebooks.sh`](../../scripts/run_mapillary
 Mehr ist nicht nötig:
 
 - Der Pfad steht nur dort. `COMMIT_PATHS` gibt es seit `c1c3f66` nicht mehr.
-- `import cw_campaign` funktioniert im Container ohne `sys.path`-Anpassung: nbconvert
-  setzt das Arbeitsverzeichnis auf das Notebook-Verzeichnis, und das Modul liegt
-  daneben. Dass das so ist, beweist `x_` selbst — es liest `../../output/…`.
+- `import cw_campaign` funktioniert im Container: das Modul liegt seit dem 20.09.2026 in
+  `use_cases/`, und das Notebook holt es mit `sys.path.insert(0, "..")`. nbconvert setzt
+  das Arbeitsverzeichnis auf das Notebook-Verzeichnis — dieselbe Annahme, auf der auch
+  `../../output/…` beruht, wie `x_` selbst beweist. Kein neues Fehlerbild also.
 - Kein Image-Neubau. `cw_campaign` braucht nur geopandas/pandas/numpy/requests. Es
   *entfernt* sogar eine Abhängigkeit (`mapillary==1.0.15`), die in `requirements.txt`
   bleiben kann, solange andere Notebooks sie noch ziehen.
