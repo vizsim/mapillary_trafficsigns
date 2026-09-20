@@ -713,6 +713,34 @@ def test_build_readme_uebernimmt_die_filterwerte():
 # --- Metadaten --------------------------------------------------------------
 
 
+def test_sync_features_spiegelt_auch_das_manifest(tmp_path, monkeypatch):
+    """Parquets und Manifest muessen denselben Stand beschreiben.
+
+    Am 20.09.2026 lagen lokal Parquets vom 17.09. neben einer
+    ml-mf_metadata.json vom 01.07. - sync_features holte die Dateien, schrieb
+    das Manifest aber nicht mit. xb_ zieht aus dieser Datei das Datum fuer die
+    veroeffentlichte README.
+    """
+    manifest = {"bundeslaender": {}, "processed_date": "2026-09-17T06:28:45+00:00"}
+
+    class _Antwort:
+        status_code = 200
+
+        def json(self):
+            return manifest
+
+        def raise_for_status(self):
+            pass
+
+    monkeypatch.setattr(cw.requests, "get", lambda *a, **k: _Antwort())
+
+    (tmp_path / "ml-ts_metadata.json").write_text('{"processed_date": "2026-07-01T00:00:00+00:00"}')
+    cw.sync_features(tmp_path, verbose=False)
+
+    _, processed_date, _ = cw.read_dataset_metadata(tmp_path / "ml-ts_metadata.json")
+    assert processed_date == "2026-09-17T06:28:45+00:00"
+
+
 def test_read_dataset_metadata(tmp_path):
     assert cw.read_dataset_metadata(tmp_path / "fehlt.json") == (None, None, {})
 
