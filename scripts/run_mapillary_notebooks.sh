@@ -14,23 +14,21 @@ case "$PIPELINE" in
   ts)
     NOTEBOOKS=(
       "2_get_mapillary_traffic_signs.ipynb"
-      # Umgestellt am 20.09.2026 von x_ auf xb_ (gleiche Ausgabe, Logik in
-      # cw_campaign.py). Zurueck geht es, indem hier wieder x_... steht;
-      # das Notebook liegt unveraendert daneben. Nachweis der Gleichheit:
-      # use_cases/cycleway_complete_campaign/xb_unterschiede.md
-      "use_cases/cycleway_complete_campaign/xb_mapillary-trafficsigns_generateOutput_2radinfra.ipynb"
-      "use_cases/cycleway_complete_campaign/2_create_pmtiles_from_geojson_trafficsigns.ipynb"
+      # Seit 20.09.2026 die neu geschriebene Fassung (Logik in use_cases/cw_campaign.py).
+      # Zurueck geht es, indem hier wieder x_mapillary-trafficsigns_generateOutput_2radinfra
+      # steht; das alte Notebook liegt unveraendert daneben.
+      "use_cases/cycleway_complete_campaign/radinfra_1_export.ipynb"
+      "use_cases/cycleway_complete_campaign/radinfra_2_pmtiles.ipynb"
     )
     ;;
   mk)
     NOTEBOOKS=(
       "2b_get_mapillary_map_feature_points.ipynb"
-      # Umgestellt am 20.09.2026 von x_ auf xb_ (gleiche Ausgabe, Logik in
-      # use_cases/cw_campaign.py). Zurueck geht es, indem hier wieder x_... steht;
-      # das Notebook liegt unveraendert daneben. Nachweis der Gleichheit:
-      # use_cases/cycleway_complete_marking_campaign/xb_unterschiede.md
-      "use_cases/cycleway_complete_marking_campaign/xb_mapillary-markings_generateOutput_2radinfra.ipynb"
-      "use_cases/cycleway_complete_marking_campaign/2_create_pmtiles_from_geojson_markings.ipynb"
+      # Seit 20.09.2026 die neu geschriebene Fassung (Logik in use_cases/cw_campaign.py).
+      # Zurueck geht es, indem hier wieder x_mapillary-markings_generateOutput_2radinfra
+      # steht; das alte Notebook liegt unveraendert daneben.
+      "use_cases/cycleway_complete_marking_campaign/radinfra_1_export.ipynb"
+      "use_cases/cycleway_complete_marking_campaign/radinfra_2_pmtiles.ipynb"
     )
     ;;
   *)
@@ -98,7 +96,7 @@ echo
 for nb in "${NOTEBOOKS[@]}"; do
   echo "▶️  $nb"
   jupyter nbconvert --to notebook --execute "$nb" \
-    --output-dir "$EXECUTED_DIR" --output "$(basename "$nb")"
+    --output-dir "$EXECUTED_DIR" --output "${PIPELINE}_$(basename "$nb")"
   echo "✅ $nb"
   echo
   maybe_sleep "$SLEEP_BETWEEN_STEPS"

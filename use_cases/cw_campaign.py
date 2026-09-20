@@ -24,8 +24,9 @@ auch die Pfade `../../output/` und `../utils/` in den Notebooks beruhen. Mit
 einem einzigen uv-Env fuers Repo (Schritt 4 in docs/plan_notebooks_zu_python.md)
 faellt die sys.path-Zeile weg.
 
-Unterschiede zu den Vorgaenger-Notebooks stehen in
-cycleway_complete_campaign/1b_unterschiede.md und xb_unterschiede.md.
+Warum die Notebooks so aussehen, wie sie aussehen - Feature-ids, fehlender
+Sync im Server-Notebook, Bildauswahl - steht in den READMEs der beiden
+Kampagnenordner.
 """
 
 from __future__ import annotations
@@ -66,8 +67,9 @@ MARKIERUNGEN = {
     "marking--discrete--symbol--bicycle": "Lane marking - symbol (bicycle)",
 }
 
-# Mapillary-Klasse -> (VZ-Code, Beschreibung). Eine Quelle fuer beide Notebooks:
-# 1b_ baut daraus MapRoulette-Aufgaben, xb_ den Export fuer radinfra.de.
+# Mapillary-Klasse -> (VZ-Code, Beschreibung). Eine Quelle fuer beide Straenge:
+# maproulette_tasks baut daraus Aufgaben, radinfra_1_export den Datensatz
+# fuer radinfra.de.
 # https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:237 usw.
 ZEICHEN = {
     "regulatory--bicycles-only--g1": ("DE:237", "Radweg"),
