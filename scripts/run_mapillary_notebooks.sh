@@ -25,7 +25,11 @@ case "$PIPELINE" in
   mk)
     NOTEBOOKS=(
       "2b_get_mapillary_map_feature_points.ipynb"
-      "use_cases/cycleway_complete_marking_campaign/x_mapillary-markings_generateOutput_2radinfra.ipynb"
+      # Umgestellt am 20.09.2026 von x_ auf xb_ (gleiche Ausgabe, Logik in
+      # use_cases/cw_campaign.py). Zurueck geht es, indem hier wieder x_... steht;
+      # das Notebook liegt unveraendert daneben. Nachweis der Gleichheit:
+      # use_cases/cycleway_complete_marking_campaign/xb_unterschiede.md
+      "use_cases/cycleway_complete_marking_campaign/xb_mapillary-markings_generateOutput_2radinfra.ipynb"
       "use_cases/cycleway_complete_marking_campaign/2_create_pmtiles_from_geojson_markings.ipynb"
     )
     ;;
