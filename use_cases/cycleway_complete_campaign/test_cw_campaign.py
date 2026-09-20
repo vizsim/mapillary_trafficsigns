@@ -7,8 +7,12 @@ unsortierten Liste nahm.
 Lauf: `uv run --project .. pytest test_cw_campaign.py` im Kampagnenordner.
 """
 
+import ast
 import gzip
 import json
+import re
+import sys
+from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
@@ -687,6 +691,76 @@ def test_read_dataset_metadata(tmp_path):
         "bundeslaender": {"DE-HB": "x"},
     }))
     assert cw.read_dataset_metadata(pfad) == ("2026-09-01", "2026-09-15", {"DE-HB": "x"})
+
+
+# --- Beide Umgebungen ------------------------------------------------------
+
+
+def _dritt_importe(modul_pfad):
+    """Alle Drittpakete, die ein Modul importiert - auch innerhalb von Funktionen."""
+    baum = ast.parse(Path(modul_pfad).read_text(encoding="utf-8"))
+    namen = set()
+    for knoten in ast.walk(baum):
+        if isinstance(knoten, ast.Import):
+            namen.update(a.name.split(".")[0] for a in knoten.names)
+        elif isinstance(knoten, ast.ImportFrom) and knoten.level == 0 and knoten.module:
+            namen.add(knoten.module.split(".")[0])
+    return {n for n in namen if n not in sys.stdlib_module_names}
+
+
+def _pakete_aus_requirements(pfad):
+    gefunden = {}
+    for zeile in Path(pfad).read_text(encoding="utf-8").splitlines():
+        treffer = re.match(r"^([A-Za-z0-9_.\-]+)\s*==\s*(\S+)", zeile.split("#")[0].strip())
+        if treffer:
+            gefunden[treffer.group(1).lower().replace("_", "-")] = treffer.group(2)
+    return gefunden
+
+
+def _pakete_aus_pyproject(pfad):
+    gefunden = {}
+    for zeile in Path(pfad).read_text(encoding="utf-8").splitlines():
+        treffer = re.match(r'^\s*"([A-Za-z0-9_.\-]+)\s*==\s*([^"]+)"', zeile)
+        if treffer:
+            gefunden[treffer.group(1).lower().replace("_", "-")] = treffer.group(2)
+    return gefunden
+
+
+# Importname -> Name auf PyPI, wo beide auseinandergehen.
+_PAKETNAME = {"dateutil": "python-dateutil", "yaml": "pyyaml", "PIL": "pillow"}
+
+_REPO = Path(__file__).resolve().parents[2]
+
+
+@pytest.mark.skipif(
+    not (_REPO / "requirements.txt").exists() or not (_REPO / "use_cases" / "pyproject.toml").exists(),
+    reason="Abhaengigkeitslisten nicht gefunden",
+)
+def test_cw_campaign_laeuft_in_beiden_umgebungen():
+    """cw_campaign wird aus zwei getrennten Umgebungen importiert.
+
+    1b_ laeuft im uv-Env aus use_cases/pyproject.toml, xb_ woechentlich im
+    pip-Env des Worker-Images aus requirements.txt. Jedes Paket, das dieses
+    Modul importiert, muss deshalb in beiden Listen stehen - sonst faellt der
+    Bruch erst im naechsten Mittwochslauf auf.
+
+    Dieser Test ist bewusst Wegwerfware: sobald das Repo auf ein einziges
+    uv-Env umgestellt ist (Schritt 4 in docs/plan_notebooks_zu_python.md),
+    kann er weg - dann ist die Invariante strukturell erfuellt.
+    """
+    server = _pakete_aus_requirements(_REPO / "requirements.txt")
+    use_cases = _pakete_aus_pyproject(_REPO / "use_cases" / "pyproject.toml")
+
+    benoetigt = {_PAKETNAME.get(n, n).lower().replace("_", "-") for n in _dritt_importe(cw.__file__)}
+    assert benoetigt, "keine Drittimporte gefunden - Parser pruefen"
+
+    fehlt_server = sorted(benoetigt - set(server))
+    fehlt_use_cases = sorted(benoetigt - set(use_cases))
+    assert not fehlt_server, f"fehlt in requirements.txt (Worker-Image): {fehlt_server}"
+    assert not fehlt_use_cases, f"fehlt in use_cases/pyproject.toml: {fehlt_use_cases}"
+
+    abweichend = {p: (server[p], use_cases[p]) for p in benoetigt if server[p] != use_cases[p]}
+    assert not abweichend, f"verschiedene Versionen je Umgebung: {abweichend}"
 
 
 def test_dataset_stand_nimmt_das_juengste_datum():
