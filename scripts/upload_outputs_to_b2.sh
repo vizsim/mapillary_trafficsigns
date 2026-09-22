@@ -125,6 +125,7 @@ case "$SERVICE" in
       ".*mapillary_trafficsigns_bicycle_latest\.pmtiles$" \
       ".*mapillary_trafficsigns_bicycle_latest\.geojson\.gz$" \
       ".*signs_by_month\.svg$" \
+      ".*signs_history\.json$" \
       ".*README\.md$"
     ;;
 
