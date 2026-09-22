@@ -431,6 +431,137 @@ def test_readme_zeichen_deckt_die_tabelle_ab():
     assert aus_tabelle == aus_readme
 
 
+def test_readme_zeichen_nutzt_die_beschreibungen_aus_zeichen():
+    """Die deutsche Bezeichnung ist der Schluessel in die Zaehlung.
+
+    Sie steht als `traffic_sign_description` in der veroeffentlichten GeoJSON.
+    Laeuft sie hier auseinander, zaehlt die README still Nullen - die englische
+    daneben darf sich dagegen frei aendern.
+    """
+    aus_tabelle = {beschreibung for _, beschreibung in cw.ZEICHEN.values()}
+    aus_readme = {eintrag[2] for eintrag in cw.README_ZEICHEN}
+    assert aus_tabelle == aus_readme
+
+
+# --- README: Zaehlung, Historie, Deltas -------------------------------------
+
+_ZAEHLUNG = {
+    "Radweg": 32401,
+    "Gemeinsamer Geh- und Radweg": 75639,
+    "Getrennter Geh- und Radweg": 25751,
+    "Ende Fahrradstraße": 571,
+    "Radfahrer frei": 16153,
+    "Radverkehr im Gegenverkehr": 8150,
+}
+
+
+@pytest.mark.parametrize(
+    "aktuell, vorher, erwartet",
+    [
+        (110, 100, "+10"),
+        (90, 100, "-10"),
+        (100, 100, "+0"),
+        (12345, 1, "+12,344"),
+        (100, None, cw.NO_VALUE),
+        (100, "keine zahl", cw.NO_VALUE),
+    ],
+)
+def test_format_delta(aktuell, vorher, erwartet):
+    assert cw.format_delta(aktuell, vorher) == erwartet
+
+
+def test_build_readme_zeigt_delta_und_summe():
+    vorher = dict(_ZAEHLUNG, Radweg=32000)
+    readme = cw.build_readme(_ZAEHLUNG, "2026-09-20", previous=vorher, previous_date="2026-09-13")
+
+    assert "| Code | Sign | Description (DE) | Description (EN) | Count | Δ | Mapillary class |" in readme
+    assert "| Radweg | Cycle path | 32,401 | +401 |" in readme
+    assert "| **Previous run** | 2026-09-13 |" in readme
+    assert "change since the previous run (2026-09-13)" in readme
+
+    # Summe ueber alle Zeichen, Delta nur aus dem einen geaenderten.
+    assert f"| **Total** | | | | **{sum(_ZAEHLUNG.values()):,}** | **+401** | |" in readme
+    assert f"| **Total signs** | {sum(_ZAEHLUNG.values()):,} |" in readme
+
+
+def test_build_readme_ohne_vorlauf_laesst_das_delta_leer():
+    readme = cw.build_readme(_ZAEHLUNG, "2026-09-20")
+
+    assert "**Previous run**" not in readme
+    assert "stays empty until a second run" in readme
+    assert f"| 32,401 | {cw.NO_VALUE} |" in readme
+
+
+def test_build_readme_zaehlt_unbekannte_zeichen_nicht_in_die_summe():
+    """Sonst wichen Summenzeile und Spalten voneinander ab."""
+    readme = cw.build_readme({**_ZAEHLUNG, "Unbekanntes Zeichen": 999}, "2026-09-20")
+    assert f"**{sum(_ZAEHLUNG.values()):,}**" in readme
+
+
+def test_sign_history_rundlauf(tmp_path):
+    cw.append_sign_history(tmp_path, "2026-09-13", {"Radweg": 32000}, runs=[], verbose=False)
+    runs = cw.load_sign_history(tmp_path, url=None, verbose=False)
+    cw.append_sign_history(tmp_path, "2026-09-20", {"Radweg": 32401}, runs=runs, verbose=False)
+
+    runs = cw.load_sign_history(tmp_path, url=None, verbose=False)
+    assert [run["date"] for run in runs] == ["2026-09-13", "2026-09-20"]
+
+    # Der aktuelle Lauf vergleicht sich mit dem davor, nicht mit sich selbst.
+    vorher, datum = cw.latest_sign_counts(runs, before="2026-09-20")
+    assert (vorher, datum) == ({"Radweg": 32000}, "2026-09-13")
+
+
+def test_append_sign_history_ersetzt_den_lauf_vom_selben_tag(tmp_path):
+    """Ein Rerun nach Abbruch darf die Referenz des naechsten Laufs nicht sein."""
+    cw.append_sign_history(tmp_path, "2026-09-13", {"Radweg": 1}, runs=[], verbose=False)
+    runs = cw.load_sign_history(tmp_path, url=None, verbose=False)
+    cw.append_sign_history(tmp_path, "2026-09-20", {"Radweg": 2}, runs=runs, verbose=False)
+    runs = cw.load_sign_history(tmp_path, url=None, verbose=False)
+    cw.append_sign_history(tmp_path, "2026-09-20", {"Radweg": 3}, runs=runs, verbose=False)
+
+    runs = cw.load_sign_history(tmp_path, url=None, verbose=False)
+    assert [run["date"] for run in runs] == ["2026-09-13", "2026-09-20"]
+    assert runs[-1]["zeichen"] == {"Radweg": 3}
+    assert cw.latest_sign_counts(runs, before="2026-09-20") == ({"Radweg": 1}, "2026-09-13")
+
+
+def test_latest_sign_counts_ohne_historie():
+    assert cw.latest_sign_counts([], before="2026-09-20") == ({}, None)
+    nur_heute = [{"date": "2026-09-20", "zeichen": {"Radweg": 1}}]
+    assert cw.latest_sign_counts(nur_heute, before="2026-09-20") == ({}, None)
+
+
+def test_load_sign_history_ergaenzt_den_lokalen_stand_um_den_server(monkeypatch, tmp_path):
+    """ts_output/ liegt nicht in git - ein leerer Ordner darf die Historie nicht kappen."""
+    cw.append_sign_history(tmp_path, "2026-09-20", {"Radweg": 2}, runs=[], verbose=False)
+
+    class _Antwort:
+        status_code = 200
+
+        @staticmethod
+        def raise_for_status():
+            pass
+
+        @staticmethod
+        def json():
+            return {"runs": [{"date": "2026-09-13", "zeichen": {"Radweg": 1}}]}
+
+    monkeypatch.setattr(cw.requests, "get", lambda *a, **k: _Antwort())
+    runs = cw.load_sign_history(tmp_path, url="https://example.invalid/h.json", verbose=False)
+    assert [run["date"] for run in runs] == ["2026-09-13", "2026-09-20"]
+
+
+def test_load_sign_history_vertraegt_kaputte_dateien(monkeypatch, tmp_path):
+    """Ohne Historie entfallen nur die Deltas - der Lauf darf nicht scheitern."""
+    cw.sign_history_path(tmp_path).write_text("{kein json", encoding="utf-8")
+
+    def _kaputt(*args, **kwargs):
+        raise cw.requests.RequestException("kein Netz")
+
+    monkeypatch.setattr(cw.requests, "get", _kaputt)
+    assert cw.load_sign_history(tmp_path, url="https://example.invalid/h.json", verbose=False) == []
+
+
 # --- Laden: Guard, Spalten, Reihenfolge -------------------------------------
 
 
@@ -692,22 +823,20 @@ def test_svg_url_bildet_den_paketnamen_nach():
     assert f"converter@{cw.SVG_PKG_VERSION}" in cw.svg_url("DE:237")
 
 
-def test_build_readme_zaehlt_und_haelt_den_zeilenumbruch():
+def test_build_readme_zaehlt():
     readme = cw.build_readme({"Radweg": 42}, "2026-09-20")
 
-    assert "| DE:237 | Radweg |" in readme
-    assert "| 42 |" in readme
-    assert "| 0 |" in readme  # nicht gezaehlte Zeichen erscheinen mit 0
-    assert "created on **2026-09-20**" in readme
-
-    zeile = next(z for z in readme.splitlines() if "detected traffic signs" in z)
-    assert zeile.endswith("  "), "harter Markdown-Umbruch fehlt"
+    assert "| DE:237 |" in readme
+    assert "| Radweg | Cycle path | 42 |" in readme
+    assert "| Radfahrer frei | Bicycles excepted | 0 |" in readme  # nicht gezaehlt -> 0
+    assert "| **Data created** | 2026-09-20 |" in readme
 
 
 def test_build_readme_uebernimmt_die_filterwerte():
     readme = cw.build_readme({}, "2026-09-20", seit="2024-02-03", autobahn_abstand_m=45)
-    assert "newer than **2024-02-03**" in readme
-    assert "**45 m of motorways**" in readme
+    assert "| **Detections newer than** | 2024-02-03 |" in readme
+    assert "| **Motorway exclusion** | 45 m |" in readme
+    assert "Signs within 45 m of a motorway are excluded" in readme
 
 
 # --- Metadaten --------------------------------------------------------------

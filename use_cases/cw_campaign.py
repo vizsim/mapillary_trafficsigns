@@ -1017,23 +1017,166 @@ SVG_BASE = (
     "/dist/data-svgs/DE/svgs"
 )
 
-# Reihenfolge und Metadaten der README-Tabelle. Die letzten Felder sind die
-# VZ-Codes der anzuzeigenden Zeichen - meist mit dem ersten identisch, DE:241
-# hat zwei Varianten. Bild-URLs werden daraus abgeleitet, nicht gepflegt.
+# Reihenfolge und Metadaten der README-Tabelle:
+# (VZ-Code, Mapillary-Klasse, Bezeichnung, englische Bezeichnung, *Bild-Codes).
+#
+# Die deutsche Bezeichnung ist kein Anzeigetext, sondern ein Schluessel: sie
+# steht als `traffic_sign_description` in der veroeffentlichten GeoJSON (die
+# radinfra.de liest) und zaehlt die Tabelle darueber ab. Sie muss also mit
+# ZEICHEN uebereinstimmen - die englische daneben ist frei uebersetzt und
+# taucht nur in README und Grafik auf.
+#
+# Die letzten Felder sind die VZ-Codes der anzuzeigenden Zeichen - meist mit
+# dem ersten identisch, DE:241 hat zwei Varianten. Bild-URLs werden daraus
+# abgeleitet, nicht gepflegt.
 README_ZEICHEN = [
-    ("DE:237", "regulatory--bicycles-only--g1", "Radweg", "DE:237"),
-    ("DE:240", "regulatory--shared-path-pedestrians-and-bicycles--g1", "Gemeinsamer Geh- und Radweg", "DE:240"),
+    ("DE:237", "regulatory--bicycles-only--g1", "Radweg", "Cycle path", "DE:237"),
+    (
+        "DE:240",
+        "regulatory--shared-path-pedestrians-and-bicycles--g1",
+        "Gemeinsamer Geh- und Radweg",
+        "Shared foot and cycle path",
+        "DE:240",
+    ),
     (
         "DE:241",
         "regulatory--dual-path-pedestrians-and-bicycles--g1`<br>`regulatory--dual-path-bicycles-and-pedestrians--g1",
         "Getrennter Geh- und Radweg",
+        "Segregated foot and cycle path",
         "DE:241-31",
         "DE:241-30",
     ),
-    ("DE:244.2", "regulatory--end-of-bicycles-only--g2", "Ende Fahrradstraße", "DE:244.2"),
-    ("DE:1022-10", "complementary--except-bicycles--g1", "Radfahrer frei", "DE:1022-10"),
-    ("DE:1000-33", "complementary--bike-route--g1", "Radverkehr im Gegenverkehr", "DE:1000-33"),
+    ("DE:244.2", "regulatory--end-of-bicycles-only--g2", "Ende Fahrradstraße", "End of bicycle road", "DE:244.2"),
+    ("DE:1022-10", "complementary--except-bicycles--g1", "Radfahrer frei", "Bicycles excepted", "DE:1022-10"),
+    (
+        "DE:1000-33",
+        "complementary--bike-route--g1",
+        "Radverkehr im Gegenverkehr",
+        "Cycle traffic in both directions",
+        "DE:1000-33",
+    ),
 ]
+
+
+# Zeichen je Lauf, als Vergleichswert fuer die Delta-Spalte der README.
+# Anders als im coverage-Repo liegt die Datei nicht in git: ts_output/ ist
+# ignoriert, veroeffentlicht wird ueber B2 (upload_outputs_to_b2.sh).
+SIGN_HISTORY_FILENAME = "signs_history.json"
+SIGN_HISTORY_URL = DATA_URL + "cycleway-campaign/" + SIGN_HISTORY_FILENAME
+
+# Platzhalter fuer ein Delta ohne Vergleichswert - wie im coverage-README.
+NO_VALUE = "—"
+
+
+def sign_history_path(folder):
+    return Path(folder) / SIGN_HISTORY_FILENAME
+
+
+def _parse_history(daten):
+    """`{"runs": [...]}` -> Liste der Laeufe; alles Unerwartete wird verworfen."""
+    runs = daten.get("runs") if isinstance(daten, dict) else None
+    if not isinstance(runs, list):
+        return []
+    return [run for run in runs if isinstance(run, dict) and run.get("date")]
+
+
+def _merge_runs(*quellen):
+    """Laeufe mehrerer Quellen nach Datum vereinigen; die spaetere Quelle gewinnt."""
+    nach_datum = {}
+    for runs in quellen:
+        for run in runs:
+            nach_datum[str(run["date"])] = run
+    return [nach_datum[datum] for datum in sorted(nach_datum)]
+
+
+def load_sign_history(folder, url=SIGN_HISTORY_URL, verbose=True):
+    """Bisherige Laeufe in chronologischer Reihenfolge.
+
+    Gelesen wird die lokale Datei *und* - sofern `url` gesetzt ist - die zuletzt
+    veroeffentlichte; bei gleichem Datum gewinnt die lokale. Der Abgleich mit
+    dem Server ist hier noetig, weil `ts_output/` nicht in git liegt: ein
+    Branch-Wechsel oder ein frischer Container hat den Ordner leer (so
+    geschehen am 16.09.2026). Ohne ihn begaenne die Historie still von vorn,
+    und die Delta-Spalte waere eine Woche lang leer, ohne dass es auffiele.
+
+    Fehlt oder bricht beides, ist das kein Fehler: dann entfallen nur die
+    Deltas, der Lauf geht weiter.
+    """
+    vom_server = []
+    if url:
+        try:
+            antwort = requests.get(url, timeout=60)
+            if antwort.status_code != 404:
+                antwort.raise_for_status()
+                vom_server = _parse_history(antwort.json())
+        except (requests.RequestException, ValueError) as fehler:
+            if verbose:
+                print(f"Historie vom Server nicht lesbar ({fehler}) - nur lokaler Stand")
+
+    lokal = []
+    pfad = sign_history_path(folder)
+    if pfad.exists():
+        try:
+            lokal = _parse_history(json.loads(pfad.read_text(encoding="utf-8")))
+        except (OSError, json.JSONDecodeError) as fehler:
+            if verbose:
+                print(f"Historie {pfad} nicht lesbar ({fehler}) - Deltas entfallen")
+
+    runs = _merge_runs(vom_server, lokal)
+    if verbose:
+        print(f"Historie: {len(runs)} Laeufe ({len(vom_server)} vom Server, {len(lokal)} lokal)")
+    return runs
+
+
+def latest_sign_counts(runs, before=None):
+    """Zaehlungen des juengsten Laufs vor `before`, dazu dessen Datum.
+
+    `before` ist das Datum des aktuellen Laufs. Ein Wiederholungslauf am selben
+    Tag - etwa nach einem Abbruch - soll sich mit der Vorwoche vergleichen und
+    nicht mit sich selbst; sonst stuenden ueberall Nullen.
+    """
+    passend = [run for run in runs if before is None or str(run["date"]) < str(before)]
+    if not passend:
+        return {}, None
+    letzter = max(passend, key=lambda run: str(run["date"]))
+    zeichen = letzter.get("zeichen")
+    return (zeichen if isinstance(zeichen, dict) else {}), str(letzter["date"])
+
+
+def append_sign_history(folder, run_date, counts, runs=None, verbose=True):
+    """Aktuellen Lauf in die Historie schreiben - ein Eintrag je Datum.
+
+    Ein zweiter Lauf am selben Tag ersetzt den vorhandenen Eintrag, sonst waere
+    die Referenz des naechsten Laufs der Rerun von heute und alle Deltas nahe
+    null.
+
+    `runs` ist der Stand aus `load_sign_history`. Ohne ihn wird neu geladen -
+    auch vom Server, sonst wuerde der geschriebene Stand die dort liegenden
+    Laeufe abschneiden.
+    """
+    pfad = sign_history_path(folder)
+    if runs is None:
+        runs = load_sign_history(folder, verbose=False)
+    nach_datum = {str(run["date"]): run for run in runs}
+    nach_datum[str(run_date)] = {"date": str(run_date), "zeichen": dict(counts)}
+    inhalt = {"runs": [nach_datum[datum] for datum in sorted(nach_datum)]}
+
+    tmp = pfad.with_name(pfad.name + ".tmp")
+    tmp.write_text(json.dumps(inhalt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    tmp.replace(pfad)
+    if verbose:
+        print(f"Historie aktualisiert: {pfad} ({len(inhalt['runs'])} Laeufe)")
+    return pfad
+
+
+def format_delta(current, previous):
+    """Differenz mit Vorzeichen; ohne Vergleichswert NO_VALUE."""
+    if previous is None:
+        return NO_VALUE
+    try:
+        return f"{current - int(previous):+,}"
+    except (TypeError, ValueError):
+        return NO_VALUE
 
 
 def svg_url(sign_id):
@@ -1048,43 +1191,87 @@ def svg_url(sign_id):
     return f"{SVG_BASE}/DE_{ident}.svg"
 
 
-def build_readme(counts, stand, seit="2023-01-01", autobahn_abstand_m=30):
+def build_readme(
+    counts,
+    stand,
+    previous=None,
+    previous_date=None,
+    seit="2023-01-01",
+    autobahn_abstand_m=30,
+):
     """README-Text fuer ts_output/.
 
     `counts` zaehlt je `traffic_sign_description`, `stand` ist das Datum des
-    Datensatzes als YYYY-MM-DD.
+    Datensatzes als YYYY-MM-DD. `previous` ist dieselbe Zaehlung aus dem Lauf
+    vom `previous_date` (beides aus `latest_sign_counts`); ohne sie bleibt die
+    Delta-Spalte leer, statt Nullen vorzutaeuschen.
+
+    Die deutsche Bezeichnung ist der Schluessel in beide Zaehlungen, angezeigt
+    wird sie zusammen mit der englischen - siehe README_ZEICHEN.
     """
+    previous = previous or {}
     zeilen = []
-    for code, wording, beschreibung, *bilder in README_ZEICHEN:
-        bild_md = " oder ".join(f'<img src="{svg_url(s)}" width="40" alt="{s}">' for s in bilder)
-        zeilen.append(f"| {code} | {beschreibung} | {bild_md} | {counts.get(beschreibung, 0)} | `{wording}` |")
+    for code, wording, beschreibung, english, *bilder in README_ZEICHEN:
+        bild_md = " or ".join(f'<img src="{svg_url(s)}" width="40" alt="{s}">' for s in bilder)
+        anzahl = counts.get(beschreibung, 0)
+        zeilen.append(
+            f"| {code} | {bild_md} | {beschreibung} | {english} | {anzahl:,} "
+            f"| {format_delta(anzahl, previous.get(beschreibung))} | `{wording}` |"
+        )
+
+    # Die Summen zaehlen nur die Zeichen der Tabelle, nicht alles in `counts` -
+    # sonst wichen Summe und Spalte voneinander ab, sobald eine Zeichenklasse
+    # in den Daten auftaucht, die README_ZEICHEN (noch) nicht kennt.
+    beschreibungen = [eintrag[2] for eintrag in README_ZEICHEN]
+    gesamt = sum(counts.get(beschreibung, 0) for beschreibung in beschreibungen)
+    gesamt_vorher = sum(previous.get(b, 0) for b in beschreibungen) if previous else None
+    zeilen.append(
+        f"| **Total** | | | | **{gesamt:,}** | **{format_delta(gesamt, gesamt_vorher)}** | |"
+    )
 
     tabelle = "\n".join(
         [
-            "| VZ-Code | Beschreibung | Verkehrszeichen | Anzahl | Mapillary Wording |",
-            "|-------|-------------|:---------------:|-------:|-----------------|",
+            "| Code | Sign | Description (DE) | Description (EN) | Count | Δ | Mapillary class |",
+            "|:-----|:----:|:-----------------|:-----------------|------:|--:|:----------------|",
             *zeilen,
         ]
     )
 
+    eigenschaften = [f"| **Data created** | {stand} |"]
+    if previous_date:
+        eigenschaften.append(f"| **Previous run** | {previous_date} |")
+        delta_hinweis = f"The Δ column shows the change since the previous run ({previous_date})."
+    else:
+        delta_hinweis = "The Δ column stays empty until a second run has been recorded."
+    eigenschaften.extend(
+        [
+            f"| **Total signs** | {gesamt:,} |",
+            f"| **Detections newer than** | {seit} |",
+            f"| **Motorway exclusion** | {autobahn_abstand_m} m |",
+        ]
+    )
+    eigenschaften_tabelle = "\n".join(["| Property | Value |", "|:---------|------:|", *eigenschaften])
+
     return f"""
-# Bicycle Infrastucture Traffic Signs Output
+# Bicycle Infrastructure Traffic Signs — Output
 
-This folder contains the output file for detected traffic signs related to bicycle infrastructure from Mapillary.{_BR}
-The output has been created on **{stand}**.
+This folder contains the **latest** output file for *traffic signs related to bicycle
+infrastructure*, as detected by Mapillary.
 
-## Applied Filters
+{eigenschaften_tabelle}
 
-- Only detections newer than **{seit}**
-- Excluded all signs located within **{autobahn_abstand_m} m of motorways** (to reduce false positives)
+Signs within {autobahn_abstand_m} m of a motorway are excluded — detections there are
+overwhelmingly false positives.
 
 ## Signs
 
 {tabelle}
 
-## Statistics Plot
+{delta_hinweis}
 
-![Anzahl pro Monat](signs_by_month.svg)
+## Detections per month
+
+![Signs per month](signs_by_month.svg)
 
 ## Downloads
 
