@@ -75,5 +75,3 @@ __pycache__/
 # Temp-Name endet auf .pmtiles, weil tippecanoe das Ausgabeformat an der
 # Endung festmacht (sonst stillschweigend MBTiles/SQLite).
 *.tmp.pmtiles
-
-docs/
