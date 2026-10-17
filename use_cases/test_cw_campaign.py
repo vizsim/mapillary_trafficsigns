@@ -831,16 +831,23 @@ def test_build_readme_zaehlt():
     assert "| **Data created** | 2026-09-20 |" in readme
 
 
-def test_readme_lists_every_published_file():
+@pytest.mark.parametrize(
+    "ordner, build",
+    [
+        ("cycleway_complete_campaign/ts_output", lambda: cw.build_readme({}, "2026-10-17")),
+        ("cycleway_complete_marking_campaign/mk_output", lambda: cw.build_readme_markierungen(0, "2026-10-17")),
+    ],
+)
+def test_readme_lists_every_published_file(ordner, build):
     """The README is read on data.vizsim.de below the file listing, so it must
-    describe every file the upload script publishes for ts_output/ - and link
+    describe every file the upload script publishes for its folder - and link
     to it relatively, not as if the files still lived in this repository."""
     skript = (Path(__file__).resolve().parents[1] / "scripts" / "upload_outputs_to_b2.sh").read_text(encoding="utf-8")
-    block = skript.split('sync_dir "use_cases/cycleway_complete_campaign/ts_output"')[1].split(";;")[0]
+    block = skript.split(f'sync_dir "use_cases/{ordner}"')[1].split(";;")[0]
     veroeffentlicht = {re.sub(r"\\(.)", r"\1", m) for m in re.findall(r'"\.\*([^"$]+)\$"', block)}
-    assert "signs_history.json" in veroeffentlicht  # the parser found the includes
+    assert len(veroeffentlicht - {"README.md"}) >= 3  # the parser found the includes
 
-    readme = cw.build_readme({}, "2026-10-17")
+    readme = build()
     for name in veroeffentlicht - {"README.md"}:
         assert f"]({name})" in readme, f"{name} fehlt in der README"
     assert "clone this repository" not in readme
@@ -918,17 +925,14 @@ def test_add_marking_label():
 
 
 def test_build_readme_markierungen():
-    readme = cw.build_readme_markierungen(
-        anzahl=35250, stand="2026-09-17", datensatz_von="2026-09-17",
-        zeitraum="2014-03-30 - 2026-09-15",
-    )
-    assert "**Total detections**: 35250" in readme
-    assert "created on **2026-09-17**" in readme
-    assert "min. 180 days apart" in readme
-    assert "Lane marking - symbol (bicycle)" in readme
-
-    zeile = next(z for z in readme.splitlines() if "detected bicycle markings" in z)
-    assert zeile.endswith("  "), "harter Markdown-Umbruch fehlt"
+    readme = cw.build_readme_markierungen(35250, "2026-09-17", seit="2024-02-03", min_days=90)
+    assert "| **Data created** | 2026-09-17 |" in readme
+    assert "| **Total markings** | 35,250 |" in readme
+    assert "| **Detections newer than** | 2024-02-03 |" in readme
+    assert "| **First to last sighting** | more than 90 days |" in readme
+    assert "`marking--discrete--symbol--bicycle`" in readme
+    # Same section headings as the traffic-sign README.
+    assert "## Files" in readme and "## Detections per month" in readme
 
 
 def test_export_spalten_markierungen_ist_festgenagelt():

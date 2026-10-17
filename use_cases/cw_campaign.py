@@ -1206,6 +1206,21 @@ README_DATEIEN = [
 README_QUELLE = "https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/cycleway_complete_campaign"
 
 
+def _files_section(dateien):
+    """`## Files` section of a published README, from (name, content) pairs."""
+    # The README is read on data.vizsim.de, right below the file listing of
+    # its folder - not in the repository, which no longer holds these files.
+    # Links are relative, so they work from the listing and from README.md.
+    zeilen = "\n".join(f"| [`{name}`]({name}) | {inhalt} |" for name, inhalt in dateien)
+    return f"""## Files
+
+| File | Content |
+| --- | --- |
+{zeilen}
+
+The file names stay the same from week to week, so links to them keep working."""
+
+
 def build_readme(
     counts,
     stand,
@@ -1267,13 +1282,6 @@ def build_readme(
     )
     eigenschaften_tabelle = "\n".join(["| Property | Value |", "|:---------|------:|", *eigenschaften])
 
-    # The README is read on data.vizsim.de, right below the file listing of
-    # this folder - not in the repository, which no longer holds these files.
-    # Links are relative, so they work from the listing and from README.md.
-    dateien = "\n".join(
-        f"| [`{name}`]({name}) | {inhalt} |" for name, inhalt in README_DATEIEN
-    )
-
     return f"""
 # Bicycle Infrastructure Traffic Signs
 
@@ -1287,13 +1295,7 @@ built is documented in the
 Signs within {autobahn_abstand_m} m of a motorway are excluded — detections there are
 overwhelmingly false positives.
 
-## Files
-
-| File | Content |
-| --- | --- |
-{dateien}
-
-The file names stay the same from week to week, so links to them keep working.
+{_files_section(README_DATEIEN)}
 
 ## Signs
 
@@ -1348,52 +1350,47 @@ def filter_by_days_seen(features, min_days, verbose=True):
     return uebrig
 
 
-def build_readme_markierungen(
-    anzahl,
-    stand,
-    datensatz_von,
-    zeitraum,
-    seit="2023-01-01",
-    min_days=180,
-):
-    """README-Text fuer mk_output/."""
+# Files in mk_output/ as published on data.vizsim.de - pinned against the
+# upload script like README_DATEIEN.
+README_DATEIEN_MARKIERUNGEN = [
+    ("mapillary_markings_bicycle_latest.pmtiles", "vector tiles, layer `default`, zoom 7–12"),
+    (
+        "mapillary_markings_bicycle_latest.geojson.gz",
+        "all markings as gzipped GeoJSON; Mapillary ids are strings, as they exceed 2<sup>53</sup>",
+    ),
+    ("markings_by_month.svg", "the chart below"),
+]
+README_QUELLE_MARKIERUNGEN = (
+    "https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/cycleway_complete_marking_campaign"
+)
+
+
+def build_readme_markierungen(anzahl, stand, seit="2023-01-01", min_days=180):
+    """README text for mk_output/, laid out like `build_readme` for ts_output/."""
+    klassen = ", ".join(f"`{klasse}`" for klasse in MARKIERUNGEN)
     return f"""
-# Bicycle Marking Detections Output
+# Bicycle Road Markings
 
-This folder contains the output file for detected bicycle markings from Mapillary.{_BR}
-The output has been created on **{stand}**.
+Every bicycle symbol painted on the road in Germany that Mapillary has detected
+({klassen}) — the weekly export used by radinfra.de,
+updated every Thursday. How it is built is documented in the
+[source repository]({README_QUELLE_MARKIERUNGEN}).
 
-## Overview
+| Property | Value |
+|:---------|------:|
+| **Data created** | {stand} |
+| **Total markings** | {anzahl:,} |
+| **Detections newer than** | {seit} |
+| **First to last sighting** | more than {min_days} days |
 
-- **Total detections**: {anzahl}
-- **Mapillary dataset from**: {datensatz_von}
-- **Detection period**: {zeitraum}
-- **Marking type**: {", ".join(MARKIERUNGEN.values())}
+Only markings seen over more than {min_days} days are included — a single sighting can
+be a false detection or a temporary marking.
 
-## Applied Filters
+{_files_section(README_DATEIEN_MARKIERUNGEN)}
 
-- Only detections with **2+ observations** (min. {min_days} days apart)
-- Only detections seen after **{seit}**
-- Restricted to **Germany** boundaries
+## Detections per month
 
-## Output Files
-
-- `mapillary_markings_bicycle_latest.geojson.gz` - Compressed GeoJSON with all markings
-- `markings_by_month.svg` - Detection frequency over time
-
-## Statistics Plot
-
-![Anzahl pro Monat](markings_by_month.svg)
-
-## Downloads
-
-The files in this folder are also published for direct download, so consumers do
-not need to clone this repository:
-
-| File | Download |
-| --- | --- |
-| 🗺️ Vector tiles (PMTiles) | <https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/mapillary_markings_bicycle_latest.pmtiles> |
-| 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_map-feature-points/cycleway-campaign/mapillary_markings_bicycle_latest.geojson.gz> |
+![Markings per month](markings_by_month.svg)
 
 Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 """
