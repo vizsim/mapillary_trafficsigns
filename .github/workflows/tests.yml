@@ -1,0 +1,55 @@
+# Runs both test suites on every push to main and on pull requests.
+#
+# The repo still has two Python environments (see #9 in docs/todo.md), so
+# there are two jobs:
+#   pipeline   - requirements-dev.txt, the pip env of the worker image; tests/
+#   use_cases  - use_cases/pyproject.toml + uv.lock; use_cases/test_cw_campaign.py
+# No test needs the network, credentials or the gitignored data in output/.
+
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pipeline:
+    name: Pipeline (tests/)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: requirements*.txt
+      - name: Install requirements-dev.txt (Python 3.12, as in the worker image)
+        run: |
+          uv venv --python 3.12 .venv
+          uv pip install --python .venv -r requirements-dev.txt
+      - name: Run tests
+        run: .venv/bin/python -m pytest
+
+  use_cases:
+    name: Campaigns (use_cases/)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: use_cases
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: use_cases/uv.lock
+      - name: Install from uv.lock
+        run: uv sync --frozen
+      - name: Run tests
+        run: uv run --frozen pytest test_cw_campaign.py

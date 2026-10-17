@@ -25,7 +25,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
 | 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | P2 |
-| 10 | CI | 1 h | hoch | P2 |
+| 10 | CI | 1 h | hoch | ✅ 17.10. |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | P2 |
 | 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | später |
 | 13 | CLI statt Root-Notebooks | ½ Tag Rest | gering | P3, Kern ✅ 17.10. |
@@ -78,7 +78,8 @@ auf dem Server, läuft eine Woche lang der alte Stand. (Früher Task 12 in
 
 Entscheiden:
 - **Auto-Pull** am Anfang des Laufs, mit Abbruch bei Nicht-Fast-Forward. Jeder
-  Push nach `main` geht dann am nächsten Mittwoch live.
+  Push nach `main` geht dann am nächsten Mittwoch live. Seit #10 hat jeder
+  Commit einen Teststatus auf GitHub; der Pull könnte sich darauf stützen.
 - **Manuell bleiben**, dann gehört der Schritt in #15.
 
 ### 6. Kampagnen-Inventur
@@ -114,14 +115,6 @@ existiert nur, um beide synchron zu halten, und `pytest.ini` sammelt nur
 - Dockerfile wie in coverage (`uv sync --frozen`); der tippecanoe-Build
   bleibt, wie er ist.
 - Danach kann der Sync-Test weg.
-
-### 10. CI
-
-**Aufwand:** 1 h (nach #9) · **Nutzen:** hoch · **Prio:** P2
-
-Die 115 Tests laufen nur, wenn jemand daran denkt; der einzige
-Integrationstest ist der Mittwochslauf, und ein Fehlschlag kostet eine Woche.
-Eine GitHub Action mit `pytest` bei jedem Push nach `main`.
 
 ### 11. Notebook-Outputs aus git
 
@@ -302,6 +295,17 @@ die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
 ---
 
 ## Erledigt
+
+### 10. CI
+
+**Erledigt:** 17.10.2026
+
+`.github/workflows/tests.yml` führt bei jedem Push nach `main` und bei Pull
+Requests beide Testordner aus, je Umgebung ein Job: `tests/` mit
+`requirements-dev.txt` (wie im Worker-Image), `use_cases/` mit `uv.lock`.
+Vorher lokal in einem frischen Klon nachgestellt — kein Test braucht Netz,
+Zugangsdaten oder die ignorierten Daten in `output/`. Mit #9 wird daraus ein
+Job.
 
 ### 3. Fehlschläge melden
 
