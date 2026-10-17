@@ -228,8 +228,10 @@ Das Betriebswissen steht verstreut in Commit-Messages: Cron-Zeiten (ts Mi
 15:00 UTC, mk Do 01:00 UTC), Deploy (#5), Wiederherstellen aus B2, auf dem
 Server `checkout -B main origin/main` statt Branch-Wechsel (ein Wechsel hat
 am 16.09. die ignorierten Lauf-Outputs gelöscht), Aussetzen und
-Wiederherstellen des Crontabs, `max_file_age_days` und manuelle Läufe. Eine
-Seite dafür.
+Wiederherstellen des Crontabs, `max_file_age_days` und manuelle Läufe. Dazu,
+wer die veröffentlichten Dateien liest: radinfra.de, und unfallkarte bindet die
+PMTiles als „external"-Layer über ihre feste URL auf data.vizsim.de ein —
+Dateinamen und Pfade dort dürfen sich nicht beiläufig ändern. Eine Seite dafür.
 
 ### 16. Token-Quellen vereinheitlichen
 
@@ -245,8 +247,8 @@ nächste Rotation ein Schritt statt zwei.
 
 **Aufwand:** 20 min · **Nutzen:** gering · **Prio:** P3
 
-Auskommentierte Altblöcke, Kommentare mit den alten `xb_`-Namen, ein Verweis
-auf `docs/worker_mix_…`, das nie getrackt war.
+Auskommentierte Altblöcke und ein `*.json`-Ausschluss, der mehrere Ausnahmen
+nach sich zieht.
 
 ### 18. mk-README angleichen
 
