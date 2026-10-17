@@ -5,6 +5,7 @@ aus dem Vorfall vom 26.08.2026 folgt (Antworten ohne MVT-Inhalt wurden still
 verworfen, der Export lief trotzdem).
 """
 
+import logging
 import time
 
 import mercantile
@@ -135,6 +136,69 @@ def test_netzwerkfehler_wird_klassifiziert(session):
     session(mt.requests.ConnectionError("Connection reset by peer"))
     _, error = mt.load_tile(TILE, "t", COVERAGE, LAYER, attempts=2)
     assert error.kind == "ConnectionError"
+
+
+# --- Token in Meldungen -----------------------------------------------------
+
+# Aufgebaut wie ein echter Token, URL-kodiert wie in den Meldungen von requests.
+GEHEIM = "0123456789abcdef0123456789abcdef"
+TOKEN_IN_URL = f"MLY%7C1234567890%7C{GEHEIM}"
+
+
+def _meldung_mit_url():
+    """So meldet requests einen gescheiterten Abruf. Der Token steht um Zeichen
+    160-215 - eine Kuerzung auf 200 Zeichen schnitte mitten hinein."""
+    return (
+        "HTTPSConnectionPool(host='tiles.mapillary.com', port=443): Max retries exceeded with url: "
+        f"/maps/vtp/mly_map_feature_traffic_sign/2/14/8472/5422?access_token={TOKEN_IN_URL} "
+        "(Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol')))"
+    )
+
+
+def test_token_steht_nicht_in_der_fehlermeldung(session):
+    """Ueber solche Meldungen in committeten Notebook-Ausgaben stand der Token
+    bis April 2026 in der oeffentlichen History."""
+    session(mt.requests.ConnectionError(_meldung_mit_url()))
+    _, error = mt.load_tile(TILE, "t", COVERAGE, LAYER, attempts=1)
+
+    assert error.kind == "ConnectionError"
+    assert "access_token=***" in error.detail
+    assert GEHEIM[:8] not in str(error)
+
+
+def test_token_im_fehlerbody_wird_geschwaerzt(session):
+    body = f"<html>403 Forbidden: /maps/vtp/x/2/14/1/1?access_token={TOKEN_IN_URL}</html>".encode()
+    session(FakeResponse(403, body, {"Content-Type": "text/html"}))
+    _, error = mt.load_tile(TILE, "t", COVERAGE, LAYER, attempts=1)
+
+    assert error.kind == "HTTP 403"
+    assert GEHEIM[:8] not in error.detail
+
+
+def test_unerwartete_ausnahme_ohne_token(monkeypatch):
+    def kaputt(tile, *args, **kwargs):
+        raise RuntimeError(_meldung_mit_url())
+
+    monkeypatch.setattr(mt, "load_tile", kaputt)
+    batch = mt.fetch_tiles([TILE], "t", COVERAGE, LAYER, max_workers=1, emit=lambda *a: None)
+
+    assert GEHEIM[:8] not in next(iter(batch.samples.values()))
+    assert GEHEIM[:8] not in str(batch.failed[0][1])
+
+
+def test_urllib3_wiederholung_protokolliert_ohne_token(caplog):
+    """urllib3 meldet jede Wiederholung mit der vollen URL; im Notebook landet
+    das ueber stderr in der Ausgabe."""
+    with caplog.at_level(logging.WARNING):
+        logging.getLogger("urllib3.connectionpool").warning(
+            "Retrying (%r) after connection broken by '%r': %s",
+            "Retry(total=4)",
+            "SSLError()",
+            f"/maps/vtp/x/2/14/1/1?access_token={TOKEN_IN_URL}",
+        )
+
+    assert "access_token=***" in caplog.text
+    assert GEHEIM[:8] not in caplog.text
 
 
 # --- Features -> GeoDataFrame ----------------------------------------------

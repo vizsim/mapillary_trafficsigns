@@ -14,7 +14,7 @@ getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`).
 
 | # | Aufgabe | Aufwand | Nutzen | Prio |
 |--:|:--------|:--------|:-------|:-----|
-| 1 | Mapillary-Token rotieren, `config.py` löschen | 15 min | hoch | P1 |
+| 1 | Mapillary-Token rotieren, `config.py` löschen | 15 min | hoch | P1, Rest offen |
 | 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | P1 |
 | 3 | Fehlschläge melden | 1 h | hoch | P1 |
 | 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
@@ -44,15 +44,21 @@ getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`).
 
 **Aufwand:** 15 min · **Nutzen:** hoch · **Prio:** P1
 
-Der aktuelle Token war bis April 2026 in Notebook-Dateien committet und steht
-damit in der öffentlichen History. Wer ihn findet, verbraucht das Kontingent
-dieses Tokens mit. Rotieren genügt, die History muss dafür nicht neu
-geschrieben werden.
+Der bis Oktober 2026 genutzte Token steht in der öffentlichen History. Er stand
+nie im Code, sondern in Fehlermeldungen: Die Tile-API nimmt den Token nur als
+URL-Parameter, gescheiterte Abrufe druckten die URL samt Token aus, und die
+Notebooks `2_`/`2b_` wurden mit diesen Ausgaben committet (09.2025–04.2026).
+Wer ihn findet, verbraucht das Kontingent dieses Tokens mit. Rotieren genügt,
+die History muss dafür nicht neu geschrieben werden.
 
-- Neuen Token anlegen, in `config.json` und `use_cases/utils/config_mapillary_privat.json`
-  eintragen — lokal und auf dem Server.
-- `config.py` löschen. Die Datei wird von nichts importiert, stammt aus dem
-  coverage-Repo und hält den Token im Klartext.
+- ✅ 17.10.: neuer Token in `config.json` und
+  `use_cases/utils/config_mapillary_privat.json`, lokal und auf dem Server,
+  gegen Kachel- und Graph-API getestet.
+- ✅ 17.10.: `mapillary_tiles.py` schwärzt den Token in allen Meldungen
+  (Ausnahmen, Fehler-Bodies, Wiederholungs-Warnungen von urllib3).
+- **Offen:** den alten Token im Mapillary-Dashboard löschen.
+- **Offen:** `config.py` löschen. Die Datei wurde in diesem Repo nie importiert,
+  stammt aus dem coverage-Repo und hält den alten Token im Klartext.
 
 ### 2. Bildauswahl in tempo30 korrigieren
 

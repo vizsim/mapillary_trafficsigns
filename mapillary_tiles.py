@@ -23,8 +23,10 @@ exportiert wird. Ein Teilstand darf einen vollstaendigen nie ueberschreiben.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import random
+import re
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -57,6 +59,43 @@ BAD_MAGIC = [
     (b"<", "HTML/XML-Fehlerseite"),
     (b"{", "JSON-Fehlerantwort"),
 ]
+
+
+# Die Tile-API nimmt den Token nur als URL-Parameter - per Authorization-Header
+# antwortet sie mit HTTP 403 (geprueft am 17.10.2026). Jede Meldung, die die URL
+# nennt, enthaelt ihn also: die Ausnahmen von requests ebenso wie die
+# Wiederholungs-Warnungen von urllib3. Ueber solche Meldungen in committeten
+# Notebook-Ausgaben stand der Token bis April 2026 in der oeffentlichen History.
+_TOKEN_IN_URL = re.compile(r"(access_token=)[^&\s'\"()<>]+")
+
+
+def _ohne_token(text: str) -> str:
+    """Den Wert von access_token in `text` durch *** ersetzen.
+
+    Vor dem Kuerzen anwenden, nicht danach: in den Meldungen von requests steht
+    der Token um Zeichen 160-215, eine Kuerzung auf 200 schnitte mitten hinein.
+    """
+    return _TOKEN_IN_URL.sub(r"\1***", text)
+
+
+class _TokenFilter(logging.Filter):
+    """Schwaerzt den Token in Log-Meldungen, bevor ein Handler sie sieht."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        try:
+            meldung = record.getMessage()
+        except Exception:  # noqa: BLE001 - ein Filter darf das Logging nie brechen
+            return True
+        if "access_token=" in meldung:
+            record.msg, record.args = _ohne_token(meldung), ()
+        return True
+
+
+# urllib3 meldet jede Wiederholung mit der vollen URL ("Retrying (...) after
+# connection broken by ...: /maps/vtp/...?access_token=..."); im Notebook landet
+# das ueber stderr in der Ausgabe.
+for _name in ("urllib3.connectionpool", "urllib3.util.retry"):
+    logging.getLogger(_name).addFilter(_TokenFilter())
 
 
 class TileError(Exception):
@@ -108,8 +147,9 @@ def _snippet(response: requests.Response, limit: int = 300) -> str:
     if not body:
         return f"leerer Body (Content-Type {ctype}, Server {response.headers.get('Server', '?')})"
     if ctype.startswith(("application/json", "text/")):
-        return body.decode("utf-8", "replace").replace("\n", " ").strip()
-    return f"Content-Type {ctype}, erste Bytes {body[:64]!r}"
+        # Fehlerseiten nennen mitunter die angefragte URL - samt Token.
+        return _ohne_token(body.decode("utf-8", "replace").replace("\n", " ").strip())
+    return _ohne_token(f"Content-Type {ctype}, erste Bytes {body[:64]!r}")
 
 
 def fetch_tile_bytes(tile, token: str, coverage: str) -> bytes:
@@ -162,7 +202,7 @@ def load_tile(tile, token: str, coverage: str, layer: str, attempts: int = 4):
         except TileError as exc:
             last_error = exc
         except requests.RequestException as exc:
-            last_error = TileError(type(exc).__name__, str(exc)[:200])
+            last_error = TileError(type(exc).__name__, _ohne_token(str(exc))[:200])
 
         if attempt < attempts - 1:
             # Bei Rate-Limits bringt schnelles Nachfassen nichts - warten hilft.
@@ -278,8 +318,9 @@ def fetch_tiles(
             _, gdf_tile, error = future.result()
         except Exception as exc:
             kind = f"unerwartet: {type(exc).__name__}"
-            note(kind, str(exc)[:200])
-            batch.failed.append((tile, TileError(kind, str(exc)[:200])))
+            detail = _ohne_token(str(exc))[:200]
+            note(kind, detail)
+            batch.failed.append((tile, TileError(kind, detail)))
             return True
         if error is not None:
             batch.failed.append((tile, error))
