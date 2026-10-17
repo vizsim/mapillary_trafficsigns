@@ -55,7 +55,7 @@ Publishes every detected bicycle symbol as GeoJSON and vector tiles.
 ```text
 scripts/run_worker_with_vpn_mk.sh
   └─ scripts/run_mapillary_notebooks.sh mk
-       1. 2b_get_mapillary_map_feature_points.ipynb   (repo root — fetches the tiles)
+       1. python3 -m mapillary_pipeline mk             (repo root — fetches the tiles)
        2. radinfra_1_export.ipynb
              →  mk_output/mapillary_markings_bicycle_latest.geojson.gz
              →  mk_output/README.md, mk_output/markings_by_month.svg
@@ -64,7 +64,7 @@ scripts/run_worker_with_vpn_mk.sh
   └─ scripts/upload_outputs_to_b2.sh   →  data.vizsim.de
 ```
 
-**If a notebook fails**, `run_worker_with_vpn.sh` exits with status 1 — **before** the B2
+**If a step fails**, `run_worker_with_vpn.sh` exits with status 1 — **before** the B2
 upload. Nothing half-finished is ever published; the previous state on data.vizsim.de
 stays. The cost of a failure is one missed weekly update, not corrupted data.
 
@@ -72,8 +72,8 @@ stays. The cost of a failure is one missed weekly update, not corrupted data.
 
 | | |
 | --- | --- |
-| `logs/cron-mk.log` | the whole run, including one `▶️ <notebook>` line per step |
-| `logs/mk_run_latest.log` | live transcript, but **only** of step 1 (the tile fetch) |
+| `logs/cron-mk.log` | the whole run: step 1 (the tile fetch) live, then one `▶️ <notebook>` line per notebook |
+| `logs/mk_run_latest.log` | step 1 alone, without the RAM lines |
 | `logs/executed/mk_*.ipynb` | the notebooks as nbconvert executed them |
 
 > **Watch the memory.** The mk worker is capped at 6.5 GB and a run peaked at 5.3 GB

@@ -28,7 +28,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 10 | CI | 1 h | hoch | P2 |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | P2 |
 | 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | später |
-| 13 | CLI statt Root-Notebooks | 1 Tag | mittel | P3 |
+| 13 | CLI statt Root-Notebooks | ½ Tag Rest | gering | P3, Kern ✅ 17.10. |
 | 14 | `src/`-Paketstruktur | ½ Tag | gering | P3 |
 | 15 | `docs/betrieb.md` | 1 h | mittel | P3 |
 | 16 | Token-Quellen vereinheitlichen | 30 min | gering | P3 |
@@ -122,7 +122,7 @@ Stand der Challenges laut MapRoulette am 17.10.:
 Heute gibt es zwei: `venv/` mit `requirements.txt` (Server, `tests/`) und
 `use_cases/.venv` mit `pyproject.toml`/`uv.lock` (Kampagnen). Ein Test
 existiert nur, um beide synchron zu halten, und `pytest.ini` sammelt nur
-`tests/` — ein nacktes `pytest` im Root lässt 71 von 108 Tests aus.
+`tests/` — ein nacktes `pytest` im Root lässt 71 von 115 Tests aus.
 
 - Eine `pyproject.toml` + `uv.lock` im Root, `testpaths` auf beide Ordner.
 - Dockerfile wie in coverage (`uv sync --frozen`); der tippecanoe-Build
@@ -133,7 +133,7 @@ existiert nur, um beide synchron zu halten, und `pytest.ini` sammelt nur
 
 **Aufwand:** 1 h (nach #9) · **Nutzen:** hoch · **Prio:** P2
 
-Die 108 Tests laufen nur, wenn jemand daran denkt; der einzige
+Die 115 Tests laufen nur, wenn jemand daran denkt; der einzige
 Integrationstest ist der Mittwochslauf, und ein Fehlschlag kostet eine Woche.
 Eine GitHub Action mit `pytest` bei jedem Push nach `main`.
 
@@ -158,14 +158,17 @@ veröffentlicht (#1).
 
 ### 13. CLI statt Root-Notebooks
 
-**Aufwand:** 1 Tag · **Nutzen:** mittel · **Prio:** P3
+**Aufwand:** ½ Tag Rest · **Nutzen:** gering · **Prio:** P3
 
-`2_` und `2b_` sind zwei Zellen, die `run_pipeline` aufrufen. Ein
-`python -m mapillary_pipeline ts` im Runner nimmt Jupyter aus dem kritischen
-Pfad; Konstanten (`max_workers`, `max_fail_ratio`, Pfade) wandern nach
-`config/*.toml` wie in coverage. Nebenbei ist dann ein Nachlauf für ein
-einzelnes Land möglich (`--bundesland DE-NW`), und die irreführende
-Nummerierung `0_`/`2_`/`2b_` verschwindet.
+- ✅ 17.10.: Der Runner ruft `python3 -m mapillary_pipeline ts|mk` statt der
+  Notebooks `2_`/`2b_`, die gelöscht sind. Jupyter ist damit aus dem
+  Kachelabruf raus, dessen Ausgabe steht live im Cron-Log, und ein Nachlauf
+  für einzelne Länder geht mit `--bundesland DE-NW`. Probeläufe
+  (`--limit-tiles`) verweigern `output/` als Ziel.
+- **Offen:** Konstanten (`max_workers`, `max_fail_ratio`, Pfade) nach
+  `config/*.toml` wie in coverage. Lohnt erst, wenn sie sich tatsächlich ändern.
+- `0_prepare_tiles.ipynb` bleibt im Root: einmalige Vorbereitung des
+  Kachel-Caches, von nichts aufgerufen.
 
 ### 14. `src/`-Paketstruktur
 
@@ -296,7 +299,8 @@ trotz 8-GB-Swap wieder am Speicher stirbt.
 
 Die Notebooks einmal per nbconvert im Worker-Image gegen einen Mini-Tile-Cache
 laufen lassen. Fängt Import- und Pfadfehler, die die Unit-Tests nicht sehen.
-Wird mit #13 weitgehend überflüssig.
+Seit #13 betrifft das nur noch die Kampagnen-Notebooks; der Kachelabruf ist
+ein Python-Aufruf mit eigenem Test.
 
 ### 22. Commit-Sperre für Tokens
 

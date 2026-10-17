@@ -4,20 +4,30 @@ mapillary_tiles.py holt Tiles. Dieses Modul entscheidet, was damit passiert -
 und vor allem, was NICHT passiert: kein Export bei zu vielen Luecken, kein
 frischer Gesamtstempel bei unvollstaendigem Lauf.
 
-Die Notebooks 2_*.ipynb und 2b_*.ipynb sind nur noch Aufrufer:
+Aufruf im Wochenlauf (scripts/run_mapillary_notebooks.sh):
 
-    from mapillary_pipeline import PIPELINE_TS, run_pipeline
-    run_pipeline(PIPELINE_TS)
+    python3 -m mapillary_pipeline ts      # Verkehrszeichen
+    python3 -m mapillary_pipeline mk      # Map Feature Points
+
+Nachlauf fuer einzelne Laender, unabhaengig vom Datenalter:
+
+    python3 -m mapillary_pipeline ts --bundesland DE-NW DE-HB
+
+Bis Oktober 2026 riefen die Notebooks 2_*.ipynb und 2b_*.ipynb run_pipeline
+auf - zwei Zellen, sonst nichts. Ohne Jupyter dazwischen steht die Ausgabe
+live im Cron-Log statt erst am Ende des Abrufs.
 """
 
 from __future__ import annotations
 
+import argparse
 import gc
 import glob
 import gzip
 import json
 import os
 import re
+import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
@@ -39,6 +49,7 @@ class Pipeline:
 
 PIPELINE_TS = Pipeline("ts", *COVERAGE_TRAFFIC_SIGNS, "mapillary_traffic-signs", "ml-ts_metadata.json")
 PIPELINE_MK = Pipeline("mk", *COVERAGE_MAP_FEATURES, "mapillary_map-feature-points", "ml-mf_metadata.json")
+PIPELINES = {p.name: p for p in (PIPELINE_TS, PIPELINE_MK)}
 
 BUNDESLAND_ID = re.compile(r"^DE-[A-Z]{2}$")
 
@@ -50,10 +61,13 @@ def now_iso() -> str:
 class RunLog:
     """print() plus Mitschrift in eine Datei.
 
-    nbconvert schreibt Zell-Ausgaben erst am Ende ins Notebook. Waehrend des
-    Laufs sieht man auf dem Server nichts - deshalb war der mk-Lauf vom
-    27.08.2026 hinterher nicht rekonstruierbar. Die Datei liegt im Bind-Mount
-    und ist live lesbar, auch wenn der Lauf mittendrin stirbt.
+    Entstanden, als der Abruf noch als Notebook lief: nbconvert schreibt
+    Zell-Ausgaben erst am Ende, waehrend des Laufs sah man auf dem Server
+    nichts - deshalb war der mk-Lauf vom 27.08.2026 hinterher nicht
+    rekonstruierbar. Seit dem Aufruf per `python3 -m` steht die Ausgabe auch
+    live im Cron-Log; die Datei bleibt, weil sie nur diesen Schritt enthaelt,
+    ohne die RAM-Zeilen des Runners. Sie liegt im Bind-Mount und ist live
+    lesbar, auch wenn der Lauf mittendrin stirbt.
     """
 
     def __init__(self, path: str):
@@ -357,3 +371,48 @@ def run_pipeline(
     # Daten sind per Definition juenger als die Grenze.
     finalize_metadata(metadata_path, uebersprungen, emit)
     return results
+
+
+# --- Aufruf von der Kommandozeile -------------------------------------------
+
+
+def _bundesland_id(wert: str) -> str:
+    if not BUNDESLAND_ID.match(wert):
+        raise argparse.ArgumentTypeError(f"{wert!r} ist keine Bundesland-ID wie DE-NW")
+    return wert
+
+
+def main(argv: list[str] | None = None) -> int:
+    """`python3 -m mapillary_pipeline ts|mk` - siehe Moduldocstring.
+
+    Fehlerverhalten wie zuvor im Notebook: Eine Ausnahme beendet den Prozess
+    mit Status 1, und run_worker_with_vpn.sh bricht vor dem B2-Upload ab. Ein
+    Land, das an der Reissleine haengen bleibt, ist dagegen kein Fehler - es
+    behaelt seinen alten Stand, und der Lauf geht weiter.
+    """
+    parser = argparse.ArgumentParser(
+        prog="python3 -m mapillary_pipeline",
+        description="Mapillary-Erkennungen je Bundesland holen und exportieren.",
+    )
+    parser.add_argument("pipeline", choices=sorted(PIPELINES), help="ts = Verkehrszeichen, mk = Map Feature Points")
+    parser.add_argument(
+        "--bundesland", nargs="+", type=_bundesland_id, metavar="DE-XX",
+        help="nur diese Laender, unabhaengig vom Datenalter (Standard: alle mit Tile-Cache)",
+    )
+    parser.add_argument("--limit-tiles", type=int, metavar="N", help="Probelauf: nur die ersten N Tiles je Land")
+    parser.add_argument("--output-folder", default="output", help="Zielordner (Standard: output)")
+    args = parser.parse_args(argv)
+
+    # Ein Teilstand im echten Ausgabeordner bekaeme einen frischen Zeitstempel:
+    # der naechste Wochenlauf hielte das Land fuer aktuell, ueberspraenge es und
+    # luede den Teilstand hoch - genau der Schaden vom 26.08.2026.
+    if args.limit_tiles and os.path.abspath(args.output_folder) == os.path.abspath("output"):
+        parser.error("--limit-tiles nur mit eigenem --output-folder, nie in output/")
+
+    kwargs = {"limit_tiles": args.limit_tiles} if args.limit_tiles else {}
+    run_pipeline(PIPELINES[args.pipeline], args.bundesland, output_folder=args.output_folder, **kwargs)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -62,7 +62,7 @@ Publishes every cycling-related traffic sign as GeoJSON and vector tiles.
 ```text
 scripts/run_worker_with_vpn_ts.sh
   └─ scripts/run_mapillary_notebooks.sh ts
-       1. 2_get_mapillary_traffic_signs.ipynb     (repo root — fetches the tiles)
+       1. python3 -m mapillary_pipeline ts         (repo root — fetches the tiles)
        2. radinfra_1_export.ipynb
              →  ts_output/mapillary_trafficsigns_bicycle_latest.geojson.gz
              →  ts_output/README.md, ts_output/signs_by_month.svg
@@ -71,7 +71,7 @@ scripts/run_worker_with_vpn_ts.sh
   └─ scripts/upload_outputs_to_b2.sh   →  data.vizsim.de
 ```
 
-**If a notebook fails**, `run_worker_with_vpn.sh` exits with status 1 — **before** the B2
+**If a step fails**, `run_worker_with_vpn.sh` exits with status 1 — **before** the B2
 upload. Nothing half-finished is ever published; the previous state on data.vizsim.de
 stays. The cost of a failure is one missed weekly update, not corrupted data.
 
@@ -79,12 +79,16 @@ stays. The cost of a failure is one missed weekly update, not corrupted data.
 
 | | |
 | --- | --- |
-| `logs/cron-ts.log` | the whole run, including one `▶️ <notebook>` line per step |
-| `logs/ts_run_latest.log` | live transcript, but **only** of step 1 (the tile fetch) |
+| `logs/cron-ts.log` | the whole run: step 1 (the tile fetch) live, then one `▶️ <notebook>` line per notebook |
+| `logs/ts_run_latest.log` | step 1 alone, without the RAM lines |
 | `logs/executed/ts_*.ipynb` | the notebooks as nbconvert executed them — this is where the cell output of `radinfra_1_export` ends up |
 
-There is no live transcript for steps 2 and 3: nbconvert only writes cell output once the
-notebook finishes. While a step is running, `cron-ts.log` shows just the `▶️` line.
+Steps 2 and 3 have no live transcript: nbconvert only writes cell output once the notebook
+finishes. While one of them is running, `cron-ts.log` shows just its `▶️` line. Step 1 is a
+plain Python call since 2026-10-17 (before: `2_get_mapillary_traffic_signs.ipynb`), so its
+output appears as it happens. Single states can be fetched again with
+`python3 -m mapillary_pipeline ts --bundesland DE-NW` — in the worker's environment, and
+only `scripts/upload_outputs_to_b2.sh` publishes the result.
 
 ---
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Führt die Notebook-Kette EINER Pipeline im Worker-Container aus.
+# Führt EINE Pipeline im Worker-Container aus: erst die Tiles holen
+# (python3 -m mapillary_pipeline), dann die Notebooks der Kampagne.
 #
 #   run_mapillary_notebooks.sh ts   -> Traffic Signs
 #   run_mapillary_notebooks.sh mk   -> Map Feature Points (Markierungen)
@@ -13,14 +14,12 @@ PIPELINE="${1:-}"
 case "$PIPELINE" in
   ts)
     NOTEBOOKS=(
-      "2_get_mapillary_traffic_signs.ipynb"
       "use_cases/cycleway_complete_campaign/radinfra_1_export.ipynb"
       "use_cases/cycleway_complete_campaign/radinfra_2_pmtiles.ipynb"
     )
     ;;
   mk)
     NOTEBOOKS=(
-      "2b_get_mapillary_map_feature_points.ipynb"
       "use_cases/cycleway_complete_marking_campaign/radinfra_1_export.ipynb"
       "use_cases/cycleway_complete_marking_campaign/radinfra_2_pmtiles.ipynb"
     )
@@ -84,8 +83,19 @@ trap 'kill $LOGGER_PID 2>/dev/null || true' EXIT
 EXECUTED_DIR="logs/executed"
 mkdir -p "$EXECUTED_DIR"
 
-echo "🚦 Pipeline $PIPELINE: ${#NOTEBOOKS[@]} Notebooks (ausgeführte Kopien: $EXECUTED_DIR/)"
+echo "🚦 Pipeline $PIPELINE: Tiles holen, dann ${#NOTEBOOKS[@]} Notebooks (ausgeführte Kopien: $EXECUTED_DIR/)"
 echo
+
+# Schritt 1 ist kein Notebook mehr (bis Oktober 2026: 2_/2b_get_…ipynb, zwei
+# Zellen, die nur run_pipeline aufriefen). Als Python-Aufruf steht seine
+# Ausgabe live im Cron-Log; nbconvert schriebe sie erst am Ende des Abrufs.
+# Scheitert er, bricht set -e hier ab - wie zuvor das Notebook.
+echo "▶️  mapillary_pipeline $PIPELINE"
+python3 -m mapillary_pipeline "$PIPELINE"
+echo "✅ mapillary_pipeline $PIPELINE"
+echo
+maybe_sleep "$SLEEP_BETWEEN_STEPS"
+maybe_drop_caches
 
 for nb in "${NOTEBOOKS[@]}"; do
   echo "▶️  $nb"

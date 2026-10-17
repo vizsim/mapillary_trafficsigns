@@ -216,3 +216,62 @@ def test_explizite_liste_ignoriert_die_altersgrenze(repo, monkeypatch):
     )
 
     assert results == {"DE-BW": True}
+
+
+# --- Aufruf von der Kommandozeile -------------------------------------------
+
+
+@pytest.fixture
+def aufrufe(monkeypatch):
+    """Ersetzt run_pipeline und merkt sich, womit main() es aufruft."""
+    gemerkt = []
+    monkeypatch.setattr(mp, "run_pipeline", lambda *args, **kwargs: gemerkt.append((args, kwargs)) or {})
+    return gemerkt
+
+
+def test_main_ruft_die_pipeline_wie_vorher_das_notebook(aufrufe):
+    """Der Wochenlauf: genau das, was 2_/2b_get_…ipynb taten - alle Laender, output/."""
+    assert mp.main(["ts"]) == 0
+    assert mp.main(["mk"]) == 0
+    assert aufrufe == [
+        ((mp.PIPELINE_TS, None), {"output_folder": "output"}),
+        ((mp.PIPELINE_MK, None), {"output_folder": "output"}),
+    ]
+
+
+def test_main_nachlauf_fuer_einzelne_laender(aufrufe):
+    mp.main(["ts", "--bundesland", "DE-NW", "DE-HB"])
+    assert aufrufe[0][0] == (mp.PIPELINE_TS, ["DE-NW", "DE-HB"])
+
+
+@pytest.mark.parametrize("argv", [["xx"], [], ["ts", "--bundesland", "NW"]])
+def test_main_lehnt_unsinn_ab(aufrufe, argv):
+    with pytest.raises(SystemExit) as ende:
+        mp.main(argv)
+    assert ende.value.code == 2
+    assert aufrufe == []
+
+
+def test_probelauf_nie_in_den_echten_ausgabeordner(aufrufe, tmp_path):
+    """Ein Teilstand in output/ bekaeme einen frischen Zeitstempel: der naechste
+    Wochenlauf ueberspraenge das Land und luede den Teilstand hoch."""
+    with pytest.raises(SystemExit):
+        mp.main(["ts", "--limit-tiles", "5"])
+    assert aufrufe == []
+
+    mp.main(["ts", "--limit-tiles", "5", "--output-folder", str(tmp_path)])
+    assert aufrufe[0][1] == {"output_folder": str(tmp_path), "limit_tiles": 5}
+
+
+def test_modulaufruf_als_eigener_prozess():
+    """So ruft der Runner im Container: python3 -m mapillary_pipeline."""
+    import subprocess
+    import sys
+
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ergebnis = subprocess.run(
+        [sys.executable, "-m", "mapillary_pipeline", "--help"],
+        cwd=repo_root, capture_output=True, text=True, timeout=120,
+    )
+    assert ergebnis.returncode == 0, ergebnis.stderr
+    assert "{mk,ts}" in ergebnis.stdout

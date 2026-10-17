@@ -3,8 +3,8 @@
 Warum als Modul und nicht je Notebook: genau die Duplizierung hat den Vorfall
 vom 26.08.2026 verursacht. Der Timeout-/Retry-Fix (6a6dd81) landete nur im
 mk-Notebook, das ts-Notebook blieb fünf Wochen lang unrepariert, weil niemand
-sah, dass es dieselbe Stelle zweimal gibt. Beide Notebooks importieren jetzt
-von hier.
+sah, dass es dieselbe Stelle zweimal gibt. Beide Pipelines laufen jetzt ueber
+mapillary_pipeline und damit ueber dieses Modul.
 
 Zum Kernproblem: "Error parsing message with type 'vector_tile.tile'" heisst
 NICHT, dass das Tile kaputt ist. Es heisst, dass im Body etwas ankam, das kein
