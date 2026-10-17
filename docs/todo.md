@@ -5,7 +5,7 @@
 Ersetzt `plan_notebooks_zu_python.md`, `docker-improvements.md` und
 `worker_mix_fehleranalyse_und_todos.md`. Was dort noch offen war, steht hier;
 was erledigt oder hinfällig ist, listet der letzte Abschnitt. Die beiden
-getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`),
+getrackten alten Dokumente liegen in der git-History (letzter Stand `9088bd5`),
 `worker_mix_…` war nie getrackt und ist seit dem 17.10. gelöscht.
 
 **Aufwand** ist grobe Arbeitszeit. **Nutzen:** hoch / mittel / gering.
@@ -34,7 +34,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 16 | Token-Quellen vereinheitlichen | 30 min | gering | P3 |
 | 17 | `.gitignore` aufräumen | 20 min | gering | P3 |
 | 18 | mk-README angleichen | 1 h | gering | ✅ 17.10. |
-| 19 | Zweiter History-Rewrite | ½ Tag | gering | optional |
+| 19 | Zweiter History-Rewrite | ½ Tag | gering | ✅ 17.10. |
 | 20 | Streaming-Export | 1 Tag | gering | optional |
 | 21 | Ende-zu-Ende-Test im Image | ½ Tag | gering | optional |
 | 22 | Commit-Sperre für Tokens | 30 min | mittel | optional |
@@ -204,16 +204,6 @@ wird.
 
 ## Optional
 
-### 19. Zweiter History-Rewrite
-
-**Aufwand:** ½ Tag · **Nutzen:** gering · **Prio:** optional
-
-`.git` ist wieder 211 MB — gewachsen bis zum 02.09. durch
-`ts_output/*.pmtiles` und die Outputs von `2_`/`2b_`. Die Ursache ist
-abgestellt, es wächst nicht weiter. Ein Rewrite macht alle Clones ungültig,
-und auf dem Server hat schon ein Branch-Wechsel Daten gekostet. Nur, wenn die
-Größe konkret stört.
-
 ### 20. Streaming-Export
 
 **Aufwand:** 1 Tag · **Nutzen:** gering · **Prio:** optional
@@ -244,6 +234,27 @@ Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet i
 ---
 
 ## Erledigt
+
+### 19. Zweiter History-Rewrite
+
+**Erledigt:** 17.10.2026 — `.git` 206 MB → 29 MB.
+
+86 % der History waren 24 Dateien: je sechs Wochenstände (22.07.–02.09.) von
+`*_latest.pmtiles` und `*_latest.geojson.gz` aus `ts_output/` und
+`mk_output/`, die seitdem nur noch auf B2 liegen. Nur diese vier Pfade sind
+entfernt (`git filter-repo --invert-paths --prune-empty never`). Dadurch haben
+nur die 65 Commits ab dem 22.07.2026 neue SHAs, die 185 davor sind
+unverändert; der Stand von `main` ist bitgleich.
+
+Bewusst geblieben: Code und Doku, die Quelltexte der gelöschten Notebooks,
+die Eingabedateien, die MapRoulette-GeoJSONs und die Notebook-Outputs bis
+zum 17.10. Diese Outputs zu entfernen hätte fast alle SHAs geändert, für
+etwa 15 MB.
+
+Backup des vorherigen Stands: `~/mapillary_trafficsigns_backup_2026-10-17.git`.
+Der Server wurde per `reset --soft` auf denselben Code-Stand in der neuen
+History gesetzt, Daten blieben unberührt. Auf GitHub halten der Fork von
+tordans und PR #2 die alten Commits weiter erreichbar.
 
 ### 18. mk-README angleichen
 
