@@ -81,5 +81,8 @@ uv run jupyter lab     # the maproulette pipeline, by hand
 Credentials come from `../utils/config_mapillary_privat.json`, or from the environment
 variables `MAPILLARY_ACCESS_TOKEN` and `MAPROULETTE_API_KEY`.
 
+Notebooks are committed without outputs. Set up the filter for that once per clone, as
+described in [`.gitattributes`](../../.gitattributes).
+
 `blogpost.md` is a write-up about the campaign. `ts_output/` and `processed_osm_files/`
 (older OSM extracts) are not in git.

@@ -1,0 +1,11 @@
+# Notebooks are committed without outputs; the working copy keeps them.
+# The filter itself lives in .git/config, so set it up once per clone, after `uv sync`:
+#
+#   git config filter.nbstripout.clean '.venv/bin/python -m nbstripout --keep-id'
+#   git config filter.nbstripout.smudge cat
+#   git config filter.nbstripout.required true
+#   git config diff.ipynb.textconv '.venv/bin/python -m nbstripout --keep-id -t'
+#
+# --keep-id keeps the cell ids, which would otherwise be renumbered on every
+# commit. CI rejects notebooks that arrive with outputs anyway.
+*.ipynb filter=nbstripout diff=ipynb

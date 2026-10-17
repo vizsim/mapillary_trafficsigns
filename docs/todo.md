@@ -26,14 +26,14 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | ✅ 17.10. |
 | 10 | CI | 1 h | hoch | ✅ 17.10. |
-| 11 | Notebook-Outputs aus git | 30 min | mittel | P2 |
+| 11 | Notebook-Outputs aus git | 30 min | mittel | ✅ 17.10. |
 | 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | später |
 | 13 | CLI statt Root-Notebooks | ½ Tag Rest | gering | P3, Kern ✅ 17.10. |
 | 14 | `src/`-Paketstruktur | ½ Tag | gering | P3 |
 | 15 | `docs/betrieb.md` | 1 h | mittel | P3 |
 | 16 | Token-Quellen vereinheitlichen | 30 min | gering | P3 |
 | 17 | `.gitignore` aufräumen | 20 min | gering | P3 |
-| 18 | mk-README angleichen | 1 h | gering | P3 |
+| 18 | mk-README angleichen | 30 min Rest | gering | P3, fast ✅ |
 | 19 | Zweiter History-Rewrite | ½ Tag | gering | optional |
 | 20 | Streaming-Export | 1 Tag | gering | optional |
 | 21 | Ende-zu-Ende-Test im Image | ½ Tag | gering | optional |
@@ -86,21 +86,6 @@ Stand der Challenges laut MapRoulette am 17.10.:
 | 52985 | Tempo 30 an Schulen | aktiv | 17.08.2025 |
 | 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
 | — | Fußgängerüberwege, Markierungen; rad_frei; access_restrictions | keine Challenge | — |
-
-### 11. Notebook-Outputs aus git
-
-**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
-
-Seit dem 02.09. committet der Server nichts mehr, die ausgeführten Kopien
-landen in `logs/executed/`. Offen ist die Handarbeit: das Produktions-Notebook
-`radinfra_2_pmtiles` trägt noch 32 (ts) bzw. 14 (mk) Outputs, die
-Kampagnen-Notebooks 250 KB bis 2 MB. Notebook-Outputs haben die History im
-Juli auf 4,3 GB gebracht — und über Fehlermeldungen den Mapillary-Token
-veröffentlicht (#1).
-
-- `nbstripout` als git-Filter einrichten — die lokale Arbeitskopie behält ihre
-  Outputs, committet wird ohne.
-- Bestehende Outputs einmal entfernen.
 
 ---
 
@@ -163,11 +148,15 @@ nach sich zieht.
 
 ### 18. mk-README angleichen
 
-**Aufwand:** 1 h · **Nutzen:** gering · **Prio:** P3
+**Aufwand:** 30 min Rest · **Nutzen:** gering · **Prio:** P3
 
-Die ts-README hat seit dem 22.09. Property-Tabelle, Delta zum Vorlauf und eine
-englische Grafik; die mk-README nichts davon. Damals bewusst zurückgestellt.
-Das Datumsformat des Erkennungszeitraums ist mit #7 schon korrigiert.
+✅ 17.10.: Die mk-README auf data.vizsim.de ist aufgebaut wie die ts-README —
+Property-Tabelle, `## Files` mit relativen Links, englische Grafik. Sichtbar ab
+dem mk-Lauf am 22.10.
+
+Offen ist nur die Δ-Spalte zum Vorlauf. Dafür bräuchte mk eine eigene
+Verlaufsdatei auf B2 wie `signs_history.json`; im ersten Lauf bliebe die
+Spalte leer.
 
 ---
 
@@ -260,13 +249,30 @@ ein Python-Aufruf mit eigenem Test.
 Ein Pre-Commit-Hook, der jeden Commit mit einem Mapillary-Token
 (`MLY|…|<32 hex>`, roh oder URL-kodiert) ablehnt. Er hätte alle Lecks von
 2025/26 aufgehalten. Seit #1 schwärzt `mapillary_tiles.py` den Token selbst,
-und Notebook-Ausgaben werden nicht mehr automatisch committet — der Hook wäre
-die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
+und seit #11 kommen Notebook-Ausgaben gar nicht mehr in einen Commit — der
+Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
 (`git config core.hooksPath .githooks`).
 
 ---
 
 ## Erledigt
+
+### 11. Notebook-Outputs aus git
+
+**Erledigt:** 17.10.2026
+
+Notebooks werden ohne Outputs committet, die Arbeitskopie behält sie:
+`.gitattributes` schickt jedes `*.ipynb` durch `nbstripout --keep-id`
+(Dev-Abhängigkeit in `pyproject.toml`). Der Filter selbst steht in
+`.git/config` und muss je Klon einmal eingerichtet werden; die Befehle stehen
+in `.gitattributes`. Ein Klon ohne Filter fällt in der CI auf: der Schritt
+„Notebooks carry no outputs" schlägt fehl, und damit wartet auch der
+Auto-Deploy (#5). Der Server braucht den Filter nicht, er committet seit dem
+02.09. nichts mehr.
+
+Beim Einrichten einmal alle 20 Notebooks bereinigt: 5,3 MB → 350 KB.
+Zellinhalte unverändert, nur die Schlüssel stehen jetzt in der Reihenfolge
+von nbformat. Die History behält die alten Outputs (#19).
 
 ### 9. Eine Python-Umgebung (uv)
 

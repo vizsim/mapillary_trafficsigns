@@ -32,3 +32,8 @@ jobs:
         run: uv sync --frozen
       - name: Run tests
         run: uv run --frozen pytest
+      # Notebooks are committed without outputs (see .gitattributes). A clone
+      # without the filter would still commit them; this catches it. Fix with
+      # `git add --renormalize -- '*.ipynb'` once the filter is set up.
+      - name: Notebooks carry no outputs
+        run: git ls-files -z '*.ipynb' | xargs -0 uv run --frozen nbstripout --verify --keep-id
