@@ -6,6 +6,7 @@ verworfen, der Export lief trotzdem).
 """
 
 import logging
+import threading
 import time
 
 import mercantile
@@ -309,10 +310,28 @@ def test_abbruch_nach_fehlern_in_folge_statt_stundenlangem_kriechen(monkeypatch)
     # den Lauf um Groessenordnungen verlaengern. Jetzt: nach 10 Fehlern in Folge Schluss.
     tiles = _tiles(200)
     attempted = []
-    monkeypatch.setattr(mt, "load_tile", lambda tile, *a, **k: attempted.append(tile) or _slow_block(tile))
+    # Deterministic instead of timing-based: after 20 tiles the workers wait
+    # until the abort message has been emitted. A busy-wait per tile used to
+    # decide this, and on a loaded CI runner the workers sometimes got through
+    # all 200 tiles before the main thread could abort (failed 9 of 60 runs
+    # locally under full CPU load).
+    gate = threading.Event()
+
+    def blocking(tile, *a, **k):
+        attempted.append(tile)
+        if len(attempted) > 20:
+            gate.wait(10)
+        return None, mt.TileError("kein MVT (Content-Type text/html)", "<!DOCTYPE html> ...")
+
+    monkeypatch.setattr(mt, "load_tile", blocking)
     log = []
 
-    batch = mt.fetch_tiles(tiles, "t", COVERAGE, LAYER, max_workers=2, emit=log.append, abort_after=10)
+    def emit(line):
+        log.append(line)
+        if "🛑" in line:
+            gate.set()
+
+    batch = mt.fetch_tiles(tiles, "t", COVERAGE, LAYER, max_workers=2, emit=emit, abort_after=10)
 
     assert "10 Fehler in Folge (kein MVT (Content-Type text/html))" in batch.aborted
     assert len(attempted) < 200  # der Rest wurde gar nicht erst angefragt
