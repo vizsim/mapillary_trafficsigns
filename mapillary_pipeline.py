@@ -365,6 +365,8 @@ def run_pipeline(
         bilanz += f", {len(fresh)} frisch übersprungen"
     emit(bilanz + " =====")
     if uebersprungen:
+        # scripts/run_worker_with_vpn.sh greps for "Nicht aktualisiert" to report
+        # the run as failed - keep the wording (pinned by test_run_pipeline_bilanz_und_mitschrift).
         emit(f"❌ Nicht aktualisiert, alter Stand bleibt stehen: {', '.join(uebersprungen)}")
 
     # Frisch uebersprungene Laender zaehlen nicht als unvollstaendig - ihre

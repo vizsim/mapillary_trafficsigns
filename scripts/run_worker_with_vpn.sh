@@ -13,6 +13,41 @@ if [[ -z "$SERVICE" ]]; then
 fi
 
 # ---------------------------
+# 📟 Monitoring (healthchecks.io)
+# ---------------------------
+# Every run reports its start, then success or failure. The check also alerts
+# when no run shows up at all (server down, cron broken). The ping URL is a
+# secret and lives in docker/.env (HEALTHCHECK_URL_TS / HEALTHCHECK_URL_MK);
+# without it, everything below is a no-op.
+PIPELINE="${SERVICE#mapillary-}"; PIPELINE="${PIPELINE%_worker}"   # mapillary-ts_worker -> ts
+RUN_LOG="logs/${PIPELINE}_run_latest.log"
+RUN_START="$(date +%s)"
+HC_VAR="HEALTHCHECK_URL_${PIPELINE^^}"
+HC_URL="$(sed -nE "s/^${HC_VAR}=[\"']?([^\"'[:space:]]*)[\"']?[[:space:]]*$/\1/p" docker/.env 2>/dev/null | tail -1)"
+HC_NOTE=""  # why the run failed; set right before the failing exit
+
+# The run transcript of THIS run - not the one a previous run left behind.
+run_log_is_current() {
+  [[ -e "$RUN_LOG" ]] && (( $(stat -c %Y "$RUN_LOG") >= RUN_START ))
+}
+
+# hc_ping <suffix>: "/start", "/fail" or "" (success). Success and failure
+# carry HC_NOTE plus the tail of the run transcript, so the dashboard shows
+# what happened. Never fails the run itself.
+hc_ping() {
+  [[ -n "$HC_URL" ]] || return 0
+  local body=""
+  if [[ "$1" != "/start" ]]; then
+    body="$HC_NOTE"
+    if run_log_is_current; then
+      body+=$'\n\n'"$(tail -n 40 "$RUN_LOG")"
+    fi
+  fi
+  curl -fsS -m 10 --retry 3 -o /dev/null --data-raw "$body" "${HC_URL}$1" \
+    || echo "⚠️  healthchecks.io not reachable (ping '${1:-success}')"
+}
+
+# ---------------------------
 # 🔒 Nur ein Worker gleichzeitig
 # ---------------------------
 # ts (Mi 15:00) und mk (Do 01:00) teilen sich Compose-Projekt, gluetun, output/
@@ -23,9 +58,13 @@ fi
 LOCK_FILE="${MAPILLARY_WORKER_LOCK:-/tmp/mapillary_worker.lock}"
 exec 9>"$LOCK_FILE"
 if ! flock -n 9; then
-  echo "⏭️  Anderer Worker läuft noch (Lock $LOCK_FILE) — $SERVICE wird übersprungen, kein Commit."
+  echo "⏭️  Anderer Worker läuft noch (Lock $LOCK_FILE) — $SERVICE wird übersprungen."
+  # A skipped run is a missed week for this pipeline - report it.
+  HC_NOTE="Skipped: another worker still holds the lock ($LOCK_FILE)."
+  hc_ping /fail
   exit 0
 fi
+hc_ping /start
 
 # Obergrenze für den Worker-Lauf. Normal sind ~6 h. Hängt der Lauf (gestrandete
 # Sockets nach VPN-Reconnect, beobachtet 2026-07-01), würde er sonst über das
@@ -47,7 +86,24 @@ cleanup() {
   docker logs gluetun > "logs/gluetun-${SERVICE}.log" 2>&1 || true
   $DC down --remove-orphans 2>/dev/null || true
 }
-trap cleanup EXIT
+
+# On every exit: clean up, then report. Status 0 is not enough for success: if
+# a state kept its old data (the rip cord in mapillary_pipeline), that is
+# reported as a failure too - the incident of 2026-08-26 was such a partial run.
+finish() {
+  local rc=$?
+  cleanup
+  if (( rc != 0 )); then
+    [[ -n "$HC_NOTE" ]] || HC_NOTE="Run aborted (exit $rc)."
+    hc_ping /fail
+  elif run_log_is_current && grep -q "Nicht aktualisiert" "$RUN_LOG"; then
+    HC_NOTE="Finished, but some states kept their old data (see below)."
+    hc_ping /fail
+  else
+    hc_ping ""
+  fi
+}
+trap finish EXIT
 
 # Container aufräumen
 $DC down --remove-orphans
@@ -93,9 +149,11 @@ timeout --signal=INT --kill-after=5m "$WORKER_TIMEOUT" \
   $DC up --build --abort-on-container-exit --exit-code-from "$SERVICE" "$SERVICE" || {
   rc=$?
   if [[ $rc -eq 124 ]]; then
-    echo "❌ Worker nach $WORKER_TIMEOUT abgebrochen (Hänger?) — skippe Auto-Commit"
+    echo "❌ Worker nach $WORKER_TIMEOUT abgebrochen (Hänger?) — kein Upload"
+    HC_NOTE="Worker killed after $WORKER_TIMEOUT (hung?) - nothing uploaded."
   else
-    echo "❌ Worker-Fehler (Exit $rc) — skippe Auto-Commit"
+    echo "❌ Worker-Fehler (Exit $rc) — kein Upload"
+    HC_NOTE="Worker failed (exit $rc) - nothing uploaded."
   fi
   exit 1
 }
@@ -103,10 +161,14 @@ timeout --signal=INT --kill-after=5m "$WORKER_TIMEOUT" \
 # ---------------------------
 # ☁️ Schwere Outputs nach B2 archivieren (nicht in git)
 # ---------------------------
-# Unabhängig vom git-Commit: läuft auch, wenn es keine Notebook-/Metadata-Diffs
-# gibt. Defensive — fehlt b2/Creds, wird nur gewarnt (bricht den Lauf nicht).
-"$(dirname "$0")/upload_outputs_to_b2.sh" "$SERVICE" || \
-  echo "⚠️  B2-Upload meldete einen Fehler — Lauf wird trotzdem fortgesetzt."
+# A failed or skipped upload (exit 1 or 3) does not stop the run - the data
+# stays on disk - but the run counts as failed at the end: nothing was
+# published, and data.vizsim.de keeps last week's state.
+UPLOAD_OK=1
+if ! "$(dirname "$0")/upload_outputs_to_b2.sh" "$SERVICE"; then
+  UPLOAD_OK=0
+  echo "⚠️  B2-Upload fehlgeschlagen oder übersprungen — nichts veröffentlicht."
+fi
 
 # ---------------------------
 # 📝 Lauf-Protokoll
@@ -119,11 +181,13 @@ timeout --signal=INT --kill-after=5m "$WORKER_TIMEOUT" \
 # (~34 MB/Woche) in die History - siehe git-history-rewrite 2026-07.
 echo
 echo "📝 Lauf-Bilanz ($SERVICE):"
-PIPELINE="${SERVICE#mapillary-}"; PIPELINE="${PIPELINE%_worker}"   # mapillary-ts_worker -> ts
-RUN_LOG="logs/${PIPELINE}_run_latest.log"
 if [[ -e "$RUN_LOG" ]]; then
   grep -aE "Lauf beendet|Nicht aktualisiert|NICHT exportiert|VPN neu verbunden" "$RUN_LOG" | sed 's/^/   /'
 else
   echo "   (keine Mitschrift unter $RUN_LOG)"
+fi
+if (( ! UPLOAD_OK )); then
+  HC_NOTE="B2 upload failed or was skipped - nothing published this week."
+  exit 1
 fi
 echo "🎉 Fertig!"

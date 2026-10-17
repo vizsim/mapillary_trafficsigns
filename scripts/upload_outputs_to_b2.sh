@@ -8,8 +8,10 @@
 # Bucket:  vizsim-public-archive  (Endpoint s3.eu-central-003.backblazeb2.com)
 #          öffentlich erreichbar unter https://data.vizsim.de/
 #
-# Defensive: fehlt b2-CLI oder Credentials, wird NUR gewarnt und übersprungen —
-# ein Worker-Lauf darf daran NICHT scheitern.
+# If the b2 CLI or the credentials are missing, the upload is skipped with
+# exit status 3 (a failed sync exits with 1). Either way the caller
+# (run_worker_with_vpn.sh) keeps going - the data stays on disk - but reports
+# the run as failed, because nothing was published.
 # ---------------------------------------------------------------------------
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -42,7 +44,7 @@ fi
 # b2-CLI vorhanden?
 if ! command -v b2 >/dev/null 2>&1; then
   echo "⚠️  b2-CLI nicht installiert ('uv tool install b2') — B2-Upload übersprungen."
-  exit 0
+  exit 3
 fi
 
 # Credentials vorhanden? Bewusst NICHT der gecachte unfallkarte-Key — der ist auf
@@ -51,7 +53,7 @@ fi
 if [[ -z "${B2_ARCHIVE_KEY_ID:-}" || -z "${B2_ARCHIVE_KEY:-}" ]]; then
   echo "⚠️  B2_ARCHIVE_KEY_ID/B2_ARCHIVE_KEY nicht gesetzt — B2-Upload übersprungen."
   echo "    App-Key mit Schreibrecht auf vizsim-public-archive in docker/.env hinterlegen."
-  exit 0
+  exit 3
 fi
 
 # b2 v4 nutzt diese Env-Vars in-memory und fasst die gecachte Default-Auth

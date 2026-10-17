@@ -18,7 +18,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 |--:|:--------|:--------|:-------|:-----|
 | 1 | Mapillary-Token rotieren, `config.py` löschen | 5 min Rest | hoch | P1, fast ✅ |
 | 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | später |
-| 3 | Fehlschläge melden | 1 h | hoch | P1 |
+| 3 | Fehlschläge melden | 1 h | hoch | ✅ 17.10. |
 | 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
 | 5 | Deploy-Weg festlegen | 30 min | mittel | P2 |
 | 6 | Kampagnen-Inventur | 30 min | mittel | P2 |
@@ -62,20 +62,6 @@ die History muss dafür nicht neu geschrieben werden.
 - ✅ 17.10.: `config.py` gelöscht. Sie wurde in diesem Repo nie importiert,
   stammte aus dem coverage-Repo und hielt den alten Token im Klartext.
 - **Offen:** den alten Token im Mapillary-Dashboard löschen.
-
-### 3. Fehlschläge melden
-
-**Aufwand:** 1 h · **Nutzen:** hoch · **Prio:** P1
-
-Ein gescheiterter Lauf steht nur in `logs/cron-*.log`; auf dem Server ist
-kein Mailversand eingerichtet. Schlimmer: fehlen b2-CLI oder Zugangsdaten,
-endet `upload_outputs_to_b2.sh` mit Exit 0 — und seit B2 der einzige
-Veröffentlichungsweg ist, heißt das: nichts publiziert, niemand merkt es.
-
-- Am Ende von `run_worker_with_vpn.sh` Erfolg oder Fehler an einen Dienst
-  melden (ntfy, healthchecks.io). healthchecks.io meldet zusätzlich einen
-  Lauf, der gar nicht erst startet.
-- Den übersprungenen Upload als Fehler werten, nicht als Warnung.
 
 ---
 
@@ -316,6 +302,21 @@ die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
 ---
 
 ## Erledigt
+
+### 3. Fehlschläge melden
+
+**Erledigt:** 17.10.2026
+
+Bis dahin stand ein gescheiterter Lauf nur in `logs/cron-*.log`, und ein
+übersprungener B2-Upload endete mit Exit 0 — nichts publiziert, niemand merkte es.
+
+Jetzt meldet `run_worker_with_vpn.sh` jeden Lauf an healthchecks.io (je ein
+Check für ts und mk, Ping-URLs in `docker/.env` auf dem Server): Start, dann
+Erfolg oder Fehler, mit den letzten Zeilen der Lauf-Mitschrift. Als Fehler
+gilt auch ein gescheiterter oder übersprungener Upload (Exit 3), ein wegen
+Lock ausgefallener Lauf und ein Land, das an der Reißleine hängen blieb.
+healthchecks.io alarmiert zusätzlich, wenn gar kein Lauf kommt
+(Grace Time: ts 8 h, mk 10 h).
 
 ### 4. Kopfzellen der `radinfra_1_export` korrigieren
 
