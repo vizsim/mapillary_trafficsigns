@@ -149,6 +149,7 @@ case "$SERVICE" in
       ".*mapillary_markings_bicycle_latest\.pmtiles$" \
       ".*mapillary_markings_bicycle_latest\.geojson\.gz$" \
       ".*markings_by_month\.svg$" \
+      ".*markings_history\.json$" \
       ".*README\.md$"
     ;;
 esac

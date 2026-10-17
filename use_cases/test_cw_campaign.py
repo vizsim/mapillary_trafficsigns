@@ -835,7 +835,7 @@ def test_build_readme_zaehlt():
     "ordner, build",
     [
         ("cycleway_complete_campaign/ts_output", lambda: cw.build_readme({}, "2026-10-17")),
-        ("cycleway_complete_marking_campaign/mk_output", lambda: cw.build_readme_markierungen(0, "2026-10-17")),
+        ("cycleway_complete_marking_campaign/mk_output", lambda: cw.build_readme_markierungen({}, "2026-10-17")),
     ],
 )
 def test_readme_lists_every_published_file(ordner, build):
@@ -924,8 +924,11 @@ def test_add_marking_label():
     assert cw.add_marking_label(frame)["MapFeaturePoint"].iloc[0] == "Lane marking - symbol (bicycle)"
 
 
+_SYMBOL = "Lane marking - symbol (bicycle)"
+
+
 def test_build_readme_markierungen():
-    readme = cw.build_readme_markierungen(35250, "2026-09-17", seit="2024-02-03", min_days=90)
+    readme = cw.build_readme_markierungen({_SYMBOL: 35250}, "2026-09-17", seit="2024-02-03", min_days=90)
     assert "| **Data created** | 2026-09-17 |" in readme
     assert "| **Total markings** | 35,250 |" in readme
     assert "| **Detections newer than** | 2024-02-03 |" in readme
@@ -933,6 +936,35 @@ def test_build_readme_markierungen():
     assert "`marking--discrete--symbol--bicycle`" in readme
     # Same section headings as the traffic-sign README.
     assert "## Files" in readme and "## Detections per month" in readme
+
+    # No previous run: an empty delta, not a zero.
+    assert "**Previous run**" not in readme
+    assert f"| **Δ since previous run** | {cw.NO_VALUE} |" in readme
+
+
+def test_build_readme_markierungen_zeigt_das_delta():
+    readme = cw.build_readme_markierungen(
+        {_SYMBOL: 36400, "unknown class": 7},
+        "2026-10-22",
+        previous={_SYMBOL: 36346},
+        previous_date="2026-10-15",
+    )
+    assert "| **Previous run** | 2026-10-15 |" in readme
+    assert "| **Total markings** | 36,400 |" in readme
+    assert "| **Δ since previous run** | +54 |" in readme
+
+
+def test_marking_history_lives_in_its_own_file(tmp_path):
+    cw.append_sign_history(
+        tmp_path, "2026-10-15", {_SYMBOL: 36346}, runs=[], filename=cw.MARKING_HISTORY_FILENAME, verbose=False
+    )
+    assert (tmp_path / "markings_history.json").exists()
+    assert not (tmp_path / cw.SIGN_HISTORY_FILENAME).exists()
+
+    runs = cw.load_sign_history(tmp_path, url=None, filename=cw.MARKING_HISTORY_FILENAME, verbose=False)
+    assert cw.latest_sign_counts(runs, before="2026-10-22") == ({_SYMBOL: 36346}, "2026-10-15")
+    assert cw.load_sign_history(tmp_path, url=None, verbose=False) == []
+    assert cw.MARKING_HISTORY_URL.endswith("/mapillary_map-feature-points/cycleway-campaign/markings_history.json")
 
 
 def test_export_spalten_markierungen_ist_festgenagelt():

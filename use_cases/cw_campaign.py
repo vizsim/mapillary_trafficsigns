@@ -1064,12 +1064,17 @@ README_ZEICHEN = [
 SIGN_HISTORY_FILENAME = "signs_history.json"
 SIGN_HISTORY_URL = DATA_URL + "cycleway-campaign/" + SIGN_HISTORY_FILENAME
 
+# The same for the markings, next to mk_output/ - counted per MapFeaturePoint
+# label instead of per sign.
+MARKING_HISTORY_FILENAME = "markings_history.json"
+MARKING_HISTORY_URL = DATENQUELLE[PREFIX_MARKIERUNGEN][0] + "cycleway-campaign/" + MARKING_HISTORY_FILENAME
+
 # Platzhalter fuer ein Delta ohne Vergleichswert - wie im coverage-README.
 NO_VALUE = "—"
 
 
-def sign_history_path(folder):
-    return Path(folder) / SIGN_HISTORY_FILENAME
+def sign_history_path(folder, filename=SIGN_HISTORY_FILENAME):
+    return Path(folder) / filename
 
 
 def _parse_history(daten):
@@ -1089,7 +1094,7 @@ def _merge_runs(*quellen):
     return [nach_datum[datum] for datum in sorted(nach_datum)]
 
 
-def load_sign_history(folder, url=SIGN_HISTORY_URL, verbose=True):
+def load_sign_history(folder, url=SIGN_HISTORY_URL, filename=SIGN_HISTORY_FILENAME, verbose=True):
     """Bisherige Laeufe in chronologischer Reihenfolge.
 
     Gelesen wird die lokale Datei *und* - sofern `url` gesetzt ist - die zuletzt
@@ -1114,7 +1119,7 @@ def load_sign_history(folder, url=SIGN_HISTORY_URL, verbose=True):
                 print(f"Historie vom Server nicht lesbar ({fehler}) - nur lokaler Stand")
 
     lokal = []
-    pfad = sign_history_path(folder)
+    pfad = sign_history_path(folder, filename)
     if pfad.exists():
         try:
             lokal = _parse_history(json.loads(pfad.read_text(encoding="utf-8")))
@@ -1143,7 +1148,9 @@ def latest_sign_counts(runs, before=None):
     return (zeichen if isinstance(zeichen, dict) else {}), str(letzter["date"])
 
 
-def append_sign_history(folder, run_date, counts, runs=None, verbose=True):
+def append_sign_history(
+    folder, run_date, counts, runs=None, filename=SIGN_HISTORY_FILENAME, url=SIGN_HISTORY_URL, verbose=True
+):
     """Aktuellen Lauf in die Historie schreiben - ein Eintrag je Datum.
 
     Ein zweiter Lauf am selben Tag ersetzt den vorhandenen Eintrag, sonst waere
@@ -1154,9 +1161,9 @@ def append_sign_history(folder, run_date, counts, runs=None, verbose=True):
     auch vom Server, sonst wuerde der geschriebene Stand die dort liegenden
     Laeufe abschneiden.
     """
-    pfad = sign_history_path(folder)
+    pfad = sign_history_path(folder, filename)
     if runs is None:
-        runs = load_sign_history(folder, verbose=False)
+        runs = load_sign_history(folder, url=url, filename=filename, verbose=False)
     nach_datum = {str(run["date"]): run for run in runs}
     nach_datum[str(run_date)] = {"date": str(run_date), "zeichen": dict(counts)}
     inhalt = {"runs": [nach_datum[datum] for datum in sorted(nach_datum)]}
@@ -1359,14 +1366,41 @@ README_DATEIEN_MARKIERUNGEN = [
         "all markings as gzipped GeoJSON; Mapillary ids are strings, as they exceed 2<sup>53</sup>",
     ),
     ("markings_by_month.svg", "the chart below"),
+    ("markings_history.json", "marking counts of every run — the basis of the Δ row"),
 ]
 README_QUELLE_MARKIERUNGEN = (
     "https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/cycleway_complete_marking_campaign"
 )
 
 
-def build_readme_markierungen(anzahl, stand, seit="2023-01-01", min_days=180):
-    """README text for mk_output/, laid out like `build_readme` for ts_output/."""
+def build_readme_markierungen(
+    counts, stand, previous=None, previous_date=None, seit="2023-01-01", min_days=180
+):
+    """README text for mk_output/, laid out like `build_readme` for ts_output/.
+
+    `counts` and `previous` count per MapFeaturePoint label, as the history
+    stores them (`latest_sign_counts`). Without `previous` the Δ row shows
+    NO_VALUE instead of pretending nothing changed.
+    """
+    # Only the labels in MARKIERUNGEN count, as in build_readme - a class that
+    # appears in one run's counts but not the other's would skew the delta.
+    labels = list(MARKIERUNGEN.values())
+    gesamt = sum(counts.get(label, 0) for label in labels)
+    gesamt_vorher = sum(previous.get(label, 0) for label in labels) if previous else None
+
+    eigenschaften = [f"| **Data created** | {stand} |"]
+    if previous_date:
+        eigenschaften.append(f"| **Previous run** | {previous_date} |")
+    eigenschaften.extend(
+        [
+            f"| **Total markings** | {gesamt:,} |",
+            f"| **Δ since previous run** | {format_delta(gesamt, gesamt_vorher)} |",
+            f"| **Detections newer than** | {seit} |",
+            f"| **First to last sighting** | more than {min_days} days |",
+        ]
+    )
+    eigenschaften_tabelle = "\n".join(["| Property | Value |", "|:---------|------:|", *eigenschaften])
+
     klassen = ", ".join(f"`{klasse}`" for klasse in MARKIERUNGEN)
     return f"""
 # Bicycle Road Markings
@@ -1376,12 +1410,7 @@ Every bicycle symbol painted on the road in Germany that Mapillary has detected
 updated every Thursday. How it is built is documented in the
 [source repository]({README_QUELLE_MARKIERUNGEN}).
 
-| Property | Value |
-|:---------|------:|
-| **Data created** | {stand} |
-| **Total markings** | {anzahl:,} |
-| **Detections newer than** | {seit} |
-| **First to last sighting** | more than {min_days} days |
+{eigenschaften_tabelle}
 
 Only markings seen over more than {min_days} days are included — a single sighting can
 be a false detection or a temporary marking.

@@ -33,7 +33,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 15 | `docs/betrieb.md` | 1 h | mittel | P3 |
 | 16 | Token-Quellen vereinheitlichen | 30 min | gering | P3 |
 | 17 | `.gitignore` aufräumen | 20 min | gering | P3 |
-| 18 | mk-README angleichen | 30 min Rest | gering | P3, fast ✅ |
+| 18 | mk-README angleichen | 1 h | gering | ✅ 17.10. |
 | 19 | Zweiter History-Rewrite | ½ Tag | gering | optional |
 | 20 | Streaming-Export | 1 Tag | gering | optional |
 | 21 | Ende-zu-Ende-Test im Image | ½ Tag | gering | optional |
@@ -146,18 +146,6 @@ nächste Rotation ein Schritt statt zwei.
 Auskommentierte Altblöcke und ein `*.json`-Ausschluss, der mehrere Ausnahmen
 nach sich zieht.
 
-### 18. mk-README angleichen
-
-**Aufwand:** 30 min Rest · **Nutzen:** gering · **Prio:** P3
-
-✅ 17.10.: Die mk-README auf data.vizsim.de ist aufgebaut wie die ts-README —
-Property-Tabelle, `## Files` mit relativen Links, englische Grafik. Sichtbar ab
-dem mk-Lauf am 22.10.
-
-Offen ist nur die Δ-Spalte zum Vorlauf. Dafür bräuchte mk eine eigene
-Verlaufsdatei auf B2 wie `signs_history.json`; im ersten Lauf bliebe die
-Spalte leer.
-
 ---
 
 ## Später — wenn die übrigen Kampagnen umgestellt werden
@@ -256,6 +244,16 @@ Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet i
 ---
 
 ## Erledigt
+
+### 18. mk-README angleichen
+
+**Erledigt:** 17.10.2026, sichtbar ab dem mk-Lauf am 22.10.
+
+Die mk-README auf data.vizsim.de ist aufgebaut wie die ts-README:
+Property-Tabelle, `## Files` mit relativen Links, englische Grafik. Dazu eine
+Δ-Zeile zum Vorlauf aus `markings_history.json`, die wie `signs_history.json`
+neben den Outputs liegt und mit nach B2 geht. Die Historie-Funktionen in
+`cw_campaign.py` nehmen dafür einen Dateinamen.
 
 ### 11. Notebook-Outputs aus git
 
