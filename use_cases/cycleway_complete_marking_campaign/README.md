@@ -1,6 +1,6 @@
 # Cycleway campaign — road markings
 
-**Last updated:** 2026-09-20
+**Last updated:** 2026-10-17
 
 Two independent pipelines run in this folder, exactly as in the twin campaign
 [`../cycleway_complete_campaign/`](../cycleway_complete_campaign/). Same structure, same
@@ -122,8 +122,9 @@ to this campaign.
 
 ### The challenge cleanup now actually applies
 
-`1_` computed which candidates already exist as MapRoulette tasks (cell 47) and then
-threw the result away (cell 50):
+The previous implementation, `1_merge_…` (removed on 2026-10-17, in the git history up to
+commit `ad5198d`), computed which candidates already exist as MapRoulette tasks (cell 47)
+and then threw the result away (cell 50):
 
 ```python
 df_process_img = df_buffered_both_false.copy()
@@ -133,15 +134,6 @@ df_process_img = df_buffered_both_false.copy()
 Places already marked *Not an issue* or *Already fixed* therefore reappeared as tasks in
 the next round. In the current run that affects **41 of 634** candidates. The
 traffic-sign campaign never had this bug.
-
-### The published README carries a cosmetic artifact
-
-`mk_output/README.md` reports the detection period as
-`2014-03-30 00:00:00 - 2026-09-15 00:00:00`. The `00:00:00` is an artifact: the previous
-implementation held the date columns as `datetime` at that point. `radinfra_1_export`
-reproduces it on purpose so that its output stayed byte-identical to `x_` during the
-switch. Dropping it is a one-line change in the notebook, worth doing once the old
-notebook is gone.
 
 ### Days, not months
 
@@ -171,7 +163,5 @@ variables `MAPILLARY_ACCESS_TOKEN` and `MAPROULETTE_API_KEY` if those are set.
 
 | | |
 | --- | --- |
-| `1_merge_…ipynb`, `x_…ipynb` | the previous implementations, kept until the new ones have survived a few weekly runs; how they were verified against each other is in the git history |
 | `processed_osm_files/` | older OSM extracts from before the shared `0_prepare`, not in git |
 | `mk_output/` | output of the radinfra pipeline, not in git |
-| `mk_output_ref/` | reference run used by the comparison cell, not in git |

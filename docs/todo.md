@@ -1,6 +1,6 @@
 # TODO
 
-**Stand:** 2026-09-22
+**Stand:** 2026-10-17
 
 Ersetzt `plan_notebooks_zu_python.md`, `docker-improvements.md` und
 `worker_mix_fehleranalyse_und_todos.md`. Was dort noch offen war, steht hier;
@@ -17,10 +17,10 @@ getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`).
 | 1 | Mapillary-Token rotieren, `config.py` löschen | 15 min | hoch | P1 |
 | 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | P1 |
 | 3 | Fehlschläge melden | 1 h | hoch | P1 |
-| 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | P2 |
+| 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
 | 5 | Deploy-Weg festlegen | 30 min | mittel | P2 |
 | 6 | Kampagnen-Inventur | 30 min | mittel | P2 |
-| 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | P2 |
+| 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
 | 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | P2 |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | P2 |
 | 10 | CI | 1 h | hoch | P2 |
@@ -88,11 +88,12 @@ Veröffentlichungsweg ist, heißt das: nichts publiziert, niemand merkt es.
 
 ### 4. Kopfzellen der `radinfra_1_export` korrigieren
 
-**Aufwand:** 15 min · **Nutzen:** mittel · **Prio:** P2
+**Erledigt:** 17.10.2026
 
-Beide Notebooks sagen noch „`x_` läuft wöchentlich auf dem Server und bleibt
-unverändert" und nennen sich „Schlankere Fassung von `radinfra_1_export.ipynb`".
-Beides ist seit der Umstellung am 20.09. falsch.
+Beide Notebooks sagten noch „`x_` läuft wöchentlich auf dem Server und bleibt
+unverändert" und nannten sich „Schlankere Fassung von `radinfra_1_export.ipynb`".
+Die Kopfzellen beschreiben jetzt, was das Notebook tut; dasselbe für beide
+`maproulette_tasks`, die sich noch über `1_` erklärten.
 
 ### 5. Deploy-Weg festlegen
 
@@ -120,10 +121,8 @@ löschen (git behält sie), lebende in die README. Legt fest, wie viel Arbeit
 
 ### 7. Alte Notebooks entfernen
 
-**Aufwand:** 1 h · **Nutzen:** mittel · **Prio:** P2, **frühestens ab 08.10.**
-
-Nach drei grünen Cron-Läufen je Pipeline mit `radinfra_1_export`
-(ts 23.09./30.09./07.10., mk 24.09./01.10./08.10.):
+**Erledigt:** 17.10.2026, nach je vier grünen Cron-Läufen mit `radinfra_1_export`
+(ts 23.09.–14.10., mk 24.09.–15.10., jeweils 16/16 Länder). Entfernt:
 
 - `x_…generateOutput_2radinfra.ipynb` und `1_merge_…` in beiden
   Cycleway-Kampagnen

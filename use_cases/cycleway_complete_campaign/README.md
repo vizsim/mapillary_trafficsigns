@@ -1,6 +1,6 @@
 # Cycleway campaign — traffic signs
 
-**Last updated:** 2026-09-20
+**Last updated:** 2026-10-17
 
 Two independent pipelines run in this folder. They share input data and, since
 2026-09-20, code as well — but they are started by different people at different times
@@ -115,17 +115,18 @@ Otherwise `maproulette_*` keeps working while `radinfra_*` dies on a Wednesday n
 All shared packages currently match; `test_cw_campaign_laeuft_in_beiden_umgebungen`
 pins that down.
 
-That test is deliberately throwaway: once the repo moves to a single uv env (step 4 in
-[`docs/plan_notebooks_zu_python.md`](../../docs/plan_notebooks_zu_python.md)), the
-invariant holds structurally and the test can go.
+That test is deliberately throwaway: once the repo moves to a single uv env (#9 in
+[`docs/todo.md`](../../docs/todo.md)), the invariant holds structurally and the test can
+go.
 
 ---
 
 ## Why the code looks the way it does
 
 Both notebooks were rewritten on 2026-09-20. These are the decisions worth knowing
-before changing anything; the previous implementations (`1_…`, `x_…`) are still in the
-folder for comparison.
+before changing anything. The previous implementations (`1_merge_…`, `x_…`) were removed
+on 2026-10-17 after four clean weekly runs; they are in the git history up to commit
+`ad5198d`.
 
 ### The row index is never renumbered
 
@@ -177,10 +178,11 @@ simply is not in the edge; there is nothing better to pick.
 
 ### One distance column instead of two buffer passes
 
-`1_` built two buffered copies of the dataset (25 m and 30 m), intersected both against
-the cycleway network and merged them back with `concat` + `sort_values` +
-`drop_duplicates`. That is a laborious way to write one distance classification: anything
-without cycling infrastructure within 30 m has none within 25 m either.
+The previous implementation built two buffered copies of the dataset (25 m and 30 m),
+intersected both against the cycleway network and merged them back with `concat` +
+`sort_values` + `drop_duplicates`. That is a laborious way to write one distance
+classification: anything without cycling infrastructure within 30 m has none within 25 m
+either.
 
 `distance_to_nearest` measures once and `assign_priority` derives the MapRoulette
 priority from thresholds in `PRIO_AB_DISTANZ`. The task texts name the measured distance
@@ -213,7 +215,5 @@ variables `MAPILLARY_ACCESS_TOKEN` and `MAPROULETTE_API_KEY` if those are set.
 | | |
 | --- | --- |
 | `blogpost.md` | write-up about the campaign |
-| `1_merge_…ipynb`, `x_…ipynb` | the previous implementations, kept until the new ones have survived a few weekly runs; how they were verified against each other is in the git history |
 | `processed_osm_files/` | older OSM extracts from before the shared `0_prepare`, not in git |
 | `ts_output/` | output of the radinfra pipeline, not in git |
-| `ts_output_ref/` | reference run used by the comparison cell, not in git |

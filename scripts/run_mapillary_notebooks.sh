@@ -14,9 +14,6 @@ case "$PIPELINE" in
   ts)
     NOTEBOOKS=(
       "2_get_mapillary_traffic_signs.ipynb"
-      # Seit 20.09.2026 die neu geschriebene Fassung (Logik in use_cases/cw_campaign.py).
-      # Zurueck geht es, indem hier wieder x_mapillary-trafficsigns_generateOutput_2radinfra
-      # steht; das alte Notebook liegt unveraendert daneben.
       "use_cases/cycleway_complete_campaign/radinfra_1_export.ipynb"
       "use_cases/cycleway_complete_campaign/radinfra_2_pmtiles.ipynb"
     )
@@ -24,9 +21,6 @@ case "$PIPELINE" in
   mk)
     NOTEBOOKS=(
       "2b_get_mapillary_map_feature_points.ipynb"
-      # Seit 20.09.2026 die neu geschriebene Fassung (Logik in use_cases/cw_campaign.py).
-      # Zurueck geht es, indem hier wieder x_mapillary-markings_generateOutput_2radinfra
-      # steht; das alte Notebook liegt unveraendert daneben.
       "use_cases/cycleway_complete_marking_campaign/radinfra_1_export.ipynb"
       "use_cases/cycleway_complete_marking_campaign/radinfra_2_pmtiles.ipynb"
     )

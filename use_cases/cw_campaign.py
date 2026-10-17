@@ -21,8 +21,8 @@ Die Notebooks holen es sich mit
 Das `..` ist keine Zauberei: nbconvert und der Jupyter-Kernel setzen das
 Arbeitsverzeichnis auf das Notebook-Verzeichnis - dieselbe Annahme, auf der
 auch die Pfade `../../output/` und `../utils/` in den Notebooks beruhen. Mit
-einem einzigen uv-Env fuers Repo (Schritt 4 in docs/plan_notebooks_zu_python.md)
-faellt die sys.path-Zeile weg.
+einem einzigen uv-Env fuers Repo (#9 in docs/todo.md) faellt die sys.path-Zeile
+weg.
 
 Warum die Notebooks so aussehen, wie sie aussehen - Feature-ids, fehlender
 Sync im Server-Notebook, Bildauswahl - steht in den READMEs der beiden
@@ -183,7 +183,7 @@ def sync_features(folder, prefix=PREFIX_ZEICHEN, verbose=True):
     # Das Manifest mitspiegeln, sonst ist der lokale Stand in sich widersprueclich:
     # Parquets vom Server, Metadatendatei von irgendwann. Genau das war am
     # 20.09.2026 der Fall - Parquets vom 17.09., ml-mf_metadata.json vom 01.07.
-    # xb_ zieht aus dieser Datei das Datum fuer die veroeffentlichte README.
+    # radinfra_1_export zieht aus dieser Datei das Datum fuer die veroeffentlichte README.
     manifest = folder / metadata_file
     tmp_manifest = manifest.with_name(metadata_file + ".tmp")
     tmp_manifest.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")

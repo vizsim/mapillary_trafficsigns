@@ -413,7 +413,8 @@ def test_compare_task_sets_ohne_vorherigen_stand(tmp_path):
 
 
 def test_radweg_zeichen_leitet_sich_aus_der_tabelle_ab():
-    """Eine Quelle fuer 1b_ und xb_ - die Nummern duerfen nicht auseinanderlaufen."""
+    """Eine Quelle fuer maproulette_tasks und radinfra_1_export - die Nummern
+    duerfen nicht auseinanderlaufen."""
     assert cw.RADWEG_ZEICHEN == {
         "regulatory--bicycles-only--g1": 237,
         "regulatory--shared-path-pedestrians-and-bicycles--g1": 240,
@@ -906,7 +907,7 @@ def test_add_marking_label():
 def test_build_readme_markierungen():
     readme = cw.build_readme_markierungen(
         anzahl=35250, stand="2026-09-17", datensatz_von="2026-09-17",
-        zeitraum="2014-03-30 00:00:00 - 2026-09-15 00:00:00",
+        zeitraum="2014-03-30 - 2026-09-15",
     )
     assert "**Total detections**: 35250" in readme
     assert "created on **2026-09-17**" in readme
@@ -928,8 +929,8 @@ def test_sync_features_spiegelt_auch_das_manifest(tmp_path, monkeypatch):
 
     Am 20.09.2026 lagen lokal Parquets vom 17.09. neben einer
     ml-mf_metadata.json vom 01.07. - sync_features holte die Dateien, schrieb
-    das Manifest aber nicht mit. xb_ zieht aus dieser Datei das Datum fuer die
-    veroeffentlichte README.
+    das Manifest aber nicht mit. radinfra_1_export zieht aus dieser Datei das
+    Datum fuer die veroeffentlichte README.
     """
     manifest = {"bundeslaender": {}, "processed_date": "2026-09-17T06:28:45+00:00"}
 
@@ -1008,14 +1009,15 @@ _REPO = Path(__file__).resolve().parents[1]
 def test_cw_campaign_laeuft_in_beiden_umgebungen():
     """cw_campaign wird aus zwei getrennten Umgebungen importiert.
 
-    1b_ laeuft im uv-Env aus use_cases/pyproject.toml, xb_ woechentlich im
-    pip-Env des Worker-Images aus requirements.txt. Jedes Paket, das dieses
-    Modul importiert, muss deshalb in beiden Listen stehen - sonst faellt der
-    Bruch erst im naechsten Mittwochslauf auf.
+    maproulette_tasks laeuft im uv-Env aus use_cases/pyproject.toml,
+    radinfra_1_export woechentlich im pip-Env des Worker-Images aus
+    requirements.txt. Jedes Paket, das dieses Modul importiert, muss deshalb in
+    beiden Listen stehen - sonst faellt der Bruch erst im naechsten
+    Mittwochslauf auf.
 
     Dieser Test ist bewusst Wegwerfware: sobald das Repo auf ein einziges
-    uv-Env umgestellt ist (Schritt 4 in docs/plan_notebooks_zu_python.md),
-    kann er weg - dann ist die Invariante strukturell erfuellt.
+    uv-Env umgestellt ist (#9 in docs/todo.md), kann er weg - dann ist die
+    Invariante strukturell erfuellt.
     """
     server = _pakete_aus_requirements(_REPO / "requirements.txt")
     use_cases = _pakete_aus_pyproject(_REPO / "use_cases" / "pyproject.toml")
