@@ -5,27 +5,29 @@
 Ersetzt `plan_notebooks_zu_python.md`, `docker-improvements.md` und
 `worker_mix_fehleranalyse_und_todos.md`. Was dort noch offen war, steht hier;
 was erledigt oder hinfällig ist, listet der letzte Abschnitt. Die beiden
-getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`).
+getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`),
+`worker_mix_…` war nie getrackt und ist seit dem 17.10. gelöscht.
 
 **Aufwand** ist grobe Arbeitszeit. **Nutzen:** hoch / mittel / gering.
-**Prio:** P1 = bald · P2 = als Nächstes · P3 = bei Gelegenheit · optional = nur bei Bedarf.
+**Prio:** P1 = bald · P2 = als Nächstes · P3 = bei Gelegenheit · optional = nur bei Bedarf ·
+später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden (Entscheidung 17.10.).
 
 ## Übersicht
 
 | # | Aufgabe | Aufwand | Nutzen | Prio |
 |--:|:--------|:--------|:-------|:-----|
-| 1 | Mapillary-Token rotieren, `config.py` löschen | 15 min | hoch | P1, Rest offen |
-| 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | P1 |
+| 1 | Mapillary-Token rotieren, `config.py` löschen | 5 min Rest | hoch | P1, fast ✅ |
+| 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | später |
 | 3 | Fehlschläge melden | 1 h | hoch | P1 |
 | 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
 | 5 | Deploy-Weg festlegen | 30 min | mittel | P2 |
 | 6 | Kampagnen-Inventur | 30 min | mittel | P2 |
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
-| 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | P2 |
+| 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | P2 |
 | 10 | CI | 1 h | hoch | P2 |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | P2 |
-| 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | P3 |
+| 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | später |
 | 13 | CLI statt Root-Notebooks | 1 Tag | mittel | P3 |
 | 14 | `src/`-Paketstruktur | ½ Tag | gering | P3 |
 | 15 | `docs/betrieb.md` | 1 h | mittel | P3 |
@@ -35,6 +37,7 @@ getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`).
 | 19 | Zweiter History-Rewrite | ½ Tag | gering | optional |
 | 20 | Streaming-Export | 1 Tag | gering | optional |
 | 21 | Ende-zu-Ende-Test im Image | ½ Tag | gering | optional |
+| 22 | Commit-Sperre für Tokens | 30 min | mittel | optional |
 
 ---
 
@@ -42,7 +45,7 @@ getrackten alten Dokumente liegen in der git-History (letzter Stand `f4b2c49`).
 
 ### 1. Mapillary-Token rotieren, `config.py` löschen
 
-**Aufwand:** 15 min · **Nutzen:** hoch · **Prio:** P1
+**Aufwand:** 5 min Rest · **Nutzen:** hoch · **Prio:** P1
 
 Der bis Oktober 2026 genutzte Token steht in der öffentlichen History. Er stand
 nie im Code, sondern in Fehlermeldungen: Die Tile-API nimmt den Token nur als
@@ -56,23 +59,9 @@ die History muss dafür nicht neu geschrieben werden.
   gegen Kachel- und Graph-API getestet.
 - ✅ 17.10.: `mapillary_tiles.py` schwärzt den Token in allen Meldungen
   (Ausnahmen, Fehler-Bodies, Wiederholungs-Warnungen von urllib3).
+- ✅ 17.10.: `config.py` gelöscht. Sie wurde in diesem Repo nie importiert,
+  stammte aus dem coverage-Repo und hielt den alten Token im Klartext.
 - **Offen:** den alten Token im Mapillary-Dashboard löschen.
-- **Offen:** `config.py` löschen. Die Datei wurde in diesem Repo nie importiert,
-  stammt aus dem coverage-Repo und hält den alten Token im Klartext.
-
-### 2. Bildauswahl in tempo30 korrigieren
-
-**Aufwand:** 1–2 h · **Nutzen:** hoch · **Prio:** P1
-
-`get_image_id` nimmt `images[-1]`, das letzte Element einer unsortierten Liste.
-An 600 Bremer Radwegzeichen war das in 84 % nicht das neueste Bild, in 10 %
-lag über ein Jahr dazwischen (Messung in `cw_campaign.newest_image_ids`).
-Zusätzlich schluckt `except Exception: return None` jeden Fehler still.
-
-- `schools_tempo30_campaign/1_merge_…` auf `cw.newest_image_ids` umstellen —
-  die Challenge 52985 ist öffentlich.
-- Derselbe Code steckt in access_restrictions und rad_frei. Ob sich das lohnt,
-  entscheidet #6.
 
 ### 3. Fehlschläge melden
 
@@ -91,15 +80,6 @@ Veröffentlichungsweg ist, heißt das: nichts publiziert, niemand merkt es.
 ---
 
 ## P2 — als Nächstes
-
-### 4. Kopfzellen der `radinfra_1_export` korrigieren
-
-**Erledigt:** 17.10.2026
-
-Beide Notebooks sagten noch „`x_` läuft wöchentlich auf dem Server und bleibt
-unverändert" und nannten sich „Schlankere Fassung von `radinfra_1_export.ipynb`".
-Die Kopfzellen beschreiben jetzt, was das Notebook tut; dasselbe für beide
-`maproulette_tasks`, die sich noch über `1_` erklärten.
 
 ### 5. Deploy-Weg festlegen
 
@@ -125,29 +105,15 @@ drin, `analysis/analize_osm_ts.ipynb` ist ein Einzelstück. Tote Kampagnen
 löschen (git behält sie), lebende in die README. Legt fest, wie viel Arbeit
 #2 und #12 wirklich sind.
 
-### 7. Alte Notebooks entfernen
+Stand der Challenges laut MapRoulette am 17.10.:
 
-**Erledigt:** 17.10.2026, nach je vier grünen Cron-Läufen mit `radinfra_1_export`
-(ts 23.09.–14.10., mk 24.09.–15.10., jeweils 16/16 Länder). Entfernt:
-
-- `x_…generateOutput_2radinfra.ipynb` und `1_merge_…` in beiden
-  Cycleway-Kampagnen
-- `ts_output_ref/`, `mk_output_ref/` und ihre Einträge in `.gitignore`
-- Abschnitt 7 „Gegenprobe" in beiden `radinfra_1_export`
-- der Rückweg-Kommentar in `scripts/run_mapillary_notebooks.sh`
-- in der mk-README den Zeitraum als Datum statt „2014-03-30 00:00:00" —
-  der Kommentar dort sagt selbst, das lohne erst nach dem Umstieg
-
-### 8. tippecanoe-Funktion ins Modul
-
-**Aufwand:** 1–2 h · **Nutzen:** mittel · **Prio:** P2
-
-`gzgjson_to_pmtiles_dual_layer` steht dreimal kopiert in den Notebooks:
-in beiden `radinfra_2_pmtiles` und in access_restrictions. Die beiden
-tippecanoe-Fixes (atomares Schreiben, `--no-tile-size-limit`) mussten
-schon je zweimal eingebaut werden — genau das Muster, durch das am 26.08.
-DE-NW verloren ging. `cw_campaign.py` und der `sys.path`-Weg dorthin
-existieren inzwischen.
+| Challenge | Kampagne | Status | Daten vom |
+| --- | --- | --- | --- |
+| 52916 | Radinfra, Verkehrszeichen | aktiv | 14.09.2026 |
+| 53882 | Radinfra, Markierungen | aktiv | 14.09.2026 |
+| 52985 | Tempo 30 an Schulen | aktiv | 17.08.2025 |
+| 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
+| — | Fußgängerüberwege, Markierungen; rad_frei; access_restrictions | keine Challenge | — |
 
 ### 9. Eine Python-Umgebung (uv)
 
@@ -156,7 +122,7 @@ existieren inzwischen.
 Heute gibt es zwei: `venv/` mit `requirements.txt` (Server, `tests/`) und
 `use_cases/.venv` mit `pyproject.toml`/`uv.lock` (Kampagnen). Ein Test
 existiert nur, um beide synchron zu halten, und `pytest.ini` sammelt nur
-`tests/` — ein nacktes `pytest` im Root lässt 71 von 104 Tests aus.
+`tests/` — ein nacktes `pytest` im Root lässt 71 von 108 Tests aus.
 
 - Eine `pyproject.toml` + `uv.lock` im Root, `testpaths` auf beide Ordner.
 - Dockerfile wie in coverage (`uv sync --frozen`); der tippecanoe-Build
@@ -167,7 +133,7 @@ existiert nur, um beide synchron zu halten, und `pytest.ini` sammelt nur
 
 **Aufwand:** 1 h (nach #9) · **Nutzen:** hoch · **Prio:** P2
 
-Die 104 Tests laufen nur, wenn jemand daran denkt; der einzige
+Die 108 Tests laufen nur, wenn jemand daran denkt; der einzige
 Integrationstest ist der Mittwochslauf, und ein Fehlschlag kostet eine Woche.
 Eine GitHub Action mit `pytest` bei jedem Push nach `main`.
 
@@ -179,7 +145,8 @@ Seit dem 02.09. committet der Server nichts mehr, die ausgeführten Kopien
 landen in `logs/executed/`. Offen ist die Handarbeit: das Produktions-Notebook
 `radinfra_2_pmtiles` trägt noch 32 (ts) bzw. 14 (mk) Outputs, die
 Kampagnen-Notebooks 250 KB bis 2 MB. Notebook-Outputs haben die History im
-Juli auf 4,3 GB gebracht.
+Juli auf 4,3 GB gebracht — und über Fehlermeldungen den Mapillary-Token
+veröffentlicht (#1).
 
 - `nbstripout` als git-Filter einrichten — die lokale Arbeitskopie behält ihre
   Outputs, committet wird ohne.
@@ -188,17 +155,6 @@ Juli auf 4,3 GB gebracht.
 ---
 
 ## P3 — bei Gelegenheit
-
-### 12. Generisches `campaign.py`
-
-**Aufwand:** 1 Tag für den Schnitt, dann ½ Tag je Kampagne · **Nutzen:** mittel · **Prio:** P3
-
-`get_image_id`, `parallel_get_image_ids`, `mark_intersections`,
-`months_between` und `to_maproulette_geojson_with_links` stehen in 5–6
-Notebooks. Die Hälfte von `cw_campaign.py` ist schon generisch: Laden,
-Abstand, Bilder, MapRoulette-GeoJSON. Diesen Teil als `campaign.py`
-herausziehen; `cw_campaign.py` behält Zeichen, README und radinfra-Export.
-Kampagnen einzeln umziehen, wenn sie ohnehin angefasst werden — nach #6.
 
 ### 13. CLI statt Root-Notebooks
 
@@ -237,9 +193,10 @@ Dateinamen und Pfade dort dürfen sich nicht beiläufig ändern. Eine Seite daf�
 
 **Aufwand:** 30 min · **Nutzen:** gering · **Prio:** P3
 
-Nach #1 bleiben zwei Dateien: `config.json` (Pipeline, rad_frei, analysis) und
+Es bleiben zwei Dateien: `config.json` (Pipeline, rad_frei, analysis) und
 `use_cases/utils/config_mapillary_privat.json` (Kampagnen, dazu der
-MapRoulette-Key). Beide Loader lesen `MAPILLARY_ACCESS_TOKEN` schon aus der
+MapRoulette-Key). Die alten Kampagnen-Notebooks lesen die zweite direkt ein,
+deshalb passt das zu #12. Beide Loader lesen `MAPILLARY_ACCESS_TOKEN` schon aus der
 Umgebung. Auf eine Datei plus Umgebungsvariable einigen — dann ist die
 nächste Rotation ein Schritt statt zwei.
 
@@ -256,6 +213,61 @@ nach sich zieht.
 
 Die ts-README hat seit dem 22.09. Property-Tabelle, Delta zum Vorlauf und eine
 englische Grafik; die mk-README nichts davon. Damals bewusst zurückgestellt.
+Das Datumsformat des Erkennungszeitraums ist mit #7 schon korrigiert.
+
+---
+
+## Später — wenn die übrigen Kampagnen umgestellt werden
+
+### 2. Bildauswahl in tempo30 korrigieren
+
+**Aufwand:** 1–2 h · **Nutzen:** hoch · **Prio:** später
+
+`get_image_id` nimmt `images[-1]`, das letzte Element einer unsortierten Liste.
+An 600 Bremer Radwegzeichen war das in 84 % nicht das neueste Bild, in 10 %
+lag über ein Jahr dazwischen (Messung in `cw_campaign.newest_image_ids`).
+Zusätzlich schluckt `except Exception: return None` jeden Fehler still.
+
+- `schools_tempo30_campaign/1_merge_…` auf `cw.newest_image_ids` umstellen —
+  die Challenge 52985 ist öffentlich.
+- Derselbe Code steckt in access_restrictions und rad_frei. Ob sich das lohnt,
+  entscheidet #6.
+
+Am 17.10. zurückgestellt: Die übrigen Kampagnen werden später umgestellt, dann
+zusammen mit #12. Die Tempo-30-Daten sind ohnehin von 08/2025 — die nächste
+Runde braucht neue OSM-Daten, und mit ihr kommt dieser Fix.
+
+### 8. tippecanoe-Funktion ins Modul
+
+**Aufwand:** 1–2 h · **Nutzen:** mittel · **Prio:** später
+
+`gzgjson_to_pmtiles_dual_layer` steht dreimal kopiert in den Notebooks:
+in beiden `radinfra_2_pmtiles` und in access_restrictions. Die beiden
+tippecanoe-Fixes (atomares Schreiben, `--no-tile-size-limit`) mussten
+schon je zweimal eingebaut werden — genau das Muster, durch das am 26.08.
+DE-NW verloren ging. Die Kopie in access_restrictions hat keinen der beiden
+Fixes bekommen. Die zwei Kopien der Cycleway-Kampagnen sind identisch.
+
+Am 17.10. zurückgestellt, zusammen mit #12: erst wenn die übrigen Kampagnen
+umgestellt werden.
+
+### 12. Generisches `campaign.py`
+
+**Aufwand:** 1 Tag für den Schnitt, dann ½ Tag je Kampagne · **Nutzen:** mittel · **Prio:** später
+
+`get_image_id`, `parallel_get_image_ids`, `mark_intersections`,
+`months_between` und `to_maproulette_geojson_with_links` stehen in den
+`1_merge_…`-Notebooks von fünf Kampagnen (die Kopien der Cycleway-Kampagnen
+sind mit #7 weggefallen). Für alle gibt es in `cw_campaign.py` schon ein
+Gegenstück: `distance_to_nearest` (gleiches CRS 25833, gleiche Treffer),
+`months_seen` (dieselbe Rechnung), `newest_image_ids`, `build_maproulette_geojson`. Die Hälfte von `cw_campaign.py` ist schon generisch: Laden,
+Abstand, Bilder, MapRoulette-GeoJSON. Diesen Teil als `campaign.py`
+herausziehen; `cw_campaign.py` behält Zeichen, README und radinfra-Export.
+Kampagnen einzeln umziehen, wenn sie ohnehin angefasst werden — nach #6.
+
+Am 17.10. bewusst verschoben: Für die beiden Cycleway-Kampagnen drückt der
+Schuh hier nicht. Der Schnitt kommt, wenn die erste weitere Kampagne umgestellt
+wird.
 
 ---
 
@@ -286,6 +298,43 @@ Die Notebooks einmal per nbconvert im Worker-Image gegen einen Mini-Tile-Cache
 laufen lassen. Fängt Import- und Pfadfehler, die die Unit-Tests nicht sehen.
 Wird mit #13 weitgehend überflüssig.
 
+### 22. Commit-Sperre für Tokens
+
+**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** optional
+
+Ein Pre-Commit-Hook, der jeden Commit mit einem Mapillary-Token
+(`MLY|…|<32 hex>`, roh oder URL-kodiert) ablehnt. Er hätte alle Lecks von
+2025/26 aufgehalten. Seit #1 schwärzt `mapillary_tiles.py` den Token selbst,
+und Notebook-Ausgaben werden nicht mehr automatisch committet — der Hook wäre
+die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
+(`git config core.hooksPath .githooks`).
+
+---
+
+## Erledigt
+
+### 4. Kopfzellen der `radinfra_1_export` korrigieren
+
+**Erledigt:** 17.10.2026
+
+Beide Notebooks sagten noch „`x_` läuft wöchentlich auf dem Server und bleibt
+unverändert" und nannten sich „Schlankere Fassung von `radinfra_1_export.ipynb`".
+Die Kopfzellen beschreiben jetzt, was das Notebook tut; dasselbe für beide
+`maproulette_tasks`, die sich noch über `1_` erklärten.
+
+### 7. Alte Notebooks entfernen
+
+**Erledigt:** 17.10.2026, nach je vier grünen Cron-Läufen mit `radinfra_1_export`
+(ts 23.09.–14.10., mk 24.09.–15.10., jeweils 16/16 Länder). Entfernt:
+
+- `x_…generateOutput_2radinfra.ipynb` und `1_merge_…` in beiden
+  Cycleway-Kampagnen
+- `ts_output_ref/`, `mk_output_ref/` und ihre Einträge in `.gitignore`
+- Abschnitt 7 „Gegenprobe" in beiden `radinfra_1_export`
+- der Rückweg-Kommentar in `scripts/run_mapillary_notebooks.sh`
+- in der mk-README den Zeitraum als Datum statt „2014-03-30 00:00:00" —
+  der Kommentar dort sagt selbst, das lohne erst nach dem Umstieg
+
 ---
 
 ## Erledigt oder hinfällig aus den alten Dokumenten
@@ -309,7 +358,8 @@ ganzen Lauf.
   behoben, `process_bundesland` prüft `max_fail_ratio`.
 - Streaming-Umbau → #20.
 
-**`worker_mix_fehleranalyse_und_todos.md`** (Juni 2026): Tasks 1–8 erledigt;
+**`worker_mix_fehleranalyse_und_todos.md`** (Juni 2026, nie getrackt, am 17.10.
+gelöscht): Tasks 1–8 erledigt;
 9 und 10 wurden damals verworfen, sind aber inzwischen umgesetzt (PMTiles und
 GeoJSON liegen auf B2, nicht mehr in git); 11 im Juli erledigt (Rewrite
 4,3 GB → 58 MB), zum erneuten Wachstum siehe #19; 12 → #5.
