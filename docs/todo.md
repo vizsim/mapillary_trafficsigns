@@ -24,7 +24,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 6 | Kampagnen-Inventur | 30 min | mittel | P2 |
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
 | 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
-| 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | P2 |
+| 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | ✅ 17.10. |
 | 10 | CI | 1 h | hoch | ✅ 17.10. |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | P2 |
 | 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | später |
@@ -87,20 +87,6 @@ Stand der Challenges laut MapRoulette am 17.10.:
 | 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
 | — | Fußgängerüberwege, Markierungen; rad_frei; access_restrictions | keine Challenge | — |
 
-### 9. Eine Python-Umgebung (uv)
-
-**Aufwand:** ½ Tag · **Nutzen:** mittel · **Prio:** P2
-
-Heute gibt es zwei: `venv/` mit `requirements.txt` (Server, `tests/`) und
-`use_cases/.venv` mit `pyproject.toml`/`uv.lock` (Kampagnen). Ein Test
-existiert nur, um beide synchron zu halten, und `pytest.ini` sammelt nur
-`tests/` — ein nacktes `pytest` im Root lässt 71 von 115 Tests aus.
-
-- Eine `pyproject.toml` + `uv.lock` im Root, `testpaths` auf beide Ordner.
-- Dockerfile wie in coverage (`uv sync --frozen`); der tippecanoe-Build
-  bleibt, wie er ist.
-- Danach kann der Sync-Test weg.
-
 ### 11. Notebook-Outputs aus git
 
 **Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
@@ -140,8 +126,8 @@ veröffentlicht (#1).
 
 `mapillary_tiles.py` und `mapillary_pipeline.py` im Root, `cw_campaign.py` in
 `use_cases/`, jeweils per `sys.path` gefunden. Ein Paket unter
-`src/mapillary_trafficsigns/` macht die Pfad-Tricks überflüssig. Nur zusammen
-mit #9 und #13 sinnvoll.
+`src/mapillary_trafficsigns/` macht die Pfad-Tricks überflüssig — die eine
+Umgebung aus #9 allein tut das nicht.
 
 ### 15. `docs/betrieb.md`
 
@@ -282,6 +268,25 @@ die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
 
 ## Erledigt
 
+### 9. Eine Python-Umgebung (uv)
+
+**Erledigt:** 17.10.2026
+
+Eine Umgebung für alles: `pyproject.toml` + `uv.lock` im Repo-Root. Lokal per
+`uv sync`, im Worker-Image per `uv sync --frozen` nach `/opt/venv` — nicht nach
+`/app/.venv`, denn der Bind-Mount des Repos würde sie dort verdecken.
+`requirements*.txt`, `use_cases/pyproject.toml`, `pytest.ini` und der Test, der
+die beiden alten Listen synchron hielt, sind weg; `uv run pytest` startet alle
+114 Tests.
+
+Maßstab war das Produktions-Image vom 15.10., nicht `requirements.txt`: die Datei
+pinnte nbconvert, aber nicht dessen 17 Abhängigkeiten, die pip beim Bau selbst
+auflöste. Das neue Image hat dieselben Versionen wie das alte, und beide
+Pipelines liefern darin dasselbe Ergebnis. Dabei entfernt, weil von nichts
+benutzt: fastparquet, mapclassify, networkx, scikit-learn samt Abhängigkeiten
+(8 Pakete). scipy und turfpy bleiben vorerst, weil das alte `mapillary`-SDK sie
+mitbringt; mit #12 fallen SDK, fiona, folium und osm2geojson weg.
+
 ### 5. Deploy-Weg festlegen
 
 **Erledigt:** 17.10.2026 — Auto-Pull, abgesichert über die CI (#10).
@@ -303,8 +308,8 @@ Meldung an healthchecks.io sagt, warum. Abschalten für einen Lauf:
 Requests beide Testordner aus, je Umgebung ein Job: `tests/` mit
 `requirements-dev.txt` (wie im Worker-Image), `use_cases/` mit `uv.lock`.
 Vorher lokal in einem frischen Klon nachgestellt — kein Test braucht Netz,
-Zugangsdaten oder die ignorierten Daten in `output/`. Mit #9 wird daraus ein
-Job.
+Zugangsdaten oder die ignorierten Daten in `output/`. Seit #9 ist es ein
+einziger Job.
 
 ### 3. Fehlschläge melden
 

@@ -2,8 +2,7 @@ FROM python:3.12-slim
 
 # Basis-Settings
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
@@ -28,14 +27,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 
-# Requirements ins Image
-# ➜ jupyterlab & nbconvert bitte einfach in requirements.txt mit reinnehmen
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
+# Python environment, installed from uv.lock - the same lock file as for local
+# work and CI. It lives in /opt/venv, not /app/.venv: docker-compose.yml
+# bind-mounts the whole repo over /app at runtime, which would hide anything the
+# image put there. PATH puts its python3 and jupyter first, so the runner and
+# nbconvert use it without further changes.
+COPY --from=ghcr.io/astral-sh/uv:0.12.21 /uv /uvx /bin/
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never \
+    PATH="/opt/venv/bin:$PATH"
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-cache
 
 # Restliches Repo
 COPY . .
 
-# Standard-Command: Notebook ausführen (default wird in docker-compose.yml überschrieben)
-CMD ["bash", "scripts/run_mapillary-ts_notebooks.sh"]
+# Overridden per service in docker-compose.yml.
+CMD ["bash", "scripts/run_mapillary_notebooks.sh", "ts"]

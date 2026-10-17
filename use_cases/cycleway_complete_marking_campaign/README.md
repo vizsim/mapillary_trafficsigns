@@ -20,7 +20,7 @@ nearby, and turns them into tasks for MapRoulette challenge 53882.
 | | |
 | --- | --- |
 | **Triggered by** | a human, when a new round of the challenge is due |
-| **Environment** | the uv env from [`use_cases/pyproject.toml`](../pyproject.toml) — run `uv sync` in `use_cases/` |
+| **Environment** | the repo's uv env from [`pyproject.toml`](../../pyproject.toml) — run `uv sync` in the repo root |
 | **Also needs** | the `osmium` CLI, a MapRoulette API key, a Mapillary token |
 
 ```text
@@ -49,7 +49,7 @@ Publishes every detected bicycle symbol as GeoJSON and vector tiles.
 | | |
 | --- | --- |
 | **Triggered by** | cron on the server, **Thursdays 01:00 UTC** |
-| **Environment** | the pip env inside the worker image, from [`requirements.txt`](../../requirements.txt), Python 3.12 |
+| **Environment** | the same env inside the worker image, installed from [`uv.lock`](../../uv.lock) into `/opt/venv`, Python 3.12 |
 | **Input** | only `output/*.parquet` — no PBF, no osmium, and no motorway filter |
 
 ```text
@@ -147,10 +147,11 @@ side by side for that reason.
 ## Running it
 
 ```bash
-cd use_cases
+# in the repo root
+uv sync
 
-# tests (no network, ~2 s)
-uv run pytest test_cw_campaign.py
+# all tests (no network, a few seconds)
+uv run pytest
 
 # the maproulette pipeline, by hand
 uv run jupyter lab

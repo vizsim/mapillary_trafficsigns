@@ -1,10 +1,11 @@
-# Runs both test suites on every push to main and on pull requests.
+# Runs the tests on every push to main and on pull requests.
 #
-# The repo still has two Python environments (see #9 in docs/todo.md), so
-# there are two jobs:
-#   pipeline   - requirements-dev.txt, the pip env of the worker image; tests/
-#   use_cases  - use_cases/pyproject.toml + uv.lock; use_cases/test_cw_campaign.py
-# No test needs the network, credentials or the gitignored data in output/.
+# One environment for everything since #9: pyproject.toml + uv.lock in the repo
+# root, the same lock file the worker image installs from. No test needs the
+# network, credentials or the gitignored data in output/.
+#
+# The worker's deploy step (scripts/run_worker_with_vpn.sh) only rolls out a
+# commit whose check runs here all succeeded.
 
 name: Tests
 
@@ -19,37 +20,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  pipeline:
-    name: Pipeline (tests/)
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          cache-dependency-glob: requirements*.txt
-      - name: Install requirements-dev.txt (Python 3.12, as in the worker image)
-        run: |
-          uv venv --python 3.12 .venv
-          uv pip install --python .venv -r requirements-dev.txt
-      - name: Run tests
-        run: .venv/bin/python -m pytest
-
-  use_cases:
-    name: Campaigns (use_cases/)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    defaults:
-      run:
-        working-directory: use_cases
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          cache-dependency-glob: use_cases/uv.lock
+      - uses: actions/checkout@v7
+      # setup-uv publishes no floating major tags, hence the exact version.
+      - uses: astral-sh/setup-uv@v10.3.0
       - name: Install from uv.lock
         run: uv sync --frozen
       - name: Run tests
-        run: uv run --frozen pytest test_cw_campaign.py
+        run: uv run --frozen pytest

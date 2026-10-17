@@ -18,11 +18,11 @@ Die Notebooks holen es sich mit
     import sys; sys.path.insert(0, "..")
     import cw_campaign as cw
 
-Das `..` ist keine Zauberei: nbconvert und der Jupyter-Kernel setzen das
-Arbeitsverzeichnis auf das Notebook-Verzeichnis - dieselbe Annahme, auf der
-auch die Pfade `../../output/` und `../utils/` in den Notebooks beruhen. Mit
-einem einzigen uv-Env fuers Repo (#9 in docs/todo.md) faellt die sys.path-Zeile
-weg.
+The `..` works because nbconvert and the Jupyter kernel set the working
+directory to the notebook's own directory - the same assumption the paths
+`../../output/` and `../utils/` in the notebooks rely on. The sys.path line
+goes away once the modules become an installable package (#14 in
+docs/todo.md); the single uv environment (#9) alone does not remove it.
 
 Warum die Notebooks so aussehen, wie sie aussehen - Feature-ids, fehlender
 Sync im Server-Notebook, Bildauswahl - steht in den READMEs der beiden

@@ -22,7 +22,7 @@ nearby, and turns them into tasks for MapRoulette challenge 52916.
 | | |
 | --- | --- |
 | **Triggered by** | a human, when a new round of the challenge is due |
-| **Environment** | the uv env from [`use_cases/pyproject.toml`](../pyproject.toml) — run `uv sync` in `use_cases/` |
+| **Environment** | the repo's uv env from [`pyproject.toml`](../../pyproject.toml) — run `uv sync` in the repo root |
 | **Also needs** | the `osmium` CLI, a MapRoulette API key, a Mapillary token |
 
 ```text
@@ -56,7 +56,7 @@ Publishes every cycling-related traffic sign as GeoJSON and vector tiles.
 | | |
 | --- | --- |
 | **Triggered by** | cron on the server, **Wednesdays 15:00 UTC** |
-| **Environment** | the pip env inside the worker image, from [`requirements.txt`](../../requirements.txt), Python 3.12 |
+| **Environment** | the same env inside the worker image, installed from [`uv.lock`](../../uv.lock) into `/opt/venv`, Python 3.12 |
 | **Input** | only `output/*.parquet` and the static motorway file — no PBF, no osmium |
 
 ```text
@@ -96,7 +96,7 @@ only `scripts/upload_outputs_to_b2.sh` publishes the result.
 
 | | |
 | --- | --- |
-| [`../cw_campaign.py`](../cw_campaign.py) | the logic behind both pipelines and both campaigns, 56 tests in [`../test_cw_campaign.py`](../test_cw_campaign.py) |
+| [`../cw_campaign.py`](../cw_campaign.py) | the logic behind both pipelines and both campaigns, tested in [`../test_cw_campaign.py`](../test_cw_campaign.py) |
 | `../utils/processed_osm_files/` | the cycleway network, built by [`../0_prepare_osm_network.ipynb`](../0_prepare_osm_network.ipynb), read by the marking campaign too |
 | `../../output/mapillary_traffic-signs_DE-*.parquet` | detections per federal state |
 | `../utils/processed_motorways_germany_251215.parquet` | motorways, rarely changes |
@@ -107,21 +107,9 @@ notebooks pick it up with `sys.path.insert(0, "..")`, which works because Jupyte
 nbconvert set the working directory to the notebook's own directory — the same
 assumption `../../output/` and `../utils/` already rely on.
 
-### The rule that is easy to miss
-
-The module is imported **from two different environments**: the uv env for
-`maproulette_*` and the worker image's pip env for `radinfra_*`.
-
-> Every package `cw_campaign.py` imports must appear in **both** dependency lists, at the
-> same version.
-
-Otherwise `maproulette_*` keeps working while `radinfra_*` dies on a Wednesday night.
-All shared packages currently match; `test_cw_campaign_laeuft_in_beiden_umgebungen`
-pins that down.
-
-That test is deliberately throwaway: once the repo moves to a single uv env (#9 in
-[`docs/todo.md`](../../docs/todo.md)), the invariant holds structurally and the test can
-go.
+Both pipelines use the same environment: `maproulette_*` locally through `uv sync`, and
+`radinfra_*` in the worker image, which installs from the same `uv.lock`. Until
+2026-10-17 these were two separate dependency lists that a test had to keep in step.
 
 ---
 
@@ -202,10 +190,11 @@ measured metrically. 25,726 signs against 822,745 ways: 4.9 s.
 ## Running it
 
 ```bash
-cd use_cases
+# in the repo root
+uv sync
 
-# tests (no network, ~2 s)
-uv run pytest test_cw_campaign.py
+# all tests (no network, a few seconds)
+uv run pytest
 
 # the maproulette pipeline, by hand
 uv run jupyter lab
