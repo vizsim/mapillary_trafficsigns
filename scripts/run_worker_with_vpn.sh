@@ -25,6 +25,7 @@ RUN_START="$(date +%s)"
 HC_VAR="HEALTHCHECK_URL_${PIPELINE^^}"
 HC_URL="$(sed -nE "s/^${HC_VAR}=[\"']?([^\"'[:space:]]*)[\"']?[[:space:]]*$/\1/p" docker/.env 2>/dev/null | tail -1)"
 HC_NOTE=""  # why the run failed; set right before the failing exit
+DEPLOY_NOTE="${MAPILLARY_DEPLOY_NOTE:-}"  # what the deploy step did, if anything
 
 # The run transcript of THIS run - not the one a previous run left behind.
 run_log_is_current() {
@@ -38,7 +39,7 @@ hc_ping() {
   [[ -n "$HC_URL" ]] || return 0
   local body=""
   if [[ "$1" != "/start" ]]; then
-    body="$HC_NOTE"
+    body="${DEPLOY_NOTE:+$DEPLOY_NOTE$'\n'}$HC_NOTE"
     if run_log_is_current; then
       body+=$'\n\n'"$(tail -n 40 "$RUN_LOG")"
     fi
@@ -56,14 +57,85 @@ hc_ping() {
 # möglich), reißt es den ts-Lauf mit. Deshalb ein Lock — und bei Kollision
 # sichtbar aussteigen statt still zu kollidieren.
 LOCK_FILE="${MAPILLARY_WORKER_LOCK:-/tmp/mapillary_worker.lock}"
-exec 9>"$LOCK_FILE"
-if ! flock -n 9; then
-  echo "⏭️  Anderer Worker läuft noch (Lock $LOCK_FILE) — $SERVICE wird übersprungen."
-  # A skipped run is a missed week for this pipeline - report it.
-  HC_NOTE="Skipped: another worker still holds the lock ($LOCK_FILE)."
-  hc_ping /fail
-  exit 0
+# After a deploy the script restarts itself and inherits fd 9 with the lock
+# still held - taking it again would briefly release it.
+if [[ -z "${MAPILLARY_LOCK_HELD:-}" ]]; then
+  exec 9>"$LOCK_FILE"
+  if ! flock -n 9; then
+    echo "⏭️  Anderer Worker läuft noch (Lock $LOCK_FILE) — $SERVICE wird übersprungen."
+    # A skipped run is a missed week for this pipeline - report it.
+    HC_NOTE="Skipped: another worker still holds the lock ($LOCK_FILE)."
+    hc_ping /fail
+    exit 0
+  fi
 fi
+
+# ---------------------------
+# 🔄 Deploy: follow main, but only to a tested commit
+# ---------------------------
+# A push to main used to need a manual `git pull` on the server. Now every run
+# fast-forwards to origin/main itself - but only if the CI run for that very
+# commit (.github/workflows/tests.yml) succeeded. Otherwise it keeps the
+# current code and says why in the final healthchecks.io ping: tests still
+# running or failed, local changes, diverged history, GitHub unreachable.
+#
+# This happens after taking the lock, so it never changes files under another
+# worker's feet. After an update the script restarts itself, so the new version
+# of this very file is what runs. The block is a single `if`, which bash reads
+# completely before running any of it - the update cannot change the rest of
+# the block under the running shell. MAPILLARY_AUTO_DEPLOY=0 switches it off.
+
+# ci_state <sha>: success | pending | failure | unknown, from GitHub's check runs.
+ci_state() {
+  local json
+  json="$(curl -fsS -m 20 -H "Accept: application/vnd.github+json" \
+    "${GITHUB_API:-https://api.github.com}/repos/${REPO_SLUG}/commits/$1/check-runs" 2>/dev/null)" \
+    || { echo unknown; return 0; }
+  python3 -c '
+import json, sys
+try:
+    runs = json.loads(sys.stdin.read())["check_runs"]
+except Exception:
+    print("unknown"); sys.exit()
+if not runs or any(r["status"] != "completed" for r in runs):
+    print("pending")
+elif all(r["conclusion"] in ("success", "skipped", "neutral") for r in runs):
+    print("success")
+else:
+    print("failure")
+' <<<"$json"
+}
+
+if [[ -z "${MAPILLARY_DEPLOYED:-}" && "${MAPILLARY_AUTO_DEPLOY:-1}" == 1 ]]; then
+  REPO_SLUG="${MAPILLARY_REPO_SLUG:-$(git remote get-url origin | sed -nE 's#.*github\.com[:/]([^/]+/[^/.]+)(\.git)?$#\1#p')}"
+  head_sha="$(git rev-parse HEAD)"
+  if ! git fetch -q origin main 2>/dev/null; then
+    DEPLOY_NOTE="Deploy: git fetch failed - staying on ${head_sha:0:7}."
+  else
+    target="$(git rev-parse origin/main)"
+    if [[ "$head_sha" == "$target" ]]; then
+      :  # already up to date
+    elif ! git merge-base --is-ancestor HEAD "$target"; then
+      DEPLOY_NOTE="Deploy: local history diverged from origin/main - staying on ${head_sha:0:7}."
+    elif [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
+      DEPLOY_NOTE="Deploy: local changes in tracked files - staying on ${head_sha:0:7}."
+    else
+      ci="$(ci_state "$target")"
+      if [[ "$ci" != success ]]; then
+        DEPLOY_NOTE="Deploy: CI for ${target:0:7} is ${ci} - staying on ${head_sha:0:7}."
+      elif ! git merge -q --ff-only "$target"; then
+        DEPLOY_NOTE="Deploy: fast-forward to ${target:0:7} failed - staying on ${head_sha:0:7}."
+      else
+        echo "🔄 Aktualisiert: ${head_sha:0:7} -> ${target:0:7} (CI grün), starte neu"
+        exec env MAPILLARY_DEPLOYED=1 MAPILLARY_LOCK_HELD=1 \
+          MAPILLARY_DEPLOY_NOTE="Deploy: updated ${head_sha:0:7} -> ${target:0:7} (CI green)." \
+          bash scripts/run_worker_with_vpn.sh "$SERVICE"
+      fi
+    fi
+  fi
+  if [[ -n "$DEPLOY_NOTE" ]]; then echo "🔄 $DEPLOY_NOTE"; fi
+fi
+
 hc_ping /start
 
 # Obergrenze für den Worker-Lauf. Normal sind ~6 h. Hängt der Lauf (gestrandete

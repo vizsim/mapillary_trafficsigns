@@ -20,7 +20,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | später |
 | 3 | Fehlschläge melden | 1 h | hoch | ✅ 17.10. |
 | 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
-| 5 | Deploy-Weg festlegen | 30 min | mittel | P2 |
+| 5 | Deploy-Weg festlegen | 30 min | mittel | ✅ 17.10. |
 | 6 | Kampagnen-Inventur | 30 min | mittel | P2 |
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
 | 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
@@ -66,21 +66,6 @@ die History muss dafür nicht neu geschrieben werden.
 ---
 
 ## P2 — als Nächstes
-
-### 5. Deploy-Weg festlegen
-
-**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
-
-Ein Push nach `main` erreicht den Server nicht von selbst:
-`run_worker_with_vpn.sh` zieht nicht. Vergisst man das `git pull --ff-only`
-auf dem Server, läuft eine Woche lang der alte Stand. (Früher Task 12 in
-`worker_mix_…`, damals offen gelassen.)
-
-Entscheiden:
-- **Auto-Pull** am Anfang des Laufs, mit Abbruch bei Nicht-Fast-Forward. Jeder
-  Push nach `main` geht dann am nächsten Mittwoch live. Seit #10 hat jeder
-  Commit einen Teststatus auf GitHub; der Pull könnte sich darauf stützen.
-- **Manuell bleiben**, dann gehört der Schritt in #15.
 
 ### 6. Kampagnen-Inventur
 
@@ -163,7 +148,8 @@ mit #9 und #13 sinnvoll.
 **Aufwand:** 1 h · **Nutzen:** mittel · **Prio:** P3
 
 Das Betriebswissen steht verstreut in Commit-Messages: Cron-Zeiten (ts Mi
-15:00 UTC, mk Do 01:00 UTC), Deploy (#5), Wiederherstellen aus B2, auf dem
+15:00 UTC, mk Do 01:00 UTC), der automatische Deploy (#5) und healthchecks.io
+(#3), Wiederherstellen aus B2, auf dem
 Server `checkout -B main origin/main` statt Branch-Wechsel (ein Wechsel hat
 am 16.09. die ignorierten Lauf-Outputs gelöscht), Aussetzen und
 Wiederherstellen des Crontabs, `max_file_age_days` und manuelle Läufe. Dazu,
@@ -295,6 +281,19 @@ die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet ist
 ---
 
 ## Erledigt
+
+### 5. Deploy-Weg festlegen
+
+**Erledigt:** 17.10.2026 — Auto-Pull, abgesichert über die CI (#10).
+
+Bis dahin erreichte ein Push nach `main` den Server erst mit einem manuellen
+`git pull`. Jetzt spult `run_worker_with_vpn.sh` zu Beginn jedes Laufs selbst
+auf `origin/main` vor — aber nur, wenn die GitHub-Checks genau dieses Commits
+grün sind. Danach startet das Skript sich neu, damit auch seine eigene neue
+Fassung läuft. Bei laufenden oder roten Tests, lokalen Änderungen, abweichender
+History oder nicht erreichbarem GitHub bleibt der bisherige Stand, und die
+Meldung an healthchecks.io sagt, warum. Abschalten für einen Lauf:
+`MAPILLARY_AUTO_DEPLOY=0`.
 
 ### 10. CI
 
