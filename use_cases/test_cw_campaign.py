@@ -9,6 +9,8 @@ Lauf: `uv run pytest test_cw_campaign.py` in use_cases/.
 
 import gzip
 import json
+import re
+from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
@@ -827,6 +829,21 @@ def test_build_readme_zaehlt():
     assert "| Radweg | Cycle path | 42 |" in readme
     assert "| Radfahrer frei | Bicycles excepted | 0 |" in readme  # nicht gezaehlt -> 0
     assert "| **Data created** | 2026-09-20 |" in readme
+
+
+def test_readme_lists_every_published_file():
+    """The README is read on data.vizsim.de below the file listing, so it must
+    describe every file the upload script publishes for ts_output/ - and link
+    to it relatively, not as if the files still lived in this repository."""
+    skript = (Path(__file__).resolve().parents[1] / "scripts" / "upload_outputs_to_b2.sh").read_text(encoding="utf-8")
+    block = skript.split('sync_dir "use_cases/cycleway_complete_campaign/ts_output"')[1].split(";;")[0]
+    veroeffentlicht = {re.sub(r"\\(.)", r"\1", m) for m in re.findall(r'"\.\*([^"$]+)\$"', block)}
+    assert "signs_history.json" in veroeffentlicht  # the parser found the includes
+
+    readme = cw.build_readme({}, "2026-10-17")
+    for name in veroeffentlicht - {"README.md"}:
+        assert f"]({name})" in readme, f"{name} fehlt in der README"
+    assert "clone this repository" not in readme
 
 
 def test_build_readme_uebernimmt_die_filterwerte():

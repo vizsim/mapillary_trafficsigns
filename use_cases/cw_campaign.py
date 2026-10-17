@@ -1191,6 +1191,21 @@ def svg_url(sign_id):
     return f"{SVG_BASE}/DE_{ident}.svg"
 
 
+# Files in ts_output/ as published on data.vizsim.de, for the README. Pinned
+# against the includes in scripts/upload_outputs_to_b2.sh by a test, so a new
+# output file cannot go unmentioned.
+README_DATEIEN = [
+    ("mapillary_trafficsigns_bicycle_latest.pmtiles", "vector tiles, layer `default`, zoom 7–12"),
+    (
+        "mapillary_trafficsigns_bicycle_latest.geojson.gz",
+        "all signs as gzipped GeoJSON; Mapillary ids are strings, as they exceed 2<sup>53</sup>",
+    ),
+    ("signs_by_month.svg", "the chart below"),
+    ("signs_history.json", "sign counts of every run — the basis of the Δ column"),
+]
+README_QUELLE = "https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/cycleway_complete_campaign"
+
+
 def build_readme(
     counts,
     stand,
@@ -1252,16 +1267,33 @@ def build_readme(
     )
     eigenschaften_tabelle = "\n".join(["| Property | Value |", "|:---------|------:|", *eigenschaften])
 
-    return f"""
-# Bicycle Infrastructure Traffic Signs — Output
+    # The README is read on data.vizsim.de, right below the file listing of
+    # this folder - not in the repository, which no longer holds these files.
+    # Links are relative, so they work from the listing and from README.md.
+    dateien = "\n".join(
+        f"| [`{name}`]({name}) | {inhalt} |" for name, inhalt in README_DATEIEN
+    )
 
-This folder contains the **latest** output file for *traffic signs related to bicycle
-infrastructure*, as detected by Mapillary.
+    return f"""
+# Bicycle Infrastructure Traffic Signs
+
+Every traffic sign related to cycling infrastructure in Germany that Mapillary has
+detected — the weekly export used by radinfra.de, updated every Wednesday. How it is
+built is documented in the
+[source repository]({README_QUELLE}).
 
 {eigenschaften_tabelle}
 
 Signs within {autobahn_abstand_m} m of a motorway are excluded — detections there are
 overwhelmingly false positives.
+
+## Files
+
+| File | Content |
+| --- | --- |
+{dateien}
+
+The file names stay the same from week to week, so links to them keep working.
 
 ## Signs
 
@@ -1272,16 +1304,6 @@ overwhelmingly false positives.
 ## Detections per month
 
 ![Signs per month](signs_by_month.svg)
-
-## Downloads
-
-The files in this folder are also published for direct download, so consumers do
-not need to clone this repository:
-
-| File | Download |
-| --- | --- |
-| 🗺️ Vector tiles (PMTiles) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.pmtiles> |
-| 📦 GeoJSON (gzip) | <https://data.vizsim.de/mapillary_trafficsigns/cycleway-campaign/mapillary_trafficsigns_bicycle_latest.geojson.gz> |
 
 Data © Mapillary, redistributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 """
