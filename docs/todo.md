@@ -212,14 +212,12 @@ Runde braucht neue OSM-Daten, und mit ihr kommt dieser Fix.
 
 **Aufwand:** 1–2 h · **Nutzen:** mittel · **Prio:** später
 
-`gzgjson_to_pmtiles_dual_layer` steht dreimal kopiert in den Notebooks:
-in beiden `radinfra_2_pmtiles` und in access_restrictions. Die beiden
+`gzgjson_to_pmtiles_dual_layer` steht zweimal kopiert in den Notebooks, in
+beiden `radinfra_2_pmtiles`; die Kopien sind identisch. Die beiden
 tippecanoe-Fixes (atomares Schreiben, `--no-tile-size-limit`) mussten
 schon je zweimal eingebaut werden — genau das Muster, durch das am 26.08.
-DE-NW verloren ging. Die Kopie in access_restrictions hat keinen der beiden
-Fixes bekommen — und seit 18.10. auch keine Eingabe mehr: kein Notebook
-schreibt dort `ts_output/`. Löschen oder einen Export dafür bauen. Die zwei
-Kopien der Cycleway-Kampagnen sind identisch.
+DE-NW verloren ging. Eine dritte Kopie in access_restrictions, ohne beide
+Fixes und ohne Eingabe, ist am 18.10. gelöscht.
 
 Am 17.10. zurückgestellt, zusammen mit #12: erst wenn die übrigen Kampagnen
 umgestellt werden.

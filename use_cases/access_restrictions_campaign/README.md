@@ -83,6 +83,5 @@ signs. The differences:
   instead of 2.3 GB. `maxweight` and its kin were extracted before but never used. The cosmo
   variant is gone.
 - **Task text** laid out like the other campaigns, naming the keys that were looked for.
-
-`processed_osm_files/` and `processed_mapillary_files/` in this folder hold the data of the
-April round and are not in git.
+- **No vector tiles any more.** `2_create_pmtiles_…` had no input left - no notebook wrote
+  the GeoJSON it converted.
