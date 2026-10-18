@@ -137,6 +137,12 @@ All use-cases follow the same general workflow:
 - **Code Repository:** [access_restrictions_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/access_restrictions_campaign)
 - **MapRoulette Challenge:** [Add missing access restrictions based on Mapillary signs (Germany)](https://maproulette.org/browse/challenges/54768) — changeset hashtag: `#missing-access_mapillary-signs`
 
+#### 🚦 Missing Maxspeed on Main Roads with Accidents
+
+- Targets **speed-limit signs** (`DE:274`, 30–130 km/h) on sections of main road (`trunk` to `tertiary`) without `maxspeed` in OSM, prioritised by the **accidents with injuries** on each section (Unfallatlas 2020–2025, via [data.vizsim.de/unfallorte](https://data.vizsim.de/unfallorte/)).
+- **Code Repository:** [maxspeed_accidents_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/maxspeed_accidents_campaign)
+- **MapRoulette Challenge:** not created yet.
+
 ### 🖌️ Road Marking-based Use-Cases
 
 #### 🚲 Cycleway Marking Completion
