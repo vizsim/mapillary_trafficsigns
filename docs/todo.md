@@ -109,9 +109,9 @@ Offen:
 - rad_frei ist am 18.10. gelöscht. Der Tag `archive/rad_frei` zeigt auf den letzten Stand;
   zurückholen mit `git checkout archive/rad_frei -- use_cases/rad_frei_campaign`.
 - Offen: das Analyse-Notebook.
-- Danach räumt #9 `pyproject.toml` auf: `fiona`, `folium` und `mapillary` (das alte SDK,
-  bringt scipy und turfpy mit) nutzt seit 18.10. niemand mehr, `osm2geojson` nur noch das
-  Analyse-Notebook. Das ändert das Worker-Image — also nicht direkt vor einem Cron-Lauf.
+- `fiona`, `folium` und `mapillary` (das alte SDK, samt scipy und turfpy) sind auf dem Branch
+  `chore/remove-unused-deps` aus `pyproject.toml` genommen, siehe #9. `osm2geojson` bleibt,
+  solange das Analyse-Notebook bleibt.
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 
@@ -273,7 +273,7 @@ wird.
 - ✅ 18.10.: pedestrian_crossing_marking umgestellt, teilt `pc_campaign.py` mit
   pedestrian_crossing.
 - ✅ 18.10.: rad_frei gelöscht (Tag `archive/rad_frei`, #6). Damit läuft jede
-  Kampagne auf `campaign.py`; SDK, fiona und folium können aus `pyproject.toml`
+  Kampagne auf `campaign.py`; SDK, fiona und folium gehen aus `pyproject.toml`
   (#9), osm2geojson erst mit dem Analyse-Notebook.
 
 ---
@@ -377,6 +377,16 @@ Pipelines liefern darin dasselbe Ergebnis. Dabei entfernt, weil von nichts
 benutzt: fastparquet, mapclassify, networkx, scikit-learn samt Abhängigkeiten
 (8 Pakete). scipy und turfpy bleiben vorerst, weil das alte `mapillary`-SDK sie
 mitbringt; mit #12 fallen SDK, fiona, folium und osm2geojson weg.
+
+Nachtrag 18.10.: SDK, fiona und folium sind raus, und mit ihnen 8 Pakete, die nur
+sie brauchten (scipy, turfpy, haversine, geojson, branca, xyzservices,
+click-plugins, cligj); keine andere Version ändert sich. Alle Importe der
+getrackten Module und Notebooks lösen weiter auf, die Tests und beide
+`radinfra_1_export` laufen, das Überweg-Notebook schreibt dieselbe Datei.
+Das liegt auf dem Branch `chore/remove-unused-deps` und kommt **nach den Läufen
+am 21./22.10.** nach `main` — das Worker-Image wird damit neu gebaut, und der
+erste Lauf mit `python3 -m mapillary_pipeline` soll nichts anderes Neues
+mitbringen. `osm2geojson` bleibt, solange `analysis/analize_osm_ts.ipynb` bleibt.
 
 ### 5. Deploy-Weg festlegen
 
