@@ -1,6 +1,6 @@
 # Cycleway campaign — traffic signs
 
-**Last updated:** 2026-10-17
+**Last updated:** 2026-10-18
 
 Two independent pipelines share this folder; the filename prefix says which is which.
 The twin [`../cycleway_complete_marking_campaign/`](../cycleway_complete_marking_campaign/)
@@ -13,9 +13,11 @@ does the same for bicycle symbols painted on the road.
 | **Runs in** | the repo's uv env (`uv sync` in the repo root) | the worker image, built from the same [`uv.lock`](../../uv.lock) |
 | **Needs** | the `osmium` CLI, a MapRoulette key, a Mapillary token | only `output/*.parquet` and the motorway file |
 
-The logic of both lives in [`../cw_campaign.py`](../cw_campaign.py) (tested in
-[`../test_cw_campaign.py`](../test_cw_campaign.py)); the notebooks only call it. Why a
-function works the way it does is in its docstring.
+The logic of both lives in [`../cw_campaign.py`](../cw_campaign.py), the generic steps in
+[`../campaign.py`](../campaign.py), which the
+[pedestrian-crossing campaign](../pedestrian_crossing_campaign/README.md) uses too. Both are
+tested next to them in `../test_*.py`; the notebooks only call them. Why a function works
+the way it does is in its docstring.
 
 ---
 
@@ -25,7 +27,7 @@ Finds traffic signs that mandate cycling infrastructure where OpenStreetMap has 
 nearby.
 
 ```text
-../0_prepare_osm_network.ipynb          ← shared with the marking campaign
+../0_prepare_osm_network.ipynb          ← shared with the other campaigns
     Geofabrik PBF → osmium tags-filter
     →  ../utils/processed_osm_files/processed_cycleways_germany_<date>.parquet
 

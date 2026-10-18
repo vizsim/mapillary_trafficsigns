@@ -1,6 +1,6 @@
 # Cycleway campaign — road markings
 
-**Last updated:** 2026-10-17
+**Last updated:** 2026-10-18
 
 The twin of [`../cycleway_complete_campaign/`](../cycleway_complete_campaign/): same two
 pipelines, same notebook names, same shared module. The difference is what the
@@ -24,7 +24,7 @@ Finds bicycle symbols on the road where OpenStreetMap has no cycling infrastruct
 nearby.
 
 ```text
-../0_prepare_osm_network.ipynb          ← shared with the traffic-sign campaign
+../0_prepare_osm_network.ipynb          ← shared with the other campaigns
     →  ../utils/processed_osm_files/processed_cycleways_germany_<date>.parquet
 
 maproulette_tasks.ipynb

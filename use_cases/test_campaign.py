@@ -83,6 +83,67 @@ def test_distance_to_nearest_lehnt_doppelten_index_ab():
         campaign.distance_to_nearest(punkte, _line_north_south(13.0), 50)
 
 
+# --- Grouping nearby detections -------------------------------------------
+
+# At 52 N, 0.0001 degrees of longitude are about 6.9 m.
+
+
+def _crossing_signs(coords, last_seen, first_seen=None):
+    return gpd.GeoDataFrame(
+        {
+            "id": list(range(len(coords))),
+            "first_seen_at": first_seen or ["2024-01-01"] * len(coords),
+            "last_seen_at": last_seen,
+            "geometry": [Point(x, y) for x, y in coords],
+        },
+        crs="EPSG:4326",
+    )
+
+
+def test_dedupe_nearby_keeps_the_sign_seen_last():
+    # About 14 m apart: one crossing, a sign on each side of the road.
+    signs = _crossing_signs([(13.0, 52.0), (13.0002, 52.0)], ["2026-03-01", "2026-06-01"])
+    assert list(campaign.dedupe_nearby(signs, 100, verbose=False)["id"]) == [1]
+
+
+def test_dedupe_nearby_leaves_distant_signs_alone():
+    # About 137 m apart.
+    signs = _crossing_signs([(13.0, 52.0), (13.002, 52.0)], ["2026-03-01", "2026-06-01"])
+    assert list(campaign.dedupe_nearby(signs, 100, verbose=False)["id"]) == [0, 1]
+
+
+def test_dedupe_nearby_groups_transitively():
+    # A-B and B-C about 82 m apart, A-C about 164 m: still one group.
+    signs = _crossing_signs(
+        [(13.0, 52.0), (13.0012, 52.0), (13.0024, 52.0)], ["2026-01-01", "2026-02-01", "2026-06-01"]
+    )
+    assert list(campaign.dedupe_nearby(signs, 100, verbose=False)["id"]) == [2]
+
+
+def test_dedupe_nearby_breaks_ties_by_span_then_row_order():
+    signs = _crossing_signs(
+        [(13.0, 52.0), (13.0001, 52.0), (13.0002, 52.0)],
+        ["2026-06-01"] * 3,
+        first_seen=["2025-01-01", "2023-01-01", "2023-01-01"],
+    )
+    # All last seen on the same day: the longest span wins, of two equal ones the first row.
+    assert list(campaign.dedupe_nearby(signs, 100, verbose=False)["id"]) == [1]
+
+
+def test_dedupe_nearby_keeps_index_and_order():
+    signs = _crossing_signs(
+        [(13.0, 52.0), (14.0, 52.0), (13.0001, 52.0), (15.0, 52.0)],
+        ["2026-01-01", "2026-01-01", "2026-06-01", "2026-01-01"],
+    )
+    signs.index = [10, 20, 30, 40]
+    assert list(campaign.dedupe_nearby(signs, 100, verbose=False).index) == [20, 30, 40]
+
+
+def test_dedupe_nearby_with_fewer_than_two_points():
+    assert campaign.dedupe_nearby(_crossing_signs([], []), 100, verbose=False).empty
+    assert len(campaign.dedupe_nearby(_crossing_signs([(13.0, 52.0)], ["2026-01-01"]), 100, verbose=False)) == 1
+
+
 # --- Time filters ----------------------------------------------------------
 
 

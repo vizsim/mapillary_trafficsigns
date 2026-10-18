@@ -341,6 +341,64 @@ def distance_to_nearest(points, lines, max_distance_m, metric_crs=METRISCHES_CRS
     return leer
 
 
+def dedupe_nearby(points, max_distance_m, metric_crs=METRISCHES_CRS, verbose=True):
+    """Keep one point per group of points that lie within `max_distance_m` of each other.
+
+    Groups are transitive: if A is close to B and B close to C, all three form
+    one group, even when A and C are further apart. Per group the point last
+    seen wins, then the one seen over the longest span, then the first in row
+    order. Kept rows keep their index and their order.
+
+    Made for the pedestrian crossings, where one crossing usually has a sign on
+    each side of the road and should become one task, not two.
+    """
+    if points.index.has_duplicates:
+        raise ValueError("points braucht einen eindeutigen Index")
+    if len(points) < 2:
+        return points
+
+    geometrien = points.geometry.to_crs(metric_crs)
+    links, rechts = geometrien.sindex.query(geometrien, predicate="dwithin", distance=max_distance_m)
+
+    # Union-find over the pairs; every group ends up labelled with its lowest position.
+    eltern = np.arange(len(points))
+
+    def wurzel(i):
+        while eltern[i] != i:
+            eltern[i] = eltern[eltern[i]]
+            i = eltern[i]
+        return i
+
+    for a, b in zip(links, rechts):
+        ra, rb = wurzel(a), wurzel(b)
+        if ra != rb:
+            eltern[max(ra, rb)] = min(ra, rb)
+    gruppe = np.array([wurzel(i) for i in range(len(points))])
+
+    zuletzt = pd.to_datetime(points["last_seen_at"], errors="coerce")
+    spanne = (zuletzt - pd.to_datetime(points["first_seen_at"], errors="coerce")).dt.days
+    rang = pd.DataFrame(
+        {
+            "gruppe": gruppe,
+            "zuletzt": zuletzt.to_numpy(),
+            "spanne": spanne.to_numpy(),
+            "position": np.arange(len(points)),
+        }
+    )
+    gewinner = (
+        rang.sort_values(["zuletzt", "spanne", "position"], ascending=[False, False, True], na_position="last")
+        .drop_duplicates("gruppe")["position"]
+        .to_numpy()
+    )
+    behalten = points.iloc[np.sort(gewinner)]
+    if verbose:
+        print(
+            f"zusammengefasst (bis {max_distance_m:.0f} m Abstand): "
+            f"{len(points):,} -> {len(behalten):,}".replace(",", ".")
+        )
+    return behalten
+
+
 # --- 4. Newest Mapillary image ----------------------------------------------
 
 
