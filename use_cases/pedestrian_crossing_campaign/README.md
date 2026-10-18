@@ -105,5 +105,4 @@ Measured locally: the crossings extract takes 19 s and 0.5 GB RAM (plus the 4.8 
 the task notebook 23 s and 1.4 GB. The worker image does not contain `osmium` yet.
 
 The [marking twin](../pedestrian_crossing_marking_campaign/README.md) runs the same check on
-zebra markings and shares `pc_campaign.py`. `processed_osm_files/` in this folder holds the
-extracts of the 2025 rounds and is not in git.
+zebra markings and shares `pc_campaign.py`.
