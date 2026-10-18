@@ -8,6 +8,11 @@ was erledigt oder hinfällig ist, listet der letzte Abschnitt. Die beiden
 getrackten alten Dokumente liegen in der git-History (letzter Stand `9088bd5`),
 `worker_mix_…` war nie getrackt und ist seit dem 17.10. gelöscht.
 
+Am 18.10. eingearbeitet: die Durchsicht vom 17.10. aus einer Cloud-Sitzung (Bundle
+`mapillary_trafficsigns_branches.bundle`, Branches `todo-durchsicht`, `src-paket`,
+`mk-monatlich`) — #24–#28 und Ergänzungen in #8, #14, #15, #17. Gemergt ist keiner der
+Branches: sie setzen auf dem Stand vor dem Modulschnitt (#12) auf.
+
 **Aufwand** ist grobe Arbeitszeit. **Nutzen:** hoch / mittel / gering.
 **Prio:** P1 = bald · P2 = als Nächstes · P3 = bei Gelegenheit · optional = nur bei Bedarf ·
 später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden (Entscheidung 17.10.).
@@ -23,22 +28,27 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 5 | Deploy-Weg festlegen | 30 min | mittel | ✅ 17.10. |
 | 6 | Kampagnen-Inventur | 30 min | mittel | ✅ 18.10., Entscheidungen offen |
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
-| 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
+| 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | P3 |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | ✅ 17.10. |
 | 10 | CI | 1 h | hoch | ✅ 17.10. |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | ✅ 17.10. |
-| 12 | Generisches `campaign.py` | ½ Tag je weitere Kampagne | mittel | Schnitt ✅ 18.10., Rest später |
+| 12 | Generisches `campaign.py` | ½ Tag je weitere Kampagne | mittel | ✅ 18.10. |
 | 13 | CLI statt Root-Notebooks | ½ Tag Rest | gering | P3, Kern ✅ 17.10. |
 | 14 | `src/`-Paketstruktur | ½ Tag | gering | P3 |
 | 15 | `docs/betrieb.md` | 1 h | mittel | P3 |
 | 16 | Token-Quellen vereinheitlichen | 30 min | gering | P3 |
-| 17 | `.gitignore` aufräumen | 20 min | gering | P3 |
+| 17 | `.gitignore` und veraltete Kommentare aufräumen | 30 min | gering | P3 |
 | 18 | mk-README angleichen | 1 h | gering | ✅ 17.10. |
 | 19 | Zweiter History-Rewrite | ½ Tag | gering | ✅ 17.10. |
 | 20 | Streaming-Export | 1 Tag | gering | optional |
 | 21 | Ende-zu-Ende-Test im Image | ½ Tag | gering | optional |
 | 22 | Commit-Sperre für Tokens | 30 min | mittel | optional |
 | 23 | Kampagnen-Erstellung auf dem Server testen | ½ Tag | mittel | P2 |
+| 24 | B2: alte Versionen nach 90 Tagen löschen | 15 min | gering | P3 |
+| 25 | Feature-ID-Regel richtigstellen | 30 min | mittel | P2 |
+| 26 | Parquet und Metadaten atomar schreiben | 30 min | mittel | P2 |
+| 27 | CI baut das Worker-Image | 1 h | hoch | P1, vor dem Merge von #9-Branch |
+| 28 | mk nur noch monatlich | 30 min | gering | optional, Entscheidung offen |
 
 ---
 
@@ -63,6 +73,27 @@ die History muss dafür nicht neu geschrieben werden.
 - ✅ 17.10.: `config.py` gelöscht. Sie wurde in diesem Repo nie importiert,
   stammte aus dem coverage-Repo und hielt den alten Token im Klartext.
 - **Offen:** den alten Token im Mapillary-Dashboard löschen.
+
+### 27. CI baut das Worker-Image
+
+**Aufwand:** 1 h · **Nutzen:** hoch · **Prio:** P1 — vor dem Merge von `chore/remove-unused-deps`
+
+Der Auto-Deploy (#5) rollt einen Commit aus, sobald die Tests grün sind. Das
+Worker-Image baut aber erst der Server, beim nächsten Lauf: Ein Fehler im
+Dockerfile oder in `uv.lock` fällt erst als gescheiterter Wochenlauf auf. Ein
+zweiter CI-Job baut `docker/Dockerfile.worker` und ruft darin tippecanoe,
+`python3 -m mapillary_pipeline --help`, den Import der Kampagnen-Module und
+`jupyter nbconvert --version` auf, mit dem Repo per Bind-Mount unter `/app` wie auf
+dem Server. Der Deploy wartet automatisch auch auf diesen Job, weil er alle
+Check-Runs des Commits prüft.
+
+Dringend macht das der Branch `chore/remove-unused-deps` (#9, 18.10.): Er ändert
+`uv.lock` und damit das Image. Reihenfolge: erst dieser Job, dann der Merge — nach
+den Läufen am 21./22.10.
+
+Vorlage: Der Branch `src-paket` der Durchsicht hat den Job schon, setzt aber das
+Paket aus #14 voraus; die Smoke-Tests sind an den heutigen Aufbau anzupassen.
+Ausbaustufe: #21.
 
 ---
 
@@ -145,6 +176,44 @@ Offen:
   `isSourceReadOnly`). Der Serverbetrieb lohnt sich deshalb erst, wenn der
   Upload geht — bis dahin muss das Ergebnis über einen Push nach GitHub.
 
+### 25. Feature-ID-Regel richtigstellen
+
+**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
+
+Die README der Verkehrszeichen-Kampagne sagt: „Never renumber the row index. It
+becomes the `id` of each feature in the GeoJSON and the vector tiles, and
+radinfra.de depends on it." Docstrings, Tests und Notebook-Zellen wiederholen das.
+Für die Vector Tiles stimmt es nicht: `GeoDataFrame.to_json()` schreibt die id als
+String (`"id": "45"`), tippecanoe verwirft sie mit „Can't represent non-numeric
+feature ID". Die PMTiles tragen keine Feature-ids, nur die Mapillary-`id` als
+Property — am 18.10. mit tippecanoe 2.78.0 nachgeprüft. Dazu kommt: `load_features`
+nummeriert per `ignore_index=True` neu, die id ist also nur innerhalb eines Laufs
+eindeutig.
+
+- Klären, was radinfra.de tatsächlich nutzt: die Top-Level-id der GeoJSON, die
+  Mapillary-`id` als Property oder keins von beiden.
+- Danach angleichen: `cycleway_complete_campaign/README.md` („Before changing the
+  code"), die Docstrings von `load_features`, `clip_to_boundary` und
+  `filter_stable_signs` in `campaign.py`, die Testbeschreibungen in
+  `test_campaign.py` und die Zellen in beiden `radinfra_1_export`.
+- Sollen die Tiles ids tragen: tippecanoe mit `--convert-stringified-ids-to-numbers`
+  (laut Durchsicht: schreibt den Index als MVT-id, die PMTiles werden gut 10 %
+  größer).
+
+### 26. Parquet und Metadaten atomar schreiben
+
+**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
+
+`export_geodata` in `mapillary_pipeline.py` schreibt das Parquet direkt unter dem
+endgültigen Namen, `_write_metadata` die JSON per `open(path, "w")` — am 18.10.
+nachgesehen. Stirbt der Prozess genau dabei — mk-Läufe sind schon an der
+Speichergrenze gestorben —, bleibt eine halbe Datei liegen. An einer kaputten
+Metadatei scheitert jeder Folgelauf schon beim Lesen, ein halbes Parquet bricht
+`radinfra_1_export` ab, Lauf für Lauf, bis jemand aufräumt. Wie an den übrigen
+Stellen im Repo: nach `*.tmp` schreiben, dann `os.replace`. Die Endung muss `.tmp`
+sein, nicht `.tmp.parquet`: dann trifft weder der Upload-Include noch das Glob in
+`load_features` eine liegengebliebene Datei.
+
 ---
 
 ## P3 — bei Gelegenheit
@@ -172,13 +241,45 @@ Offen:
 `src/mapillary_trafficsigns/` macht die Pfad-Tricks überflüssig — die eine
 Umgebung aus #9 allein tut das nicht.
 
+Zielbild, nach dem Schnitt aus #12:
+
+```text
+src/mapillary_trafficsigns/
+    tiles.py              ← mapillary_tiles.py
+    pipeline.py           ← mapillary_pipeline.py, dazu die CLI mapillary-pipeline
+    campaigns/
+        common.py         ← use_cases/campaign.py
+        cycleway.py       ← use_cases/cw_campaign.py
+        crossings.py      ← use_cases/pc_campaign.py
+        access.py         ← use_cases/ar_campaign.py
+        tempo30.py        ← use_cases/t30_campaign.py
+    (vectortiles.py)      ← später die tippecanoe-Funktion, #8
+tests/                    alle Tests, auch die der Kampagnen
+use_cases/                nur noch Notebooks und Daten
+```
+
+- `pyproject.toml`: `uv_build` als Build-Backend, `package = true`. `uv sync`
+  installiert das Paket editierbar; die Notebooks importieren
+  `from mapillary_trafficsigns.campaigns import common as campaign`, ohne `sys.path`.
+- Dockerfile: erst nur die Abhängigkeiten (`--no-install-project`), nach `COPY . .`
+  das Paket selbst. Dessen `.pth` zeigt auf `/app/src`, also auf den Code im
+  Bind-Mount, den der Auto-Deploy aktuell hält.
+- Runner: `python3 -m mapillary_trafficsigns.pipeline ts|mk`.
+- Pfade bleiben relativ zum Arbeitsverzeichnis; nichts im Code hängt an `__file__`.
+- Erst verschieben, dann ändern — sonst zeigt der Diff nicht, was sich inhaltlich
+  geändert hat. #8 deshalb nicht im selben Schritt.
+
+Der Branch `src-paket` der Durchsicht setzt das um, aber auf dem Stand vor dem
+Schnitt aus #12 (nur `cw_campaign.py`). Nicht mergen, neu aufsetzen.
+
 ### 15. `docs/betrieb.md`
 
 **Aufwand:** 1 h · **Nutzen:** mittel · **Prio:** P3
 
 Das Betriebswissen steht verstreut in Commit-Messages: Cron-Zeiten (ts Mi
 15:00 UTC, mk Do 01:00 UTC), der automatische Deploy (#5) und healthchecks.io
-(#3), Wiederherstellen aus B2, auf dem
+(#3), Wiederherstellen aus B2 (frühere Versionen 90 Tage lang, sobald #24
+eingerichtet ist), auf dem
 Server `checkout -B main origin/main` statt Branch-Wechsel (ein Wechsel hat
 am 16.09. die ignorierten Lauf-Outputs gelöscht), Aussetzen und
 Wiederherstellen des Crontabs, `max_file_age_days` und manuelle Läufe. Dazu,
@@ -197,12 +298,56 @@ deshalb passt das zu #12. Beide Loader lesen `MAPILLARY_ACCESS_TOKEN` schon aus 
 Umgebung. Auf eine Datei plus Umgebungsvariable einigen — dann ist die
 nächste Rotation ein Schritt statt zwei.
 
-### 17. `.gitignore` aufräumen
+### 17. `.gitignore` und veraltete Kommentare aufräumen
 
-**Aufwand:** 20 min · **Nutzen:** gering · **Prio:** P3
+**Aufwand:** 30 min · **Nutzen:** gering · **Prio:** P3
 
 Auskommentierte Altblöcke und ein `*.json`-Ausschluss, der mehrere Ausnahmen
-nach sich zieht.
+nach sich zieht. Dazu Kommentare, die einen alten Stand beschreiben (Durchsicht):
+`.gitignore` verweist auf „Task 1" und „Task 3" eines gelöschten Plans,
+`docker/.env.example` nennt den B2-Key nur für die ts-Parquets.
+
+- ✅ 18.10.: `upload_outputs_to_b2.sh` sagte noch, die Kampagnen-Outputs stünden
+  „aktuell ZUSÄTZLICH noch in git" (seit 02.09. nicht mehr, `COMMIT_PATHS` gibt es
+  nicht mehr), und erklärt jetzt, warum Aufräumen in B2 keine Sache von
+  `b2 sync --keep-days` ist (#24).
+
+### 24. B2: alte Versionen nach 90 Tagen löschen
+
+**Aufwand:** 15 min · **Nutzen:** gering · **Prio:** P3
+
+Der Bucket `vizsim-public-archive` behält jede frühere Fassung: Jeder Lauf lädt die
+`*_latest`-Dateien unter demselben Namen hoch — rund 160 MB ts-Parquets und knapp
+1 GB mk-Parquets pro Lauf, dazu die Kampagnen-Dateien. Die Kosten liegen im
+Cent-Bereich, aber es wächst ohne Ende. Ziel: frühere Versionen 90 Tage behalten,
+dann löschen; die aktuelle Version bleibt immer stehen.
+
+Das gehört in eine Lifecycle-Regel des Buckets, nicht ins Upload-Skript.
+`b2 sync --keep-days` räumte alte Versionen zwar auch ab, versteckt aber jede
+Datei im Ziel, die lokal fehlt: ein Land, dessen Parquet einmal nicht exportiert
+wurde, verschwände von data.vizsim.de.
+
+Einmalig einrichten, mit einem Key, der Bucket-Einstellungen ändern darf (der
+Upload-Key `B2_ARCHIVE_KEY` darf das in der Regel nicht):
+
+- **Web-UI:** Buckets → `vizsim-public-archive` → Lifecycle Settings → „Use custom
+  lifecycle rules", zwei Regeln mit leerem „Days till hide" und 90 bei „Days till
+  delete": `mapillary_trafficsigns/` und `mapillary_map-feature-points/`. Nur diese
+  Präfixe, weil im Bucket auch andere Projekte liegen.
+- **CLI (b2 ≥ 4):** vorher `b2 bucket get vizsim-public-archive` ansehen —
+  `bucket update` setzt alle Regeln auf einmal, vorhandene müssen mit in den Aufruf:
+
+  ```bash
+  b2 bucket update \
+    --lifecycle-rule '{"fileNamePrefix": "mapillary_trafficsigns/", "daysFromHidingToDeleting": 90, "daysFromUploadingToHiding": null}' \
+    --lifecycle-rule '{"fileNamePrefix": "mapillary_map-feature-points/", "daysFromHidingToDeleting": 90, "daysFromUploadingToHiding": null}' \
+    vizsim-public-archive
+  ```
+
+Prüfen: `b2 bucket get --show-size vizsim-public-archive` zählt alle Versionen mit.
+B2 wendet die Regeln einmal täglich an; nach zwei Tagen sollte die Größe deutlich
+gefallen sein. Wiederherstellen geht weiter, solange eine Version jünger als 90
+Tage ist — rund 13 Wochenstände. Das gehört dann mit nach `docs/betrieb.md` (#15).
 
 ---
 
@@ -239,7 +384,19 @@ DE-NW verloren ging. Eine dritte Kopie in access_restrictions, ohne beide
 Fixes und ohne Eingabe, ist am 18.10. gelöscht.
 
 Am 17.10. zurückgestellt, zusammen mit #12: erst wenn die übrigen Kampagnen
-umgestellt werden.
+umgestellt werden. Seit 18.10. ist das erfüllt — jetzt P3.
+
+Beim Umzug gleich `--no-feature-limit` dazunehmen (Durchsicht, nachgestellt am
+17.10. mit 230.000 Punkten in einer z7-Kachel): Neben der 500-KB-Grenze kennt
+tippecanoe eine zweite, 200.000 Features je Kachel. Mit `--drop-rate=0` hat es
+auch dort kein Ventil und bricht mit Exit 110 ab, wie am 16.06. Die dichteste
+z7-Kachel der ts-Daten hatte im April knapp 30.000 Features — weit weg, aber
+dieselbe Falle.
+
+Ebenfalls am 17.10. geprüft: tylertoo (GeoParquet → PMTiles, Rust) als Ersatz für
+tippecanoe. Gleicher Inhalt, aber kaum schneller (ts: 7 s statt 10 s auf 2 Kernen),
+drei- bis vierfacher RAM-Bedarf und mit v0.8 noch Breaking Changes. Bleibt bei
+tippecanoe, bis das Kacheln Minuten statt Sekunden dauert.
 
 ### 12. Generisches `campaign.py`
 
@@ -294,7 +451,30 @@ trotz 8-GB-Swap wieder am Speicher stirbt.
 Die Notebooks einmal per nbconvert im Worker-Image gegen einen Mini-Tile-Cache
 laufen lassen. Fängt Import- und Pfadfehler, die die Unit-Tests nicht sehen.
 Seit #13 betrifft das nur noch die Kampagnen-Notebooks; der Kachelabruf ist
-ein Python-Aufruf mit eigenem Test.
+ein Python-Aufruf mit eigenem Test. Ausbaustufe von #27, das nur prüft, ob im
+Image alles startet.
+
+### 28. mk nur noch monatlich
+
+**Aufwand:** 30 min · **Nutzen:** gering · **Prio:** optional — Entscheidung offen
+
+Vorschlag der Durchsicht: Fahrbahnmarkierungen ändern sich langsam, der Wochenlauf
+bringt wenig Neues, belegt aber Server, VPN und B2. Dagegen spricht: radinfra.de
+bekäme die Markierungen nur noch monatlich, und ein übersprungener Lauf (Lock von
+ts belegt, Land an der Reißleine) kostet einen Monat statt einer Woche. Das
+Speicherargument erledigt #24.
+
+Falls doch, am ersten Donnerstag im Monat, 01:00 UTC:
+
+- **Crontab:** cron verknüpft Tag im Monat und Wochentag mit ODER — `0 1 1-7 * 4`
+  liefe an jedem Donnerstag *und* an jedem der ersten sieben Tage. Deshalb den
+  Wochentag im Befehl prüfen (`%` muss in der Crontab maskiert werden):
+  `0 1 1-7 * * [ "$(date -u +\%u)" = 4 ] && <bisheriger mk-Befehl>`
+- **healthchecks.io:** mk-Check auf den Cron-Ausdruck `0 1 * * 4#1` (UTC) umstellen,
+  Grace Time bleibt 10 h — sonst meldet er jeden Donnerstag einen fehlenden Lauf.
+- **Texte** (Notebook-Kopf, READMEs, veröffentlichte README „weekly … every
+  Thursday"): Der Branch `mk-monatlich` der Durchsicht hat sie, auf dem Stand vom
+  17.10. — neu aufsetzen, am selben Tag wie die Crontab mergen.
 
 ### 22. Commit-Sperre für Tokens
 

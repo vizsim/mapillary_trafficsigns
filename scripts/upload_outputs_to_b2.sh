@@ -73,7 +73,11 @@ FAILED=0
 # hat, würde ein Endungs-Muster diesen Müll mit veröffentlichen.
 # → Neue Output-Dateien brauchen hier eine neue Zeile.
 #
-# Ohne --delete: alte Stände bleiben (Bucket ist ohnehin 'Keep all versions').
+# Ohne --delete und ohne --keep-days: B2 behält die überschriebene Fassung als
+# frühere Version. Aufräumen soll eine Lifecycle-Regel des Buckets
+# (docs/todo.md #24); --keep-days wäre dafür die falsche Stelle - es versteckt
+# auch jede Ziel-Datei, die lokal fehlt, und ein Land, dessen Export einmal
+# ausfiel, verschwände von data.vizsim.de.
 # ---------------------------------------------------------------------------
 sync_dir() {
   local src="$1" dest="$2"
@@ -118,10 +122,9 @@ case "$SERVICE" in
       ".*ml-ts_metadata\.json$" \
       ".*LICENSE\.txt$"
 
-    # 2) Fertige Kampagnen-Outputs (Radinfrastruktur) — die Dateien, die auch
-    #    2radinfra.de konsumiert. Stehen aktuell ZUSÄTZLICH noch in git;
-    #    sobald die Konsumenten auf data.vizsim.de zeigen, können sie aus dem
-    #    Repo fliegen (.gitignore + COMMIT_PATHS in run_worker_with_vpn.sh).
+    # 2) Fertige Kampagnen-Outputs (Radinfrastruktur) — die Dateien, die
+    #    radinfra.de von data.vizsim.de liest. Nur hier veröffentlicht, seit
+    #    02.09.2026 nicht mehr in git.
     sync_dir "use_cases/cycleway_complete_campaign/ts_output" \
       "b2://vizsim-public-archive/mapillary_trafficsigns/cycleway-campaign/" \
       ".*mapillary_trafficsigns_bicycle_latest\.pmtiles$" \
@@ -141,9 +144,7 @@ case "$SERVICE" in
       ".*LICENSE\.txt$"
 
     # 2) Fertige Kampagnen-Outputs (Radinfrastruktur-Markierungen) — analog zur
-    #    ts-Kampagne. Stehen aktuell ZUSÄTZLICH noch in git; sobald die
-    #    Konsumenten auf data.vizsim.de zeigen, können sie aus dem Repo fliegen
-    #    (.gitignore + COMMIT_PATHS in run_worker_with_vpn.sh).
+    #    ts-Kampagne, ebenfalls nur hier veröffentlicht.
     sync_dir "use_cases/cycleway_complete_marking_campaign/mk_output" \
       "b2://vizsim-public-archive/mapillary_map-feature-points/cycleway-campaign/" \
       ".*mapillary_markings_bicycle_latest\.pmtiles$" \
