@@ -1,6 +1,6 @@
 # TODO
 
-**Stand:** 2026-10-17
+**Stand:** 2026-10-18
 
 Ersetzt `plan_notebooks_zu_python.md`, `docker-improvements.md` und
 `worker_mix_fehleranalyse_und_todos.md`. Was dort noch offen war, steht hier;
@@ -27,7 +27,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | ✅ 17.10. |
 | 10 | CI | 1 h | hoch | ✅ 17.10. |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | ✅ 17.10. |
-| 12 | Generisches `campaign.py` | 1 Tag + ½ Tag je Kampagne | mittel | später |
+| 12 | Generisches `campaign.py` | ½ Tag je weitere Kampagne | mittel | Schnitt ✅ 18.10., Rest später |
 | 13 | CLI statt Root-Notebooks | ½ Tag Rest | gering | P3, Kern ✅ 17.10. |
 | 14 | `src/`-Paketstruktur | ½ Tag | gering | P3 |
 | 15 | `docs/betrieb.md` | 1 h | mittel | P3 |
@@ -38,6 +38,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 20 | Streaming-Export | 1 Tag | gering | optional |
 | 21 | Ende-zu-Ende-Test im Image | ½ Tag | gering | optional |
 | 22 | Commit-Sperre für Tokens | 30 min | mittel | optional |
+| 23 | Kampagnen-Erstellung auf dem Server testen | ½ Tag | mittel | P2 |
 
 ---
 
@@ -86,6 +87,34 @@ Stand der Challenges laut MapRoulette am 17.10.:
 | 52985 | Tempo 30 an Schulen | aktiv | 17.08.2025 |
 | 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
 | — | Fußgängerüberwege, Markierungen; rad_frei; access_restrictions | keine Challenge | — |
+
+Am 18.10. ist pedestrian_crossing auf den Stand der Cycleway-Kampagnen gebracht
+(#12); eine neue Runde ergäbe 190 Aufgaben (Daten vom 14.10.2026). Die Challenge
+53589 müsste dafür wieder geöffnet oder neu angelegt werden.
+
+### 23. Kampagnen-Erstellung auf dem Server testen
+
+**Aufwand:** ½ Tag · **Nutzen:** mittel · **Prio:** P2
+
+Ziel: die `maproulette_tasks`-Notebooks nicht nur lokal, sondern auf dem Server
+laufen lassen. pedestrian_crossing ist der Testfall — seine Challenge ist
+abgeschlossen, ein Fehlschlag trifft niemanden. Beide Notebooks laufen unverändert
+per nbconvert; was ein Serverlauf setzen muss (`OSM_EXTRACTS`, `CAMPAIGN_SYNC=0`,
+`CAMPAIGN_OUTPUT_DIR`), steht in `use_cases/pedestrian_crossing_campaign/README.md`.
+
+Offen:
+
+- `osmium` fehlt im Worker-Image. Als eigene `RUN`-Schicht hinter tippecanoe
+  ergänzen und das Image einmal von Hand bauen, bevor der nächste Cron-Lauf es tut —
+  sonst hängt dessen `--build` an apt.
+- Wo und wie: `docker compose run` ohne VPN-Overlay, außerhalb der Cron-Fenster,
+  und denselben Lock nehmen wie die Worker (`/tmp/mapillary_worker.lock`).
+- Platz für den Geofabrik-Auszug (4,8 GB) auf dem Server prüfen.
+- Zugangsdaten: Steht `API_KEY_MAPROULETTE` in der `config_mapillary_privat.json`
+  auf dem Server?
+- Wohin mit dem Ergebnis: Heute liegt die Aufgabendatei in git und MapRoulette
+  liest sie von dort. Auf dem Server entsteht sie neben dem Repo; für den
+  Dauerbetrieb bräuchte sie einen Platz auf data.vizsim.de.
 
 ---
 
@@ -199,6 +228,18 @@ Kampagnen einzeln umziehen, wenn sie ohnehin angefasst werden — nach #6.
 Am 17.10. bewusst verschoben: Für die beiden Cycleway-Kampagnen drückt der
 Schuh hier nicht. Der Schnitt kommt, wenn die erste weitere Kampagne umgestellt
 wird.
+
+- ✅ 18.10.: Schnitt gemacht, mit pedestrian_crossing als erster weiterer
+  Kampagne. `campaign.py` hat die generischen Schritte, unverändert verschoben;
+  `cw_campaign.py` exportiert sie weiter, die Cycleway-Notebooks blieben
+  unberührt. Beide `radinfra_1_export` liefern danach denselben Inhalt wie vorher
+  (GeoJSON, README und Historie gleich, SVG bis auf Datum und Clip-IDs). Neu in
+  `campaign.py`: `dedupe_nearby` (Zeichen derselben Stelle zusammenfassen) und
+  eine feste Wahl zwischen gleich alten Bildern in `newest_image_ids` — vorher
+  schwankte sie mit der Reihenfolge der API.
+- Offen: schools_tempo30, rad_frei, access_restrictions,
+  pedestrian_crossing_marking. Erst danach fallen SDK, fiona, folium und
+  osm2geojson aus `pyproject.toml` (#9).
 
 ---
 
