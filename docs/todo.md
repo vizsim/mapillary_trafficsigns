@@ -81,7 +81,7 @@ Stand am 18.10.2026, laut MapRoulette (Projekte 60811 und 61738, beide vizsim/bi
 | `pedestrian_crossing_campaign` | 53589 | aktiv | 183 | 14.10. / 17.10.2026 | umgestellt |
 | `access_restrictions_campaign` | 54768 | aktiv | 2.044 + 1.157 Skipped | 14.10. / 17.10.2026 | umgestellt |
 | `schools_tempo30_campaign` | 52985 | **archiviert** | 982 | 14.10. / 17.10.2026 | umgestellt |
-| `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert | 61 | 11/2025 | alt |
+| `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert | 61 | 11/2025 → neue Runde 465 (15.10. / 17.10.2026) | umgestellt 18.10. |
 | `rad_frei_campaign` | keine (53361, im Code verlinkt, ist gelöscht) | — | — | 10/2025 | alt |
 | `analysis/analize_osm_ts.ipynb` | — | — | — | 12/2025 | Einzelstück |
 
@@ -104,7 +104,9 @@ Offen:
 
 - **52985 entarchivieren.** Die 982 Aufgaben der neuen Runde stehen in einer archivierten
   Challenge — für Mapper unsichtbar.
-- Je Altlast: umstellen oder löschen (git behält sie).
+- Je Altlast: umstellen oder löschen (git behält sie). pedestrian_crossing_marking
+  ist am 18.10. umgestellt; 53697 muss für die neue Runde entarchiviert und
+  aktiviert werden.
 - Danach räumt #9 `pyproject.toml` auf: `fiona` nutzt schon niemand mehr; `mapillary` (das
   alte SDK, bringt scipy und turfpy mit) hängt nur an rad_frei und pedestrian_crossing_marking,
   `folium` nur an pedestrian_crossing_marking, `osm2geojson` nur an der Analyse. Das ändert
@@ -267,7 +269,9 @@ wird.
 - ✅ 18.10.: access_restrictions umgestellt (`ar_campaign.py`); die
   cosmo-Variante ist weg, der Auszug kommt aus `0_prepare_osm_network`.
 - ✅ 18.10.: schools_tempo30 umgestellt (`t30_campaign.py`), damit auch #2.
-- Offen: rad_frei, pedestrian_crossing_marking. Erst danach fallen SDK, fiona, folium und
+- ✅ 18.10.: pedestrian_crossing_marking umgestellt, teilt `pc_campaign.py` mit
+  pedestrian_crossing.
+- Offen: rad_frei. Erst danach fallen SDK, fiona, folium und
   osm2geojson aus `pyproject.toml` (#9).
 
 ---

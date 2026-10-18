@@ -1,13 +1,15 @@
-"""Pedestrian-crossing campaign: MapRoulette tasks from Mapillary DE:350 signs.
+"""Pedestrian-crossing campaigns: MapRoulette tasks where OSM lacks a crossing.
 
-Finds pedestrian-crossing signs (DE:350) where OpenStreetMap has no
-`highway=crossing` node nearby. The steps are the generic ones in campaign.py;
-this module holds what is specific to the campaign: the sign, the distances
-and the task text. Used by pedestrian_crossing_campaign/maproulette_tasks.ipynb.
+Serves both pedestrian-crossing campaigns, as cw_campaign does the two
+cycleway ones:
 
-The twin for zebra markings (pedestrian_crossing_marking_campaign/) still runs
-on code of its own. Once it is converted, this is the module to share, as
-cw_campaign is for the two cycleway campaigns.
+    pedestrian_crossing_campaign/          traffic signs (DE:350)
+    pedestrian_crossing_marking_campaign/  zebra markings (map feature points)
+
+Both look for detections where OpenStreetMap has no `highway=crossing` node
+nearby. The steps are the generic ones in campaign.py; this module holds what
+the two campaigns share - the distances - and what differs: the classes and the
+task texts.
 """
 
 from __future__ import annotations
@@ -22,6 +24,11 @@ UEBERWEG_ZEICHEN = {
     "information--pedestrians-crossing--g1": 350,
 }
 
+# Mapillary class -> label, for the marking campaign (map feature points).
+UEBERWEG_MARKIERUNGEN = {
+    "marking--discrete--crosswalk-zebra": "Lane Marking - Crosswalk",
+}
+
 # A sign becomes a task when OSM has no highway=crossing within this radius.
 SUCHRADIUS_M = 50.0
 
@@ -34,6 +41,13 @@ MESSRADIUS_M = 100.0
 ZUSAMMENFASSEN_M = 100.0
 
 _MAPILLARY_HIGHLIGHT = "".join(f"&trafficSign[]={v}" for v in UEBERWEG_ZEICHEN)
+_MAPILLARY_HIGHLIGHT_MARKIERUNG = "".join(f"&mapFeature[]={v}" for v in UEBERWEG_MARKIERUNGEN)
+
+_KOPIERVORLAGE = f"""### Kopiervorlage
+
+`highway=crossing`{campaign.BR}
+`crossing=uncontrolled`{campaign.BR}
+`crossing:markings=zebra`"""
 
 
 def _instruction(zeichen, abstand, aufnahme, image_url):
@@ -60,11 +74,38 @@ Bitte schaue dir den Bereich rund um dieses erkannte Verkehrszeichen an. Vermutl
 
 ---
 
-### Kopiervorlage
+{_KOPIERVORLAGE}
 
-`highway=crossing`{campaign.BR}
-`crossing=uncontrolled`{campaign.BR}
-`crossing:markings=zebra`
+---
+
+Viel Erfolg beim Prüfen und Mappen! 🗺️
+"""
+
+
+def _instruction_markierung(abstand, aufnahme, image_url):
+    bild_zeile = campaign.bild_zeile(image_url, aufnahme, "die Markierung")
+    return f"""
+### 🚧 Aufgabe: Erkannten Zebrastreifen prüfen und Fußgängerüberweg in OSM ergänzen
+
+Bitte schaue dir den Bereich rund um diese erkannte Fahrbahnmarkierung an. Vermutlich fehlt hier ein Fußgängerüberweg, den du hinzufügen kannst. Der nächste in OSM gemappte Überweg (`highway=crossing`) ist **{abstand}** entfernt.
+
+---
+
+### 🖼️ Bild
+
+{bild_zeile}
+
+---
+
+### 📚 Nützliche Links
+
+- 🚶 [**OSM-Wiki: Fußgängerüberweg**](https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dcrossing)
+- 🚶 [**OSM-Wiki: crossing allgemein**](https://wiki.openstreetmap.org/wiki/DE:Key:crossing)
+- 🚶 [**OSM-Wiki: crossing:markings**](https://wiki.openstreetmap.org/wiki/Key:crossing:markings)
+
+---
+
+{_KOPIERVORLAGE}
 
 ---
 
@@ -87,5 +128,23 @@ def aufgabe(row):
             campaign.abstand_text(row["dist_crossing_m"], MESSRADIUS_M),
             row["image_captured_at"],
             campaign.bild_url(image_id, _MAPILLARY_HIGHLIGHT),
+        ),
+    }
+
+
+def aufgabe_markierung(row):
+    """MapRoulette properties of one task of the marking campaign.
+
+    Expects the columns value, dist_crossing_m, image_id and image_captured_at.
+    `MapFeaturePoint` is the label of the 2025 round.
+    """
+    image_id = row["image_id"] if pd.notna(row["image_id"]) else None
+    return {
+        "image_id": image_id,
+        "MapFeaturePoint": UEBERWEG_MARKIERUNGEN[row["value"]],
+        "instruction": _instruction_markierung(
+            campaign.abstand_text(row["dist_crossing_m"], MESSRADIUS_M),
+            row["image_captured_at"],
+            campaign.bild_url(image_id, _MAPILLARY_HIGHLIGHT_MARKIERUNG),
         ),
     }

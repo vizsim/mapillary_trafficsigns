@@ -74,3 +74,40 @@ def test_distances_fit_together():
     assert pc.ZUSAMMENFASSEN_M <= 2 * pc.SUCHRADIUS_M
     # The text must be able to show a distance beyond the search radius.
     assert pc.MESSRADIUS_M > pc.SUCHRADIUS_M
+
+
+# --- Marking campaign -----------------------------------------------------------
+
+
+def _marking_properties(**overrides):
+    daten = {
+        "id": [3400731073557718],
+        "value": ["marking--discrete--crosswalk-zebra"],
+        "dist_crossing_m": [np.inf],
+        "image_id": ["1811166426451582"],
+        "image_captured_at": [pd.Timestamp("2026-08-30", tz="UTC")],
+        "geometry": [Point(7.6, 50.36)],
+    }
+    daten.update(overrides)
+    tasks = gpd.GeoDataFrame(daten, crs="EPSG:4326")
+    return campaign.build_maproulette_geojson(tasks, pc.aufgabe_markierung)["features"][0]["properties"]
+
+
+def test_aufgabe_markierung_builds_the_expected_fields():
+    properties = _marking_properties()
+
+    assert set(properties) == {"image_id", "MapFeaturePoint", "instruction"}
+    assert properties["MapFeaturePoint"] == "Lane Marking - Crosswalk"
+    instruction = properties["instruction"]
+    assert "Zebrastreifen" in instruction
+    assert "&mapFeature[]=marking--discrete--crosswalk-zebra" in instruction
+    assert "trafficSign[]" not in instruction
+    assert f"ist **mehr als {pc.MESSRADIUS_M:.0f} m** entfernt" in instruction
+    assert "auf der die Markierung erkannt wurde: **30.08.2026**" in instruction
+
+
+def test_both_task_texts_share_the_tags_to_copy():
+    zeichen = _properties()["instruction"]
+    markierung = _marking_properties()["instruction"]
+    for zeile in ("`highway=crossing`" + campaign.BR, "`crossing:markings=zebra`"):
+        assert zeile in zeichen and zeile in markierung
