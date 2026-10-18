@@ -131,6 +131,12 @@ All use-cases follow the same general workflow:
 - **Code Repository:** [pedestrian_crossing_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/pedestrian_crossing_campaign)
 - **MapRoulette Challenge:** [Fehlende Fußgängerüberwege anhand von Mapillary-Verkehrszeichen ergänzen](https://maproulette.org/browse/challenges/53589) — changeset hashtag: `#missing-ped-cross_mapillary-signs`
 
+#### 🚫 Missing Access Restrictions
+
+- Targets **prohibition signs** (`DE:250`, `DE:251`, `DE:253`, `DE:254`, `DE:255`, `DE:259`, `DE:260`) to identify ways where the restriction is not tagged in OSM (`access`, `vehicle`, `motor_vehicle`, `hgv`, `bicycle`, `foot`, …).
+- **Code Repository:** [access_restrictions_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/access_restrictions_campaign)
+- **MapRoulette Challenge:** [Add missing access restrictions based on Mapillary signs (Germany)](https://maproulette.org/browse/challenges/54768) — changeset hashtag: `#missing-access_mapillary-signs`
+
 #### 🚳 Missing Bicycle Access Tags
 
 - Targets the **"Radfahrer frei" supplementary sign** (`complementary--except-bicycles`) to identify roads where bicycles are permitted by sign but `bicycle=yes` is missing in OSM.
