@@ -82,7 +82,7 @@ Stand am 18.10.2026, laut MapRoulette (Projekte 60811 und 61738, beide vizsim/bi
 | `access_restrictions_campaign` | 54768 | aktiv | 2.044 + 1.157 Skipped | 14.10. / 17.10.2026 | umgestellt |
 | `schools_tempo30_campaign` | 52985 | **archiviert** | 982 | 14.10. / 17.10.2026 | umgestellt |
 | `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert | 61 | 11/2025 → neue Runde 465 (15.10. / 17.10.2026) | umgestellt 18.10. |
-| `rad_frei_campaign` | keine (53361, im Code verlinkt, ist gelöscht) | — | — | 10/2025 | alt |
+| `rad_frei_campaign` | keine (53361, im Code verlinkt, ist gelöscht) | — | — | 10/2025 | gelöscht 18.10., Tag `archive/rad_frei` |
 | `analysis/analize_osm_ts.ipynb` | — | — | — | 12/2025 | Einzelstück |
 
 Was die drei alten sind:
@@ -104,13 +104,14 @@ Offen:
 
 - **52985 entarchivieren.** Die 982 Aufgaben der neuen Runde stehen in einer archivierten
   Challenge — für Mapper unsichtbar.
-- Je Altlast: umstellen oder löschen (git behält sie). pedestrian_crossing_marking
-  ist am 18.10. umgestellt; 53697 muss für die neue Runde entarchiviert und
-  aktiviert werden.
-- Danach räumt #9 `pyproject.toml` auf: `fiona` nutzt schon niemand mehr; `mapillary` (das
-  alte SDK, bringt scipy und turfpy mit) hängt nur an rad_frei und pedestrian_crossing_marking,
-  `folium` nur an pedestrian_crossing_marking, `osm2geojson` nur an der Analyse. Das ändert
-  das Worker-Image — also nicht direkt vor einem Cron-Lauf.
+- pedestrian_crossing_marking ist am 18.10. umgestellt; 53697 muss für die neue Runde
+  entarchiviert und aktiviert werden.
+- rad_frei ist am 18.10. gelöscht. Der Tag `archive/rad_frei` zeigt auf den letzten Stand;
+  zurückholen mit `git checkout archive/rad_frei -- use_cases/rad_frei_campaign`.
+- Offen: das Analyse-Notebook.
+- Danach räumt #9 `pyproject.toml` auf: `fiona`, `folium` und `mapillary` (das alte SDK,
+  bringt scipy und turfpy mit) nutzt seit 18.10. niemand mehr, `osm2geojson` nur noch das
+  Analyse-Notebook. Das ändert das Worker-Image — also nicht direkt vor einem Cron-Lauf.
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 
@@ -189,7 +190,7 @@ Dateinamen und Pfade dort dürfen sich nicht beiläufig ändern. Eine Seite daf�
 
 **Aufwand:** 30 min · **Nutzen:** gering · **Prio:** P3
 
-Es bleiben zwei Dateien: `config.json` (Pipeline, rad_frei, analysis) und
+Es bleiben zwei Dateien: `config.json` (Pipeline, analysis) und
 `use_cases/utils/config_mapillary_privat.json` (Kampagnen, dazu der
 MapRoulette-Key). Die alten Kampagnen-Notebooks lesen die zweite direkt ein,
 deshalb passt das zu #12. Beide Loader lesen `MAPILLARY_ACCESS_TOKEN` schon aus der
@@ -219,8 +220,8 @@ Zusätzlich schluckt `except Exception: return None` jeden Fehler still.
 - ✅ 18.10.: schools_tempo30 nutzt `campaign.newest_image_ids` (#12). Dabei fiel
   auf, dass die Runde 2025 Bild- und Erkennungs-ID vertauscht hatte: die
   Aufgaben in 52985 hießen nach dem Bild. Die neue Runde ersetzt sie.
-- Derselbe Code steckt noch in rad_frei (access_restrictions ist seit 18.10.
-  umgestellt). Ob sich das lohnt, entscheidet #6.
+- Derselbe Code steckte in access_restrictions und rad_frei: die erste ist seit
+  18.10. umgestellt, die zweite gelöscht (#6).
 
 Am 17.10. zurückgestellt: Die übrigen Kampagnen werden später umgestellt, dann
 zusammen mit #12. Die Tempo-30-Daten sind ohnehin von 08/2025 — die nächste
@@ -271,8 +272,9 @@ wird.
 - ✅ 18.10.: schools_tempo30 umgestellt (`t30_campaign.py`), damit auch #2.
 - ✅ 18.10.: pedestrian_crossing_marking umgestellt, teilt `pc_campaign.py` mit
   pedestrian_crossing.
-- Offen: rad_frei. Erst danach fallen SDK, fiona, folium und
-  osm2geojson aus `pyproject.toml` (#9).
+- ✅ 18.10.: rad_frei gelöscht (Tag `archive/rad_frei`, #6). Damit läuft jede
+  Kampagne auf `campaign.py`; SDK, fiona und folium können aus `pyproject.toml`
+  (#9), osm2geojson erst mit dem Analyse-Notebook.
 
 ---
 

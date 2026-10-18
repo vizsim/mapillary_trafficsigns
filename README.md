@@ -137,12 +137,6 @@ All use-cases follow the same general workflow:
 - **Code Repository:** [access_restrictions_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/access_restrictions_campaign)
 - **MapRoulette Challenge:** [Add missing access restrictions based on Mapillary signs (Germany)](https://maproulette.org/browse/challenges/54768) — changeset hashtag: `#missing-access_mapillary-signs`
 
-#### 🚳 Missing Bicycle Access Tags
-
-- Targets the **"Radfahrer frei" supplementary sign** (`complementary--except-bicycles`) to identify roads where bicycles are permitted by sign but `bicycle=yes` is missing in OSM.
-- **Code Repository:** [rad_frei_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/rad_frei_campaign)
-- **MapRoulette Challenge:** Work in progress – no stable challenge published yet.
-
 ### 🖌️ Road Marking-based Use-Cases
 
 #### 🚲 Cycleway Marking Completion
