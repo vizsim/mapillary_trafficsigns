@@ -89,8 +89,8 @@ Stand der Challenges laut MapRoulette am 17.10.:
 | — | Fußgängerüberwege, Markierungen; rad_frei; access_restrictions | keine Challenge | — |
 
 Am 18.10. ist pedestrian_crossing auf den Stand der Cycleway-Kampagnen gebracht
-(#12); eine neue Runde ergäbe 190 Aufgaben (Daten vom 14.10.2026). Die Challenge
-53589 müsste dafür wieder geöffnet oder neu angelegt werden.
+(#12). Die neue Runde hat 183 Aufgaben (Mapillary 14.10., OSM 17.10.2026); die
+Challenge 53589 muss dafür entarchiviert werden.
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 

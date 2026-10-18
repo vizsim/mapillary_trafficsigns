@@ -53,7 +53,7 @@ its name, because the challenge's source URL points to it.
 | Existing tasks that block | all but Fixed, Created and Skipped, within 50 m |
 | Task names the challenge already has | dropped, whatever their status — MapRoulette would update that task in place |
 
-Run on the data of 14.10.2026, this gave 187 tasks.
+On the Mapillary data of 14.10.2026 and the OSM extract of 17.10.2026, this gave 183 tasks.
 
 ## Uploading through the API
 
