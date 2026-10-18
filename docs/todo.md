@@ -112,9 +112,17 @@ Offen:
 - Platz für den Geofabrik-Auszug (4,8 GB) auf dem Server prüfen.
 - Zugangsdaten: Steht `API_KEY_MAPROULETTE` in der `config_mapillary_privat.json`
   auf dem Server?
-- Wohin mit dem Ergebnis: Heute liegt die Aufgabendatei in git und MapRoulette
-  liest sie von dort. Auf dem Server entsteht sie neben dem Repo; für den
-  Dauerbetrieb bräuchte sie einen Platz auf data.vizsim.de.
+- Wohin mit dem Ergebnis: Upload per MapRoulette-API ist gebaut
+  (`campaign.upload_tasks`, im Notebook nur mit `CAMPAIGN_UPLOAD=1`), läuft
+  aber noch nicht: Seit maproulette-backend v4.11.0 (Sicherheitsvorfall Oktober
+  2026) sind API-Keys abgeschaltet, jedes Skript bekommt 401. Ersatz sind
+  Personal Access Tokens (`Authorization: Bearer mrt_…`), am 18.10. nur ein
+  Vorschlag ohne Zeitplan (maproulette-backend#1288). Bis dahin holt MapRoulette
+  die Aufgaben weiter über `remoteGeoJson`, und „Rebuild tasks“ bleibt ein Klick.
+  Die Datei woandershin legen (data.vizsim.de) hilft nicht: Hat eine Challenge
+  Aufgaben, sperrt die Oberfläche ihre Quell-URL (maproulette3,
+  `isSourceReadOnly`). Der Serverbetrieb lohnt sich deshalb erst, wenn der
+  Upload geht — bis dahin muss das Ergebnis über einen Push nach GitHub.
 
 ---
 
