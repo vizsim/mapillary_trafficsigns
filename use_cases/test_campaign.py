@@ -723,3 +723,18 @@ def test_drop_known_task_names():
     uebrig = campaign.drop_known_task_names(tasks, names, verbose=False)
     # 2 is closed and would stay closed; 3 is open and gets updated in place.
     assert list(uebrig["id"]) == [1, 3]
+
+
+def test_drop_known_task_names_can_leave_skipped_tasks_alone():
+    tasks = gpd.GeoDataFrame({"id": [1, 2, 3], "geometry": [Point(13, 52)] * 3}, crs="EPSG:4326")
+    names = {"1": "Skipped", "2": "Created"}
+
+    # By default a skipped task is open and gets refreshed ...
+    assert list(campaign.drop_known_task_names(tasks, names, verbose=False)["id"]) == [1, 2, 3]
+    # ... unless only Created counts as open.
+    nur_created = campaign.drop_known_task_names(tasks, names, offene_status=("Created",), verbose=False)
+    assert list(nur_created["id"]) == [2, 3]
+
+
+def test_task_status_knows_every_open_state():
+    assert set(campaign.OFFENE_STATUS) <= set(campaign.TASK_STATUS)

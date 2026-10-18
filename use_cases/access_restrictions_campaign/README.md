@@ -36,7 +36,8 @@ maproulette_tasks.ipynb
 > extracts for only about 90 days.
 
 A new round: run the notebook, commit and push the GeoJSON, then "Rebuild tasks" in
-MapRoulette. The file keeps its name, because the challenge's source URL points to it.
+MapRoulette — **without "remove unmatched"**, which would delete the skipped tasks (see
+below). The file keeps its name, because the challenge's source URL points to it.
 Uploading through the API instead is built in, but waits for MapRoulette — see the
 [pedestrian-crossing README](../pedestrian_crossing_campaign/README.md#uploading-through-the-api).
 
@@ -50,16 +51,22 @@ Uploading through the API instead is built in, but waits for MapRoulette — see
 | Clipped to | the German border |
 | No way within 30 m carrying | a key of the sign's group (`ar.SCHLUESSEL`), any value |
 | Ways that count | every way with such a key, areas like parking lots included (`nur_strassen = False`) |
-| Existing tasks that block | all but Fixed, Created and Skipped, within 30 m |
-| Names of closed tasks in the challenge | dropped — MapRoulette would update that task in place, and it would stay closed; open tasks of the same name get refreshed |
+| Existing tasks that block | all but Fixed and Created, within 30 m — skipped ones too |
+| Names of tasks in the challenge that are not Created | dropped — MapRoulette would update that task in place |
 
 Which keys count: a no-bicycles sign (254) is answered by `bicycle=*`, `vehicle=*` or
 `access=*` on a way nearby, a no-pedestrians sign (259) by `foot=*` or `access=*`, and so on.
 The value does not matter, so `bicycle=yes` next to a no-bicycles sign counts as mapped.
 
-On the Mapillary data of 14.10.2026 and the OSM extract of 17.10.2026 this gave 3,199 tasks:
-973 open ones of challenge 54768 refreshed, 2,226 new. Most are DE:253 (no heavy goods
-vehicles) and DE:250 (no vehicles).
+Unlike the other campaigns, only Created counts as open here (`offene_status`). Mappers
+skipped over a thousand tasks of 54768, and those spots are not to come back as open tasks:
+a skipped task blocks new ones within 30 m, and a sign whose id names it stays out of the
+file. A rebuild without "remove unmatched" then only adds new places and leaves the skipped
+tasks as they are. With "remove unmatched", MapRoulette would delete every skipped task first.
+
+On the Mapillary data of 14.10.2026 and the OSM extract of 17.10.2026 this gave 2,044 new
+tasks, none within 30 m of a skipped one. Most are DE:253 (no heavy goods vehicles) and
+DE:250 (no vehicles).
 
 ### Open question: do parking lots count?
 
@@ -78,7 +85,8 @@ signs. The differences:
 
 - **Newest image** from the Graph API instead of `images[-1]`, the last element of an unsorted
   list.
-- **Names of closed tasks are dropped**, see above.
+- **Skipped tasks are left alone**, and names of tasks already in the challenge are dropped,
+  see above.
 - **OSM extract** from the shared notebook: only the eight keys the campaign compares, 541 MB
   instead of 2.3 GB. `maxweight` and its kin were extracted before but never used. The cosmo
   variant is gone.

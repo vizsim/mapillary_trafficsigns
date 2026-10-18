@@ -91,9 +91,10 @@ Stand der Challenges laut MapRoulette am 17.10.:
 
 Am 18.10. sind pedestrian_crossing und access_restrictions auf den Stand der
 Cycleway-Kampagnen gebracht (#12). pedestrian_crossing: neue Runde mit 183
-Aufgaben, seit 18.10. in 53589. access_restrictions: 3.199 Aufgaben (Mapillary
-14.10., OSM 17.10.2026), noch nicht in 54768; offen ist dort, ob Parkplätze mit
-`access=private` als gemappt zählen (README der Kampagne).
+Aufgaben, seit 18.10. in 53589. access_restrictions: 2.044 neue Aufgaben
+(Mapillary 14.10., OSM 17.10.2026) für 54768; die übersprungenen Aufgaben dort
+blockieren und bleiben unangetastet (Rebuild ohne „remove unmatched“), Parkplätze
+mit `access=private` zählen wie bisher als gemappt.
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 

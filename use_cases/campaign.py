@@ -604,25 +604,43 @@ def challenge_task_names(challenge_id, api_key):
     return {str(f["properties"]["mr_taskName"]): f["properties"]["mr_taskStatus"] for f in response.json()["features"]}
 
 
+# Every task status as challenge/view names it.
+TASK_STATUS = (
+    "Created",
+    "Fixed",
+    "Not_An_Issue",
+    "Skipped",
+    "Deleted",
+    "Already_Fixed",
+    "Too_Hard",
+    "Answered",
+    "Validated",
+    "Disabled",
+)
+
 # Task states in which a task is still open to mappers - the ones MapRoulette's
 # removeUnmatched deletes before a rebuild.
 OFFENE_STATUS = ("Created", "Skipped")
 
 
-def closed_task_names(names):
+def closed_task_names(names, offene_status=OFFENE_STATUS):
     """The names of the closed tasks in {name: status} from challenge_task_names."""
-    return {name for name, status in names.items() if status not in OFFENE_STATUS}
+    return {name for name, status in names.items() if status not in offene_status}
 
 
-def drop_known_task_names(tasks, names, verbose=True):
+def drop_known_task_names(tasks, names, offene_status=OFFENE_STATUS, verbose=True):
     """Drop the rows whose id is the name of a closed task in the challenge.
 
     MapRoulette takes a feature with a known name as an update of that task, in
     place. For an open task that is wanted - it gets the newer image. A closed
     one (Fixed, false positive, ...) stays closed, so the detection would not
     come back at all. `names` is {name: status} from challenge_task_names.
+
+    `offene_status` says which states count as open. A campaign that wants its
+    skipped tasks left alone passes ("Created",): then a skipped task is not
+    touched by the rebuild either.
     """
-    geschlossen = tasks["id"].astype(str).isin(closed_task_names(names))
+    geschlossen = tasks["id"].astype(str).isin(closed_task_names(names, offene_status))
     if verbose:
         print(f"Name einer erledigten Aufgabe: {int(geschlossen.sum())}")
     return tasks[~geschlossen].reset_index(drop=True)
