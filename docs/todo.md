@@ -17,7 +17,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | # | Aufgabe | Aufwand | Nutzen | Prio |
 |--:|:--------|:--------|:-------|:-----|
 | 1 | Mapillary-Token rotieren, `config.py` löschen | 5 min Rest | hoch | P1, fast ✅ |
-| 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | später |
+| 2 | Bildauswahl in tempo30 korrigieren | 1–2 h | hoch | ✅ 18.10. |
 | 3 | Fehlschläge melden | 1 h | hoch | ✅ 17.10. |
 | 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
 | 5 | Deploy-Weg festlegen | 30 min | mittel | ✅ 17.10. |
@@ -84,7 +84,7 @@ Stand der Challenges laut MapRoulette am 17.10.:
 | --- | --- | --- | --- |
 | 52916 | Radinfra, Verkehrszeichen | aktiv | 14.09.2026 |
 | 53882 | Radinfra, Markierungen | aktiv | 14.09.2026 |
-| 52985 | Tempo 30 an Schulen | aktiv | 17.08.2025 |
+| 52985 | Tempo 30 an Schulen | aktiv, archiviert | 17.08.2025 |
 | 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
 | 54768 | Zugangsbeschränkungen | aktiv (1.157 Skipped, keine Created) | 10.04.2026 |
 | — | Fußgängerüberwege, Markierungen; rad_frei | keine Challenge | — |
@@ -94,7 +94,9 @@ Cycleway-Kampagnen gebracht (#12). pedestrian_crossing: neue Runde mit 183
 Aufgaben, seit 18.10. in 53589. access_restrictions: 2.044 neue Aufgaben
 (Mapillary 14.10., OSM 17.10.2026) für 54768; die übersprungenen Aufgaben dort
 blockieren und bleiben unangetastet (Rebuild ohne „remove unmatched“), Parkplätze
-mit `access=private` zählen wie bisher als gemappt.
+mit `access=private` zählen wie bisher als gemappt. schools_tempo30 ebenso
+umgestellt: 982 Aufgaben für 52985, die die 405 offenen der Runde 2025 ersetzen
+(Rebuild mit „remove unmatched“).
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 
@@ -200,9 +202,10 @@ An 600 Bremer Radwegzeichen war das in 84 % nicht das neueste Bild, in 10 %
 lag über ein Jahr dazwischen (Messung in `cw_campaign.newest_image_ids`).
 Zusätzlich schluckt `except Exception: return None` jeden Fehler still.
 
-- `schools_tempo30_campaign/1_merge_…` auf `cw.newest_image_ids` umstellen —
-  die Challenge 52985 ist öffentlich.
-- Derselbe Code steckt in rad_frei (access_restrictions ist seit 18.10.
+- ✅ 18.10.: schools_tempo30 nutzt `campaign.newest_image_ids` (#12). Dabei fiel
+  auf, dass die Runde 2025 Bild- und Erkennungs-ID vertauscht hatte: die
+  Aufgaben in 52985 hießen nach dem Bild. Die neue Runde ersetzt sie.
+- Derselbe Code steckt noch in rad_frei (access_restrictions ist seit 18.10.
   umgestellt). Ob sich das lohnt, entscheidet #6.
 
 Am 17.10. zurückgestellt: Die übrigen Kampagnen werden später umgestellt, dann
@@ -251,7 +254,8 @@ wird.
   schwankte sie mit der Reihenfolge der API.
 - ✅ 18.10.: access_restrictions umgestellt (`ar_campaign.py`); die
   cosmo-Variante ist weg, der Auszug kommt aus `0_prepare_osm_network`.
-- Offen: schools_tempo30, rad_frei, pedestrian_crossing_marking. Erst danach fallen SDK, fiona, folium und
+- ✅ 18.10.: schools_tempo30 umgestellt (`t30_campaign.py`), damit auch #2.
+- Offen: rad_frei, pedestrian_crossing_marking. Erst danach fallen SDK, fiona, folium und
   osm2geojson aus `pyproject.toml` (#9).
 
 ---
