@@ -577,6 +577,117 @@ def drop_near_existing_tasks(signs, existing, radius_m=30.0, metric_crs=METRISCH
     return behalten.reset_index(drop=True)
 
 
+MAPROULETTE_API = "https://maproulette.org/api/v2/"
+
+# MapRoulette's challenge states. Uploads are refused while it builds or deletes tasks.
+CHALLENGE_STATUS = {
+    0: "NA",
+    1: "BUILDING",
+    2: "FAILED",
+    3: "READY",
+    4: "PARTIALLY_LOADED",
+    5: "FINISHED",
+    6: "DELETING_TASKS",
+}
+
+
+def challenge_task_names(challenge_id, api_key):
+    """Every task of a challenge as {name: status}, whatever its status.
+
+    The name is the top-level `id` of the feature a task was built from - for
+    these campaigns the Mapillary id of the detection.
+    """
+    response = requests.get(
+        f"{MAPROULETTE_API}challenge/view/{challenge_id}", headers={"apiKey": api_key}, timeout=120
+    )
+    response.raise_for_status()
+    return {str(f["properties"]["mr_taskName"]): f["properties"]["mr_taskStatus"] for f in response.json()["features"]}
+
+
+def drop_known_task_names(tasks, names, verbose=True):
+    """Drop the rows whose id is already the name of a task in the challenge.
+
+    MapRoulette takes a feature with a known name as an update of that task, in
+    place, instead of opening a new one. A detection whose task was closed as
+    Fixed would come back as that closed task - that is, not at all.
+    """
+    bekannt = tasks["id"].astype(str).isin(list(names))
+    if verbose:
+        print(f"schon als Aufgabe in der Challenge (gleicher Name): {int(bekannt.sum())}")
+    return tasks[~bekannt].reset_index(drop=True)
+
+
+def _challenge_status(challenge_id, headers):
+    response = requests.get(f"{MAPROULETTE_API}challenge/{challenge_id}", headers=headers, timeout=60)
+    response.raise_for_status()
+    return response.json().get("status")
+
+
+def upload_tasks(challenge_id, collection, api_key, data_origin_date=None, verbose=True):
+    """Add the tasks of `collection` to a MapRoulette challenge, then check they arrived.
+
+    Replaces committing a GeoJSON, pushing it and "Rebuild tasks" from its URL on
+    GitHub. Uses addFileTasks with removeUnmatched=false: the tasks already in the
+    challenge stay as they are, open ones included.
+
+    Refuses a challenge that is building or deleting tasks, and names the
+    challenge already has (see drop_known_task_names). MapRoulette answers 204
+    even when the import failed inside, so afterwards the challenge status and
+    every uploaded name are checked; a gap raises.
+
+    `data_origin_date` (YYYY-MM-DD) is the date of the data, shown in MapRoulette.
+    Returns {name: status} of all tasks in the challenge after the upload.
+    """
+    headers = {"apiKey": api_key}
+    namen = [str(f["id"]) for f in collection["features"]]
+    if len(set(namen)) != len(namen):
+        raise ValueError("doppelte Namen in den Aufgaben - MapRoulette legte nur eine davon an")
+    if not namen:
+        if verbose:
+            print("keine Aufgaben - nichts hochgeladen")
+        return challenge_task_names(challenge_id, api_key)
+
+    status = _challenge_status(challenge_id, headers)
+    if status in (1, 6):
+        raise RuntimeError(f"Challenge {challenge_id} ist {CHALLENGE_STATUS[status]} - Upload abgelehnt")
+
+    doppelt = sorted(set(namen) & challenge_task_names(challenge_id, api_key).keys())
+    if doppelt:
+        raise ValueError(
+            f"{len(doppelt)} Namen gibt es in Challenge {challenge_id} schon (z. B. {doppelt[:3]}) "
+            "- vorher drop_known_task_names"
+        )
+
+    params = {"lineByLine": "false", "removeUnmatched": "false"}
+    if data_origin_date:
+        params["dataOriginDate"] = data_origin_date
+    datei = json.dumps(collection, ensure_ascii=False).encode("utf-8")
+    response = requests.put(
+        f"{MAPROULETTE_API}challenge/{challenge_id}/addFileTasks",
+        params=params,
+        headers=headers,
+        # The file must come as the multipart field "json", with a file name.
+        files={"json": ("tasks.geojson", datei, "application/json")},
+        timeout=600,
+    )
+    response.raise_for_status()
+
+    status = _challenge_status(challenge_id, headers)
+    nachher = challenge_task_names(challenge_id, api_key)
+    fehlend = [name for name in namen if name not in nachher]
+    if status in (2, 4) or fehlend:
+        raise RuntimeError(
+            f"Upload nach Challenge {challenge_id} unvollständig: Status {CHALLENGE_STATUS.get(status, status)}, "
+            f"{len(fehlend)} von {len(namen)} Aufgaben fehlen"
+        )
+    if verbose:
+        print(
+            f"{len(namen)} Aufgaben hochgeladen nach Challenge {challenge_id}, "
+            f"Status jetzt {CHALLENGE_STATUS.get(status, status)}"
+        )
+    return nachher
+
+
 # A hard line break in Markdown is two spaces at the end of the line. Kept as a
 # constant instead of literal spaces: any editor that trims trailing whitespace
 # removes them silently, and the note then runs on in MapRoulette from the link

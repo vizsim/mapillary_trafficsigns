@@ -4,12 +4,13 @@
 
 Finds pedestrian-crossing signs (DE:350) detected by Mapillary where OpenStreetMap has no
 `highway=crossing` within 50 m, and turns them into tasks for MapRoulette. Built like the
-`maproulette_*` pipeline of the [cycleway campaigns](../cycleway_complete_campaign/README.md);
-there is no weekly export here.
+`maproulette_*` pipeline of the [cycleway campaigns](../cycleway_complete_campaign/README.md).
+Uploading the tasks through MapRoulette's API is built in, but MapRoulette does not accept it
+yet — see [below](#uploading-through-the-api). There is no weekly export here.
 
 | | |
 | --- | --- |
-| **Produces** | tasks for MapRoulette challenge 53589 (completed in 2025) |
+| **Produces** | tasks for MapRoulette challenge 53589 |
 | **Triggered by** | a human, when a new round is due |
 | **Runs in** | the repo's uv env (`uv sync` in the repo root), locally or on the server |
 | **Needs** | the `osmium` CLI, a MapRoulette key, a Mapillary token |
@@ -28,14 +29,16 @@ what is specific to this one — the sign, the distances, the task text — in
     →  ../utils/processed_osm_files/processed_crossings_germany_<date>.parquet
 
 maproulette_tasks.ipynb
-    →  maproulette_tasks_missing-ped-crossing.geojson
+    →  maproulette_tasks_missing-ped-crossing.geojson   (MapRoulette fetches it from GitHub)
+    →  MapRoulette challenge 53589                      (API upload, CAMPAIGN_UPLOAD=1 - not yet)
 ```
 
 > **Mind `set_date`.** It appears in both notebooks and has to match. Geofabrik keeps daily
 > extracts for only about 90 days.
 
-The output keeps its name on every run, because MapRoulette needs a stable path. The last
-cell of the notebook compares the new tasks with the file in the repo.
+For now a new round goes as in the cycleway campaigns: run the notebook, commit and push the
+GeoJSON, then "Rebuild tasks" in MapRoulette, which fetches the file from GitHub. The file keeps
+its name, because the challenge's source URL points to it.
 
 ## Selection
 
@@ -48,8 +51,23 @@ cell of the notebook compares the new tasks with the file in the repo.
 | No `highway=crossing` within | 50 m (`pc.SUCHRADIUS_M`) |
 | Signs that become one task | up to 100 m apart (`pc.ZUSAMMENFASSEN_M`); the one seen last stays |
 | Existing tasks that block | all but Fixed, Created and Skipped, within 50 m |
+| Task names the challenge already has | dropped, whatever their status — MapRoulette would update that task in place |
 
-Run on the data of 14.10.2026, this gave 190 tasks.
+Run on the data of 14.10.2026, this gave 187 tasks.
+
+## Uploading through the API
+
+`campaign.upload_tasks` adds the new tasks to the challenge and leaves the existing ones as they
+are, open ones included — no commit, no push, no "Rebuild tasks". MapRoulette answers with success
+even when the import fails inside, so the function checks the challenge afterwards and raises if
+a task is missing. The notebook calls it only with `CAMPAIGN_UPLOAD=1`.
+
+It does not work yet: since maproulette-backend v4.11.0 (October 2026) MapRoulette refuses API
+keys, and their announced replacement, personal access tokens, does not exist yet
+([maproulette-backend#1288](https://github.com/maproulette/maproulette-backend/issues/1288)).
+Once it does, only the header in `upload_tasks` changes. Hosting the file somewhere else than
+GitHub is no way around it: the web UI locks a challenge's source URL as soon as the challenge
+has tasks.
 
 ## What changed from the 2025 rounds
 
@@ -71,16 +89,17 @@ signs, before and after grouping. The differences:
 
 ## Running it unattended
 
-Both notebooks run unchanged under `jupyter nbconvert --execute`. A run on the server must
-not touch tracked files — the deploy step refuses to update a server with local changes — so
-it sets these instead:
+Both notebooks run unchanged under `jupyter nbconvert --execute` and take their settings from
+the environment, so a run on the server needs no edit to them. The task notebook still writes
+the tracked GeoJSON, though, and the deploy step stops updating a server with local changes —
+so running it there only makes sense once the upload works.
 
 | Variable | Notebook | Effect |
 | --- | --- | --- |
 | `OSM_EXTRACTS=crossings` | `0_prepare_osm_network` | builds only the crossings, not the 5.8 M cycleway lines |
 | `CAMPAIGN_SYNC=0` | `maproulette_tasks` | reads `output/` as the weekly ts run left it; mirroring would overwrite that run's manifest |
-| `CAMPAIGN_OUTPUT_DIR=<dir>` | `maproulette_tasks` | writes the tasks there instead of over the tracked file |
-| `MAPILLARY_ACCESS_TOKEN`, `MAPROULETTE_API_KEY` | `maproulette_tasks` | credentials, instead of `../utils/config_mapillary_privat.json` |
+| `CAMPAIGN_UPLOAD=1` | `maproulette_tasks` | uploads the tasks to the challenge (not yet, see above); without it, the notebook only says how many it would upload |
+| `MAPILLARY_ACCESS_TOKEN`, `MAPROULETTE_API_KEY` | `maproulette_tasks` | credentials, instead of `../utils/config_mapillary_privat.json`; the MapRoulette key must belong to an admin of the challenge |
 
 Measured locally: the crossings extract takes 19 s and 0.5 GB RAM (plus the 4.8 GB download),
 the task notebook 23 s and 1.4 GB. The worker image does not contain `osmium` yet.

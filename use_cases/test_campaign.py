@@ -602,3 +602,113 @@ def test_read_geojson_vor_dem_ueberschreiben(tmp_path):
 def test_compare_task_sets_ohne_vorherigen_stand(tmp_path):
     with pytest.raises(FileNotFoundError):
         campaign.compare_task_sets(tmp_path / "gibt_es_nicht.geojson", {"features": []})
+
+
+# --- Upload to MapRoulette ----------------------------------------------------
+
+
+class _FakeMapRoulette:
+    """The three endpoints upload_tasks uses, without network."""
+
+    def __init__(self, tasks=None, status=5, verliert=()):
+        self.tasks = dict(tasks or {})  # name -> status
+        self.status = status
+        self.verliert = set(verliert)  # names the import drops silently, as MapRoulette can
+        self.uploads = []
+
+    def get(self, url, headers=None, timeout=None):
+        assert headers == {"apiKey": "key"}
+        if "/challenge/view/" in url:
+            features = [{"properties": {"mr_taskName": n, "mr_taskStatus": s}} for n, s in self.tasks.items()]
+            return _Json({"type": "FeatureCollection", "features": features})
+        return _Json({"id": 53589, "status": self.status})
+
+    def put(self, url, params=None, headers=None, files=None, timeout=None):
+        assert url.endswith("/challenge/53589/addFileTasks")
+        self.uploads.append({"params": params, "files": files})
+        dateiname, inhalt, _ = files["json"]
+        assert dateiname  # MapRoulette ignores a file part without a name
+        for feature in json.loads(inhalt)["features"]:
+            if feature["id"] not in self.verliert:
+                self.tasks[feature["id"]] = "Created"
+        self.status = 3
+        return _Json(None, status_code=204)
+
+
+class _Json:
+    def __init__(self, payload, status_code=200):
+        self.payload = payload
+        self.status_code = status_code
+
+    def raise_for_status(self):
+        pass
+
+    def json(self):
+        return self.payload
+
+
+@pytest.fixture
+def fake_maproulette(monkeypatch):
+    def install(**kwargs):
+        api = _FakeMapRoulette(**kwargs)
+        monkeypatch.setattr(campaign.requests, "get", api.get)
+        monkeypatch.setattr(campaign.requests, "put", api.put)
+        return api
+
+    return install
+
+
+def _collection(*ids):
+    return {"type": "FeatureCollection", "features": [{"type": "Feature", "id": i, "properties": {}} for i in ids]}
+
+
+def test_upload_tasks_adds_the_tasks_and_leaves_the_others(fake_maproulette):
+    api = fake_maproulette(tasks={"1": "Fixed"})
+
+    nachher = campaign.upload_tasks(53589, _collection("2", "3"), "key", data_origin_date="2026-10-14", verbose=False)
+
+    assert nachher == {"1": "Fixed", "2": "Created", "3": "Created"}
+    # removeUnmatched=false: open tasks of the challenge must survive an upload.
+    assert api.uploads[0]["params"] == {
+        "lineByLine": "false",
+        "removeUnmatched": "false",
+        "dataOriginDate": "2026-10-14",
+    }
+
+
+def test_upload_tasks_refuses_names_the_challenge_has(fake_maproulette):
+    """The task would be updated in place and stay closed."""
+    api = fake_maproulette(tasks={"1": "Fixed"})
+
+    with pytest.raises(ValueError, match="gibt es in Challenge 53589 schon"):
+        campaign.upload_tasks(53589, _collection("1", "2"), "key", verbose=False)
+    assert api.uploads == []
+
+
+def test_upload_tasks_notices_tasks_lost_despite_204(fake_maproulette):
+    fake_maproulette(verliert={"3"})
+
+    with pytest.raises(RuntimeError, match="1 von 2 Aufgaben fehlen"):
+        campaign.upload_tasks(53589, _collection("2", "3"), "key", verbose=False)
+
+
+def test_upload_tasks_refuses_a_busy_challenge(fake_maproulette):
+    api = fake_maproulette(status=1)
+
+    with pytest.raises(RuntimeError, match="BUILDING"):
+        campaign.upload_tasks(53589, _collection("2"), "key", verbose=False)
+    assert api.uploads == []
+
+
+def test_upload_tasks_without_tasks_uploads_nothing(fake_maproulette):
+    api = fake_maproulette(tasks={"1": "Fixed"})
+    assert campaign.upload_tasks(53589, _collection(), "key", verbose=False) == {"1": "Fixed"}
+    assert api.uploads == []
+
+
+def test_drop_known_task_names():
+    tasks = gpd.GeoDataFrame(
+        {"id": [1, 2, 3], "geometry": [Point(13, 52)] * 3}, crs="EPSG:4326", index=[10, 20, 30]
+    )
+    uebrig = campaign.drop_known_task_names(tasks, {"2": "Fixed"}, verbose=False)
+    assert list(uebrig["id"]) == [1, 3]
