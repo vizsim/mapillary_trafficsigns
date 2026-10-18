@@ -21,7 +21,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 3 | Fehlschläge melden | 1 h | hoch | ✅ 17.10. |
 | 4 | Kopfzellen der `radinfra_1_export` korrigieren | 15 min | mittel | ✅ 17.10. |
 | 5 | Deploy-Weg festlegen | 30 min | mittel | ✅ 17.10. |
-| 6 | Kampagnen-Inventur | 30 min | mittel | P2 |
+| 6 | Kampagnen-Inventur | 30 min | mittel | ✅ 18.10., Entscheidungen offen |
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
 | 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | später |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | ✅ 17.10. |
@@ -70,33 +70,45 @@ die History muss dafür nicht neu geschrieben werden.
 
 ### 6. Kampagnen-Inventur
 
-**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
+**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2 — Inventur ✅ 18.10., drei Entscheidungen offen
 
-Welche Kampagnen leben noch? rad_frei und pedestrian_crossing_marking stehen
-in der README als „work in progress", `analysis/analize_osm_ts.ipynb` ist ein
-Einzelstück. access_restrictions steht seit 18.10. in der README. Tote Kampagnen
-löschen (git behält sie), lebende in die README. Legt fest, wie viel Arbeit
-#2 und #12 wirklich sind.
+Stand am 18.10.2026, laut MapRoulette (Projekte 60811 und 61738, beide vizsim/bicyclett):
 
-Stand der Challenges laut MapRoulette am 17.10.:
+| Ordner | Challenge | Status | offen | Daten | Code |
+| --- | --- | --- | --: | --- | --- |
+| `cycleway_complete_campaign` | 52916 | aktiv | 242 | Mapillary 14.10., OSM 17.10.2026 | umgestellt; dazu wöchentlicher radinfra-Export |
+| `cycleway_complete_marking_campaign` | 53882 | aktiv | 617 | Mapillary 15.10., OSM 17.10.2026 | umgestellt; dazu Export |
+| `pedestrian_crossing_campaign` | 53589 | aktiv | 183 | 14.10. / 17.10.2026 | umgestellt |
+| `access_restrictions_campaign` | 54768 | aktiv | 2.044 + 1.157 Skipped | 14.10. / 17.10.2026 | umgestellt |
+| `schools_tempo30_campaign` | 52985 | **archiviert** | 982 | 14.10. / 17.10.2026 | umgestellt |
+| `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert | 61 | 11/2025 | alt |
+| `rad_frei_campaign` | keine (53361, im Code verlinkt, ist gelöscht) | — | — | 10/2025 | alt |
+| `analysis/analize_osm_ts.ipynb` | — | — | — | 12/2025 | Einzelstück |
 
-| Challenge | Kampagne | Status | Daten vom |
-| --- | --- | --- | --- |
-| 52916 | Radinfra, Verkehrszeichen | aktiv | 14.09.2026 |
-| 53882 | Radinfra, Markierungen | aktiv | 14.09.2026 |
-| 52985 | Tempo 30 an Schulen | aktiv, archiviert | 17.08.2025 |
-| 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
-| 54768 | Zugangsbeschränkungen | aktiv (1.157 Skipped, keine Created) | 10.04.2026 |
-| — | Fußgängerüberwege, Markierungen; rad_frei | keine Challenge | — |
+Was die drei alten sind:
 
-Am 18.10. sind pedestrian_crossing und access_restrictions auf den Stand der
-Cycleway-Kampagnen gebracht (#12). pedestrian_crossing: neue Runde mit 183
-Aufgaben, seit 18.10. in 53589. access_restrictions: 2.044 neue Aufgaben
-(Mapillary 14.10., OSM 17.10.2026) für 54768; die übersprungenen Aufgaben dort
-blockieren und bleiben unangetastet (Rebuild ohne „remove unmatched“), Parkplätze
-mit `access=private` zählen wie bisher als gemappt. schools_tempo30 ebenso
-umgestellt: 982 Aufgaben für 52985, die die 405 offenen der Runde 2025 ersetzen
-(Rebuild mit „remove unmatched“).
+- **pedestrian_crossing_marking** — Zebrastreifen-Markierungen ohne `highway=crossing` in
+  50 m. Fachlich die Zwillingskampagne von pedestrian_crossing: gleicher Abgleich, gleiches
+  Zusammenfassen, nur Map-Feature-Punkte statt Verkehrszeichen. Hat noch die Bildsuche über
+  Blickwinkel, eine eigene Kopie des Überweg-Auszugs von 11/2025 und `.explore()` (folium).
+  Umstellen wäre wenig Arbeit: `pc_campaign.py` und der Überweg-Auszug passen schon.
+- **rad_frei** — Zusatzzeichen DE:1022-10 (Radfahrer frei) und 1000-33 ohne freigegebenen
+  Radverkehr (`bicycle=yes|designated`, `oneway:bicycle=no`, `share_busway`, …) in 30 m. Keine
+  Challenge mehr; Code mit `images[-1]`, `../../config.json` und dem Glob über alle Parquets.
+  Die Zeichen exportiert der wöchentliche radinfra-Lauf schon.
+- **analysis/analize_osm_ts.ipynb** — Overpass-Abfrage: OSM-Knoten mit `traffic_sign~DE:240`
+  und `mapillary=*` in Brandenburg, dazu das Aufnahmedatum des verlinkten Bilds. Einmalige
+  Auswertung, liest `../config.json` und als einziges `osm2geojson`.
+
+Offen:
+
+- **52985 entarchivieren.** Die 982 Aufgaben der neuen Runde stehen in einer archivierten
+  Challenge — für Mapper unsichtbar.
+- Je Altlast: umstellen oder löschen (git behält sie).
+- Danach räumt #9 `pyproject.toml` auf: `fiona` nutzt schon niemand mehr; `mapillary` (das
+  alte SDK, bringt scipy und turfpy mit) hängt nur an rad_frei und pedestrian_crossing_marking,
+  `folium` nur an pedestrian_crossing_marking, `osm2geojson` nur an der Analyse. Das ändert
+  das Worker-Image — also nicht direkt vor einem Cron-Lauf.
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 
