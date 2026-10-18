@@ -73,8 +73,8 @@ die History muss dafür nicht neu geschrieben werden.
 **Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
 
 Welche Kampagnen leben noch? rad_frei und pedestrian_crossing_marking stehen
-in der README als „work in progress", access_restrictions steht gar nicht
-drin, `analysis/analize_osm_ts.ipynb` ist ein Einzelstück. Tote Kampagnen
+in der README als „work in progress", `analysis/analize_osm_ts.ipynb` ist ein
+Einzelstück. access_restrictions steht seit 18.10. in der README. Tote Kampagnen
 löschen (git behält sie), lebende in die README. Legt fest, wie viel Arbeit
 #2 und #12 wirklich sind.
 
@@ -86,11 +86,14 @@ Stand der Challenges laut MapRoulette am 17.10.:
 | 53882 | Radinfra, Markierungen | aktiv | 14.09.2026 |
 | 52985 | Tempo 30 an Schulen | aktiv | 17.08.2025 |
 | 53589 | Fußgängerüberwege, Verkehrszeichen | **abgeschlossen** | 14.11.2025 |
-| — | Fußgängerüberwege, Markierungen; rad_frei; access_restrictions | keine Challenge | — |
+| 54768 | Zugangsbeschränkungen | aktiv (1.157 Skipped, keine Created) | 10.04.2026 |
+| — | Fußgängerüberwege, Markierungen; rad_frei | keine Challenge | — |
 
-Am 18.10. ist pedestrian_crossing auf den Stand der Cycleway-Kampagnen gebracht
-(#12). Die neue Runde hat 183 Aufgaben (Mapillary 14.10., OSM 17.10.2026); die
-Challenge 53589 muss dafür entarchiviert werden.
+Am 18.10. sind pedestrian_crossing und access_restrictions auf den Stand der
+Cycleway-Kampagnen gebracht (#12). pedestrian_crossing: neue Runde mit 183
+Aufgaben, seit 18.10. in 53589. access_restrictions: 3.199 Aufgaben (Mapillary
+14.10., OSM 17.10.2026), noch nicht in 54768; offen ist dort, ob Parkplätze mit
+`access=private` als gemappt zählen (README der Kampagne).
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 
@@ -198,8 +201,8 @@ Zusätzlich schluckt `except Exception: return None` jeden Fehler still.
 
 - `schools_tempo30_campaign/1_merge_…` auf `cw.newest_image_ids` umstellen —
   die Challenge 52985 ist öffentlich.
-- Derselbe Code steckt in access_restrictions und rad_frei. Ob sich das lohnt,
-  entscheidet #6.
+- Derselbe Code steckt in rad_frei (access_restrictions ist seit 18.10.
+  umgestellt). Ob sich das lohnt, entscheidet #6.
 
 Am 17.10. zurückgestellt: Die übrigen Kampagnen werden später umgestellt, dann
 zusammen mit #12. Die Tempo-30-Daten sind ohnehin von 08/2025 — die nächste
@@ -214,7 +217,9 @@ in beiden `radinfra_2_pmtiles` und in access_restrictions. Die beiden
 tippecanoe-Fixes (atomares Schreiben, `--no-tile-size-limit`) mussten
 schon je zweimal eingebaut werden — genau das Muster, durch das am 26.08.
 DE-NW verloren ging. Die Kopie in access_restrictions hat keinen der beiden
-Fixes bekommen. Die zwei Kopien der Cycleway-Kampagnen sind identisch.
+Fixes bekommen — und seit 18.10. auch keine Eingabe mehr: kein Notebook
+schreibt dort `ts_output/`. Löschen oder einen Export dafür bauen. Die zwei
+Kopien der Cycleway-Kampagnen sind identisch.
 
 Am 17.10. zurückgestellt, zusammen mit #12: erst wenn die übrigen Kampagnen
 umgestellt werden.
@@ -245,8 +250,9 @@ wird.
   `campaign.py`: `dedupe_nearby` (Zeichen derselben Stelle zusammenfassen) und
   eine feste Wahl zwischen gleich alten Bildern in `newest_image_ids` — vorher
   schwankte sie mit der Reihenfolge der API.
-- Offen: schools_tempo30, rad_frei, access_restrictions,
-  pedestrian_crossing_marking. Erst danach fallen SDK, fiona, folium und
+- ✅ 18.10.: access_restrictions umgestellt (`ar_campaign.py`); die
+  cosmo-Variante ist weg, der Auszug kommt aus `0_prepare_osm_network`.
+- Offen: schools_tempo30, rad_frei, pedestrian_crossing_marking. Erst danach fallen SDK, fiona, folium und
   osm2geojson aus `pyproject.toml` (#9).
 
 ---
