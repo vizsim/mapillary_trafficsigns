@@ -141,7 +141,7 @@ All use-cases follow the same general workflow:
 
 - Targets **speed-limit signs** (`DE:274`, 30–130 km/h) on sections of main road (`trunk` to `tertiary`) without `maxspeed` in OSM, prioritised by the **accidents with injuries** on each section (Unfallatlas 2020–2025, via [data.vizsim.de/unfallorte](https://data.vizsim.de/unfallorte/)).
 - **Code Repository:** [maxspeed_accidents_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/maxspeed_accidents_campaign)
-- **MapRoulette Challenge:** not created yet.
+- **MapRoulette Challenge:** [Tempolimits an Hauptstraßen mit vielen Unfällen ergänzen (Deutschland)](https://maproulette.org/browse/challenges/57279) — changeset hashtag: `#missing-maxspeed_mapillary-signs`
 
 ### 🖌️ Road Marking-based Use-Cases
 

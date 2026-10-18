@@ -9,7 +9,7 @@ accidents in 2020–2025 into tasks for MapRoulette. From 10 accidents a task ha
 
 | | |
 | --- | --- |
-| **Produces** | tasks for a MapRoulette challenge that does not exist yet |
+| **Produces** | tasks for MapRoulette challenge [57279](https://maproulette.org/browse/challenges/57279) |
 | **Triggered by** | a human, when a new round is due |
 | **Runs in** | the repo's uv env (`uv sync` in the repo root); about 2 minutes and 7.5 GB RAM |
 | **Needs** | the `osmium` CLI, a MapRoulette key, a Mapillary token |
@@ -91,20 +91,23 @@ seen only once.
 Long sections are tasks too: 90 % are up to 4.7 km, the longest is the L 267 with 11.5 km.
 The task text asks to fill in the whole section, also the parts without a sign.
 
-## Setting up the challenge
+## The challenge
 
-1. Run `../0_prepare_osm_network.ipynb` with `OSM_EXTRACTS=roads` (or all), then this notebook.
-2. Commit and push the GeoJSON. Create the challenge in MapRoulette with the raw URL of the file
-   as its source: `https://raw.githubusercontent.com/vizsim/mapillary_trafficsigns/main/use_cases/maxspeed_accidents_campaign/maproulette_tasks_missing-maxspeed_accidents.geojson`
-3. Description, instruction template (`{{instruction}}`) and the attribution of the accident data
-   are at the end of the notebook.
-4. Priority rules: High when the property `priority` is `0`, Medium when it is `1`.
-5. Put the challenge id into `challenge_id` in the notebook, so that the next round does not
-   create closed tasks again.
+[57279](https://maproulette.org/browse/challenges/57279), created on 18.10.2026 in project 60811.
+Its settings, as the other challenges have them:
+
+| Field | Value |
+| --- | --- |
+| Source | GeoJSON by URL: `https://raw.githubusercontent.com/vizsim/mapillary_trafficsigns/refs/heads/main/use_cases/maxspeed_accidents_campaign/maproulette_tasks_missing-maxspeed_accidents.geojson` |
+| Description | the block at the end of the notebook |
+| Detailed instructions for mappers | `{{instruction}}` and nothing else — inside a code fence MapRoulette shows the task text as source instead of formatted text, as it did at first |
+| Priority rules | High: `priority` == 0, Medium: `priority` == 1 (integer) |
+| Changeset comment | `#missing-maxspeed_mapillary-signs #maproulette` |
 
 A new round: run the notebook, commit and push the GeoJSON, then "Rebuild tasks". Uploading
 through the API is built in, but waits for MapRoulette — see the
 [pedestrian-crossing README](../pedestrian_crossing_campaign/README.md#uploading-through-the-api).
+To rebuild the extract first, run `../0_prepare_osm_network.ipynb` with `OSM_EXTRACTS=roads`.
 
 ## Accident data
 
