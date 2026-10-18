@@ -604,17 +604,28 @@ def challenge_task_names(challenge_id, api_key):
     return {str(f["properties"]["mr_taskName"]): f["properties"]["mr_taskStatus"] for f in response.json()["features"]}
 
 
+# Task states in which a task is still open to mappers - the ones MapRoulette's
+# removeUnmatched deletes before a rebuild.
+OFFENE_STATUS = ("Created", "Skipped")
+
+
+def closed_task_names(names):
+    """The names of the closed tasks in {name: status} from challenge_task_names."""
+    return {name for name, status in names.items() if status not in OFFENE_STATUS}
+
+
 def drop_known_task_names(tasks, names, verbose=True):
-    """Drop the rows whose id is already the name of a task in the challenge.
+    """Drop the rows whose id is the name of a closed task in the challenge.
 
     MapRoulette takes a feature with a known name as an update of that task, in
-    place, instead of opening a new one. A detection whose task was closed as
-    Fixed would come back as that closed task - that is, not at all.
+    place. For an open task that is wanted - it gets the newer image. A closed
+    one (Fixed, false positive, ...) stays closed, so the detection would not
+    come back at all. `names` is {name: status} from challenge_task_names.
     """
-    bekannt = tasks["id"].astype(str).isin(list(names))
+    geschlossen = tasks["id"].astype(str).isin(closed_task_names(names))
     if verbose:
-        print(f"schon als Aufgabe in der Challenge (gleicher Name): {int(bekannt.sum())}")
-    return tasks[~bekannt].reset_index(drop=True)
+        print(f"Name einer erledigten Aufgabe: {int(geschlossen.sum())}")
+    return tasks[~geschlossen].reset_index(drop=True)
 
 
 def _challenge_status(challenge_id, headers):
@@ -630,10 +641,10 @@ def upload_tasks(challenge_id, collection, api_key, data_origin_date=None, verbo
     GitHub. Uses addFileTasks with removeUnmatched=false: the tasks already in the
     challenge stay as they are, open ones included.
 
-    Refuses a challenge that is building or deleting tasks, and names the
-    challenge already has (see drop_known_task_names). MapRoulette answers 204
-    even when the import failed inside, so afterwards the challenge status and
-    every uploaded name are checked; a gap raises.
+    Refuses a challenge that is building or deleting tasks, and names of closed
+    tasks (see drop_known_task_names); a name of an open task updates that task.
+    MapRoulette answers 204 even when the import failed inside, so afterwards
+    the challenge status and every uploaded name are checked; a gap raises.
 
     `data_origin_date` (YYYY-MM-DD) is the date of the data, shown in MapRoulette.
     Returns {name: status} of all tasks in the challenge after the upload.
@@ -651,10 +662,10 @@ def upload_tasks(challenge_id, collection, api_key, data_origin_date=None, verbo
     if status in (1, 6):
         raise RuntimeError(f"Challenge {challenge_id} ist {CHALLENGE_STATUS[status]} - Upload abgelehnt")
 
-    doppelt = sorted(set(namen) & challenge_task_names(challenge_id, api_key).keys())
+    doppelt = sorted(set(namen) & closed_task_names(challenge_task_names(challenge_id, api_key)))
     if doppelt:
         raise ValueError(
-            f"{len(doppelt)} Namen gibt es in Challenge {challenge_id} schon (z. B. {doppelt[:3]}) "
+            f"{len(doppelt)} Namen erledigter Aufgaben in Challenge {challenge_id} (z. B. {doppelt[:3]}) "
             "- vorher drop_known_task_names"
         )
 

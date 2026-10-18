@@ -51,7 +51,7 @@ its name, because the challenge's source URL points to it.
 | No `highway=crossing` within | 50 m (`pc.SUCHRADIUS_M`) |
 | Signs that become one task | up to 100 m apart (`pc.ZUSAMMENFASSEN_M`); the one seen last stays |
 | Existing tasks that block | all but Fixed, Created and Skipped, within 50 m |
-| Task names the challenge already has | dropped, whatever their status — MapRoulette would update that task in place |
+| Names of closed tasks in the challenge | dropped — MapRoulette would update that task in place, and it would stay closed; open tasks of the same name get refreshed |
 
 On the Mapillary data of 14.10.2026 and the OSM extract of 17.10.2026, this gave 183 tasks.
 

@@ -680,9 +680,18 @@ def test_upload_tasks_refuses_names_the_challenge_has(fake_maproulette):
     """The task would be updated in place and stay closed."""
     api = fake_maproulette(tasks={"1": "Fixed"})
 
-    with pytest.raises(ValueError, match="gibt es in Challenge 53589 schon"):
+    with pytest.raises(ValueError, match="Namen erledigter Aufgaben in Challenge 53589"):
         campaign.upload_tasks(53589, _collection("1", "2"), "key", verbose=False)
     assert api.uploads == []
+
+
+def test_upload_tasks_updates_open_tasks_in_place(fake_maproulette):
+    """An open task of the same name gets the newer properties - wanted, not refused."""
+    api = fake_maproulette(tasks={"1": "Created", "2": "Skipped"})
+
+    nachher = campaign.upload_tasks(53589, _collection("1", "2", "3"), "key", verbose=False)
+    assert nachher == {"1": "Created", "2": "Created", "3": "Created"}
+    assert len(api.uploads) == 1
 
 
 def test_upload_tasks_notices_tasks_lost_despite_204(fake_maproulette):
@@ -710,5 +719,7 @@ def test_drop_known_task_names():
     tasks = gpd.GeoDataFrame(
         {"id": [1, 2, 3], "geometry": [Point(13, 52)] * 3}, crs="EPSG:4326", index=[10, 20, 30]
     )
-    uebrig = campaign.drop_known_task_names(tasks, {"2": "Fixed"}, verbose=False)
+    names = {"2": "Fixed", "3": "Created", "9": "Not_An_Issue"}
+    uebrig = campaign.drop_known_task_names(tasks, names, verbose=False)
+    # 2 is closed and would stay closed; 3 is open and gets updated in place.
     assert list(uebrig["id"]) == [1, 3]
