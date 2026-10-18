@@ -388,6 +388,14 @@ def test_newest_image_ids_nimmt_neuestes_bild(fake_graph):
     assert ergebnis.loc["100", "image_captured_at"].year == 2026
 
 
+def test_newest_image_ids_picks_the_same_image_on_a_tie(fake_graph):
+    """Two images of one capture share a timestamp; the API order varies between calls."""
+    gleichzeitig = [{"id": "111", "captured_at": 5}, {"id": "222", "captured_at": 5}]
+    for bilder in (gleichzeitig, gleichzeitig[::-1]):
+        fake_graph({"100": {"id": "100", "images": {"data": bilder}}})
+        assert campaign.newest_image_ids([100], token="x", verbose=False).loc["100", "image_id"] == "222"
+
+
 def test_newest_image_ids_haelt_grosse_ids_als_string(fake_graph):
     """Mapillary-IDs uebersteigen 2**53; als Zahl wuerden sie gerundet."""
     gross = "9007199254740993"  # 2**53 + 1

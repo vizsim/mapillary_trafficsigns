@@ -424,7 +424,9 @@ def newest_image_ids(feature_ids, token, chunk_size=50, workers=8, max_fehlerquo
         bilder = (antworten.get(feature_id) or {}).get("images", {}).get("data", [])
         if not bilder:
             continue
-        neuestes = max(bilder, key=lambda bild: bild["captured_at"])
+        # Images of one capture (e.g. several cameras) share a timestamp, and the API
+        # lists them in varying order. The id breaks the tie, so a rerun links the same image.
+        neuestes = max(bilder, key=lambda bild: (bild["captured_at"], str(bild["id"])))
         # Die ID bleibt ein String: Mapillary-IDs uebersteigen 2**53, als Zahl
         # in einer Spalte mit Luecken wuerde pandas sie zu float64 runden.
         zeilen[feature_id] = (str(neuestes["id"]), neuestes["captured_at"])
