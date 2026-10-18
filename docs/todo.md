@@ -81,7 +81,7 @@ Stand am 18.10.2026, laut MapRoulette (Projekte 60811 und 61738, beide vizsim/bi
 | `pedestrian_crossing_campaign` | 53589 | aktiv | 183 | 14.10. / 17.10.2026 | umgestellt |
 | `access_restrictions_campaign` | 54768 | aktiv | 2.044 + 1.157 Skipped | 14.10. / 17.10.2026 | umgestellt |
 | `schools_tempo30_campaign` | 52985 | **archiviert** | 982 | 14.10. / 17.10.2026 | umgestellt |
-| `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert | 61 | 11/2025 → neue Runde 465 (15.10. / 17.10.2026) | umgestellt 18.10. |
+| `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert — bleibt so | 61 | 11/2025; Datei mit 465 (15.10. / 17.10.2026) | umgestellt 18.10. |
 | `rad_frei_campaign` | keine (53361, im Code verlinkt, ist gelöscht) | — | — | 10/2025 | gelöscht 18.10., Tag `archive/rad_frei` |
 | `analysis/analize_osm_ts.ipynb` | — | — | — | 12/2025 | Einzelstück |
 
@@ -104,8 +104,8 @@ Offen:
 
 - **52985 entarchivieren.** Die 982 Aufgaben der neuen Runde stehen in einer archivierten
   Challenge — für Mapper unsichtbar.
-- pedestrian_crossing_marking ist am 18.10. umgestellt; 53697 muss für die neue Runde
-  entarchiviert und aktiviert werden.
+- pedestrian_crossing_marking ist am 18.10. umgestellt. 53697 bleibt aber archiviert: die
+  Zebrastreifen-Erkennungen liefern zu viele Falsch-Positive (Entscheidung 18.10.).
 - rad_frei ist am 18.10. gelöscht. Der Tag `archive/rad_frei` zeigt auf den letzten Stand;
   zurückholen mit `git checkout archive/rad_frei -- use_cases/rad_frei_campaign`.
 - Offen: das Analyse-Notebook.

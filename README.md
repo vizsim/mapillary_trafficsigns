@@ -150,6 +150,7 @@ All use-cases follow the same general workflow:
 - Uses **Mapillary marking detections** (`marking--discrete--crosswalk-zebra`) to identify zebra crossings with no `highway=crossing` node nearby in OSM.
 - **Code Repository:** [pedestrian_crossing_marking_campaign](https://github.com/vizsim/mapillary_trafficsigns/tree/main/use_cases/pedestrian_crossing_marking_campaign)
 - **MapRoulette Challenge:** [Fehlende Fußgängerüberwege anhand von Mapillary Map Feature Points ergänzen](https://maproulette.org/browse/challenges/53697) — changeset hashtag: `#missing-ped-cross_mapillary-map-feature`
+- **Status:** archived — the zebra detections produce too many false positives for a challenge.
 
 ---
 

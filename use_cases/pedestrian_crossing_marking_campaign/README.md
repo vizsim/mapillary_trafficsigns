@@ -2,6 +2,10 @@
 
 **Last updated:** 2026-10-18
 
+> **Archived.** Challenge 53697 stays archived: the zebra detections of Mapillary produce too
+> many false positives for a challenge. The code is kept up to date with the twin, so a new
+> round is a run of the notebook away if the detections get better.
+
 The twin of [`../pedestrian_crossing_campaign/`](../pedestrian_crossing_campaign/README.md):
 same check, same distances, same module. The difference is what the detections are:
 **zebra crossings painted on the road** (`marking--discrete--crosswalk-zebra`, a Mapillary
@@ -9,7 +13,7 @@ map feature point), not DE:350 signs.
 
 | | |
 | --- | --- |
-| **Produces** | tasks for MapRoulette challenge 53697 |
+| **Produces** | tasks for MapRoulette challenge 53697 (archived) |
 | **Triggered by** | a human, when a new round is due |
 | **Runs in** | the repo's uv env (`uv sync` in the repo root) |
 | **Needs** | the `osmium` CLI, a Mapillary token |
@@ -42,10 +46,10 @@ task, closed tasks block within 50 m — with these settings of its own:
 | First to last sighting | at least 12 months |
 | Task text | `pc.aufgabe_markierung` |
 
-On the Mapillary data of 15.10.2026 and the OSM extract of 17.10.2026 this gave 465 tasks: 39
-open ones of challenge 53697 refreshed, 426 new. 22 open tasks of the 2025 round are no longer
-in the file — "Rebuild tasks" with "remove unmatched" clears them; the challenge has no skipped
-tasks.
+On the Mapillary data of 15.10.2026 and the OSM extract of 17.10.2026 this gave 465 tasks, in
+the file in this folder. They are not in the challenge: it stays archived (see above). Were it
+rebuilt, 39 of its open tasks would be refreshed, 426 added, and "remove unmatched" would clear
+the 22 open ones of the 2025 round that are no longer in the file.
 
 ## What changed from the 2025 round
 
