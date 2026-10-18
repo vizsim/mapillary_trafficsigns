@@ -112,7 +112,7 @@ Stand am 18.10.2026, laut MapRoulette (Projekte 60811 und 61738, beide vizsim/bi
 | `pedestrian_crossing_campaign` | 53589 | aktiv | 183 | 14.10. / 17.10.2026 | umgestellt |
 | `access_restrictions_campaign` | 54768 | aktiv | 2.044 + 1.157 Skipped | 14.10. / 17.10.2026 | umgestellt |
 | `schools_tempo30_campaign` | 52985 | **archiviert** | 982 | 14.10. / 17.10.2026 | umgestellt |
-| `maxspeed_accidents_campaign` | 57279 | angelegt 18.10., noch nicht aktiviert | 390 | 14.10. / 17.10.2026, Unfälle 03.10.2026 | neu 18.10. |
+| `maxspeed_accidents_campaign` | 57279 | aktiv seit 18.10. | 390 | 14.10. / 17.10.2026, Unfälle 03.10.2026 | neu 18.10. |
 | `pedestrian_crossing_marking_campaign` | 53697 | archiviert, deaktiviert — bleibt so | 61 | 11/2025; Datei mit 465 (15.10. / 17.10.2026) | umgestellt 18.10. |
 | `rad_frei_campaign` | keine (53361, im Code verlinkt, ist gelöscht) | — | — | 10/2025 | gelöscht 18.10., Tag `archive/rad_frei` |
 | `analysis/analize_osm_ts.ipynb` | — | — | — | 12/2025 | Einzelstück |
@@ -134,7 +134,6 @@ Was die drei alten sind:
 
 Offen:
 
-- **57279 aktivieren** (maxspeed_accidents, angelegt 18.10.), sobald das Feld für die Mapper-Anleitung nur noch `{{instruction}}` enthält.
 - **52985 entarchivieren.** Die 982 Aufgaben der neuen Runde stehen in einer archivierten
   Challenge — für Mapper unsichtbar.
 - pedestrian_crossing_marking ist am 18.10. umgestellt. 53697 bleibt aber archiviert: die
