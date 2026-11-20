@@ -32,10 +32,13 @@ TIPPECANOE_OPTIONS = (
     "--no-simplification-of-shared-nodes",
     # No dropping, not even of the densest features (-rg, --drop-densest-as-needed).
     "--drop-rate=0",
-    # No 500 KB cap per tile. With --drop-rate=0 tippecanoe has no other way out
-    # when a tile gets too dense: it stops with exit 110 ("could not make tile small
-    # enough"), as in the ts run of 16.06.2026. Lossless; a dense tile gets bigger.
+    # No cap per tile, neither the 500 KB nor the 200,000 features. With
+    # --drop-rate=0 tippecanoe has no other way out when a tile gets too dense: it
+    # stops with exit 110, as in the ts run of 16.06.2026 ("could not make tile
+    # small enough"). Lossless; a dense tile gets bigger. The densest z7 tile of the
+    # signs held 36,925 features in November 2026, up from 30,000 in April.
     "--no-tile-size-limit",
+    "--no-feature-limit",
     "--read-parallel",
 )
 

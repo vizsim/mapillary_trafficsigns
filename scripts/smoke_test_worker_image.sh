@@ -31,6 +31,34 @@ vectortiles.geojson_gz_to_pmtiles(tmp / "in.geojson.gz", tmp / "out.pmtiles")
 assert (tmp / "out.pmtiles").stat().st_size > 0
 EOF
 
+echo "▶️  a z7 tile of 200,100 points, over the 200,000 features that stop tippecanoe with exit 110"
+python3 - "$tmp" <<'EOF'
+import gzip
+import json
+import random
+import sys
+from pathlib import Path
+
+sys.path.insert(0, "use_cases")
+import vectortiles
+
+tmp = Path(sys.argv[1])
+rng = random.Random(17)
+# Inside the z7 tile 7/68/41, away from its edges, one feature per line as GDAL writes.
+with gzip.open(tmp / "dense.geojson.gz", "wt", compresslevel=1) as f:
+    f.write('{"type": "FeatureCollection", "features": [\n')
+    for i in range(200_100):
+        point = [round(rng.uniform(11.4, 13.9), 6), round(rng.uniform(52.6, 54.0), 6)]
+        f.write(json.dumps({"type": "Feature", "properties": {"id": str(i)}, "geometry": {"type": "Point", "coordinates": point}}))
+        f.write(",\n" if i < 200_099 else "\n")
+    f.write("]}\n")
+vectortiles.geojson_gz_to_pmtiles(tmp / "dense.geojson.gz", tmp / "dense.pmtiles")
+EOF
+# Exit 0 is not enough: a tiler could also drop points without a word.
+n="$(tippecanoe-decode -c "$tmp/dense.pmtiles" 7 68 41 | grep -c '"type": "Feature"' || true)"
+[[ $n == 200100 ]] || { echo "❌ tile 7/68/41 holds $n of 200100 points"; exit 1; }
+echo "tile 7/68/41 holds all $n points"
+
 echo "▶️  mapillary_pipeline"
 python3 -m mapillary_pipeline --help >/dev/null
 

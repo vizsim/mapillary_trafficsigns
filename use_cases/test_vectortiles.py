@@ -91,6 +91,15 @@ def test_a_missing_input_stops_before_tippecanoe(out_dir, monkeypatch):
     assert list(out_dir.iterdir()) == []
 
 
+def test_no_limit_can_stop_a_dense_tile():
+    # With --drop-rate=0, tippecanoe stops with exit 110 at a tile over 500 KB (ts
+    # run of 16.06.2026) or over 200,000 features. The image smoke test tiles such a
+    # tile with the real tippecanoe; this keeps the options from losing it.
+    options = vectortiles.TIPPECANOE_OPTIONS
+    assert "--drop-rate=0" in options
+    assert "--no-tile-size-limit" in options and "--no-feature-limit" in options
+
+
 @pytest.mark.parametrize("campaign", ["cycleway_complete_campaign", "cycleway_complete_marking_campaign"])
 def test_the_radinfra_notebooks_tile_through_this_module(campaign):
     # Until November 2026 both notebooks carried a copy of the function, and fixes
