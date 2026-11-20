@@ -1,11 +1,14 @@
-# Runs the tests on every push to main and on pull requests.
+# Runs the tests and builds the worker image, on every push to main and on pull
+# requests.
 #
 # One environment for everything since #9: pyproject.toml + uv.lock in the repo
 # root, the same lock file the worker image installs from. No test needs the
 # network, credentials or the gitignored data in output/.
 #
 # The worker's deploy step (scripts/run_worker_with_vpn.sh) only rolls out a
-# commit whose check runs here all succeeded.
+# commit whose check runs here all succeeded - both jobs. The server builds the
+# image itself at the start of a run, so without the second job a broken
+# Dockerfile or uv.lock would only show as a failed weekly run.
 
 name: Tests
 
@@ -37,3 +40,15 @@ jobs:
       # `git add --renormalize -- '*.ipynb'` once the filter is set up.
       - name: Notebooks carry no outputs
         run: git ls-files -z '*.ipynb' | xargs -0 uv run --frozen nbstripout --verify --keep-id
+
+  worker-image:
+    name: Worker image
+    runs-on: ubuntu-latest
+    # Compiling tippecanoe is most of it.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build docker/Dockerfile.worker
+        run: docker build -f docker/Dockerfile.worker -t mapillary-worker .
+      - name: Smoke test, repo bind-mounted at /app as on the server
+        run: docker run --rm -v "$PWD:/app" -w /app mapillary-worker bash scripts/smoke_test_worker_image.sh
