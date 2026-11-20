@@ -15,9 +15,10 @@ does the same for bicycle symbols painted on the road.
 
 The logic of both lives in [`../cw_campaign.py`](../cw_campaign.py), the generic steps in
 [`../campaign.py`](../campaign.py), which the
-[pedestrian-crossing campaign](../pedestrian_crossing_campaign/README.md) uses too. Both are
-tested next to them in `../test_*.py`; the notebooks only call them. Why a function works
-the way it does is in its docstring.
+[pedestrian-crossing campaign](../pedestrian_crossing_campaign/README.md) uses too, and the
+tiling for radinfra.de, shared with the twin, in [`../vectortiles.py`](../vectortiles.py).
+They are tested next to them in `../test_*.py`; the notebooks only call them. Why a function
+works the way it does is in its docstring.
 
 ---
 
@@ -53,7 +54,7 @@ scripts/run_worker_with_vpn_ts.sh
   └─ scripts/run_mapillary_notebooks.sh ts
        1. python3 -m mapillary_pipeline ts         (fetches the tiles)
        2. radinfra_1_export.ipynb   →  ts_output/*.geojson.gz, README.md, signs_by_month.svg
-       3. radinfra_2_pmtiles.ipynb  →  ts_output/*.pmtiles
+       3. radinfra_2_pmtiles.ipynb  →  ts_output/*.pmtiles   (tippecanoe, via ../vectortiles.py)
   └─ scripts/upload_outputs_to_b2.sh   →  data.vizsim.de
 ```
 

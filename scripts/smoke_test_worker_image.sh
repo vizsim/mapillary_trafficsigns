@@ -10,18 +10,26 @@
 set -euo pipefail
 cd /app
 
-echo "▶️  tippecanoe"
+echo "▶️  tippecanoe, called as radinfra_2_pmtiles calls it"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
-cat >"$tmp/in.geojson" <<'EOF'
-{"type": "FeatureCollection", "features": [
-  {"type": "Feature", "properties": {"id": "1234"}, "geometry": {"type": "Point", "coordinates": [13.4, 52.5]}}
-]}
-EOF
-# Same output format as radinfra_2_pmtiles: tippecanoe picks it by the extension.
-tippecanoe -o "$tmp/out.pmtiles" --force --quiet --layer=default -Z7 -z12 "$tmp/in.geojson"
-test -s "$tmp/out.pmtiles"
 tippecanoe --version 2>&1 | head -1
+python3 - "$tmp" <<'EOF'
+import gzip
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, "use_cases")
+import vectortiles
+
+tmp = Path(sys.argv[1])
+point = {"type": "Feature", "properties": {"id": "1234"}, "geometry": {"type": "Point", "coordinates": [13.4, 52.5]}}
+with gzip.open(tmp / "in.geojson.gz", "wt") as f:
+    json.dump({"type": "FeatureCollection", "features": [point]}, f)
+vectortiles.geojson_gz_to_pmtiles(tmp / "in.geojson.gz", tmp / "out.pmtiles")
+assert (tmp / "out.pmtiles").stat().st_size > 0
+EOF
 
 echo "▶️  mapillary_pipeline"
 python3 -m mapillary_pipeline --help >/dev/null

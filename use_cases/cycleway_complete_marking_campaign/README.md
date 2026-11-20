@@ -46,7 +46,7 @@ scripts/run_worker_with_vpn_mk.sh
   └─ scripts/run_mapillary_notebooks.sh mk
        1. python3 -m mapillary_pipeline mk         (fetches the tiles)
        2. radinfra_1_export.ipynb   →  mk_output/*.geojson.gz, README.md, markings_by_month.svg
-       3. radinfra_2_pmtiles.ipynb  →  mk_output/*.pmtiles
+       3. radinfra_2_pmtiles.ipynb  →  mk_output/*.pmtiles   (tippecanoe, via ../vectortiles.py)
   └─ scripts/upload_outputs_to_b2.sh   →  data.vizsim.de
 ```
 
