@@ -67,7 +67,7 @@ Both `maproulette_tasks.ipynb` call the same functions in
 | --- | --- | --- |
 | Dataset | `PREFIX_ZEICHEN` | `PREFIX_MARKIERUNGEN` |
 | Classes | 4 traffic signs | 1 marking (bicycle symbol) |
-| Seen after | `2025-07-01` | `2025-01-01` |
+| Seen after | one year before the run | `2025-01-01` |
 | Counts as cycling infrastructure | `designated` | `designated`, **`yes`** |
 | Motorway exclusion | yes | no |
 | Task text | `aufgabe_verkehrszeichen` | `aufgabe_markierung` |
