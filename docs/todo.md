@@ -1,6 +1,6 @@
 # TODO
 
-**Stand:** 2026-10-18
+**Stand:** 2026-11-20
 
 Ersetzt `plan_notebooks_zu_python.md`, `docker-improvements.md` und
 `worker_mix_fehleranalyse_und_todos.md`. Was dort noch offen war, steht hier;
@@ -46,8 +46,8 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 23 | Kampagnen-Erstellung auf dem Server testen | ½ Tag | mittel | P2 |
 | 24 | B2: alte Versionen nach 90 Tagen löschen | 15 min | gering | P3 |
 | 25 | Feature-ID-Regel richtigstellen | 30 min | mittel | P2 |
-| 26 | Parquet und Metadaten atomar schreiben | 30 min | mittel | P2 |
-| 27 | CI baut das Worker-Image | 1 h | hoch | P1, vor dem Merge von #9-Branch |
+| 26 | Parquet und Metadaten atomar schreiben | 30 min | mittel | ✅ 20.11. |
+| 27 | CI baut das Worker-Image | 1 h | hoch | ✅ 20.11., #9-Branch gemergt |
 | 28 | mk nur noch monatlich | 30 min | gering | optional, Entscheidung offen |
 
 ---
@@ -73,27 +73,6 @@ die History muss dafür nicht neu geschrieben werden.
 - ✅ 17.10.: `config.py` gelöscht. Sie wurde in diesem Repo nie importiert,
   stammte aus dem coverage-Repo und hielt den alten Token im Klartext.
 - **Offen:** den alten Token im Mapillary-Dashboard löschen.
-
-### 27. CI baut das Worker-Image
-
-**Aufwand:** 1 h · **Nutzen:** hoch · **Prio:** P1 — vor dem Merge von `chore/remove-unused-deps`
-
-Der Auto-Deploy (#5) rollt einen Commit aus, sobald die Tests grün sind. Das
-Worker-Image baut aber erst der Server, beim nächsten Lauf: Ein Fehler im
-Dockerfile oder in `uv.lock` fällt erst als gescheiterter Wochenlauf auf. Ein
-zweiter CI-Job baut `docker/Dockerfile.worker` und ruft darin tippecanoe,
-`python3 -m mapillary_pipeline --help`, den Import der Kampagnen-Module und
-`jupyter nbconvert --version` auf, mit dem Repo per Bind-Mount unter `/app` wie auf
-dem Server. Der Deploy wartet automatisch auch auf diesen Job, weil er alle
-Check-Runs des Commits prüft.
-
-Dringend macht das der Branch `chore/remove-unused-deps` (#9, 18.10.): Er ändert
-`uv.lock` und damit das Image. Reihenfolge: erst dieser Job, dann der Merge — nach
-den Läufen am 21./22.10.
-
-Vorlage: Der Branch `src-paket` der Durchsicht hat den Job schon, setzt aber das
-Paket aus #14 voraus; die Smoke-Tests sind an den heutigen Aufbau anzupassen.
-Ausbaustufe: #21.
 
 ---
 
@@ -141,9 +120,13 @@ Offen:
 - rad_frei ist am 18.10. gelöscht. Der Tag `archive/rad_frei` zeigt auf den letzten Stand;
   zurückholen mit `git checkout archive/rad_frei -- use_cases/rad_frei_campaign`.
 - Offen: das Analyse-Notebook.
-- `fiona`, `folium` und `mapillary` (das alte SDK, samt scipy und turfpy) sind auf dem Branch
-  `chore/remove-unused-deps` aus `pyproject.toml` genommen, siehe #9. `osm2geojson` bleibt,
-  solange das Analyse-Notebook bleibt.
+- Rollende Ein-Jahres-Grenze für `zuletzt_gesehen_nach` (heute − 1 Jahr statt fester
+  Daten): 52916 seit 20.11., die übrigen Kampagnen je mit ihrer nächsten Runde. Bei der
+  zweiten als Funktion samt Test nach `campaign.py`. Die beiden `radinfra_1_export`
+  (Produktion, fest 2023-01-01) bleiben außen vor.
+- `fiona`, `folium` und `mapillary` (das alte SDK, samt scipy und turfpy) sind seit 20.11.
+  aus `pyproject.toml` raus, siehe #9. `osm2geojson` bleibt, solange das Analyse-Notebook
+  bleibt.
 
 ### 23. Kampagnen-Erstellung auf dem Server testen
 
@@ -200,20 +183,6 @@ eindeutig.
 - Sollen die Tiles ids tragen: tippecanoe mit `--convert-stringified-ids-to-numbers`
   (laut Durchsicht: schreibt den Index als MVT-id, die PMTiles werden gut 10 %
   größer).
-
-### 26. Parquet und Metadaten atomar schreiben
-
-**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P2
-
-`export_geodata` in `mapillary_pipeline.py` schreibt das Parquet direkt unter dem
-endgültigen Namen, `_write_metadata` die JSON per `open(path, "w")` — am 18.10.
-nachgesehen. Stirbt der Prozess genau dabei — mk-Läufe sind schon an der
-Speichergrenze gestorben —, bleibt eine halbe Datei liegen. An einer kaputten
-Metadatei scheitert jeder Folgelauf schon beim Lesen, ein halbes Parquet bricht
-`radinfra_1_export` ab, Lauf für Lauf, bis jemand aufräumt. Wie an den übrigen
-Stellen im Repo: nach `*.tmp` schreiben, dann `os.replace`. Die Endung muss `.tmp`
-sein, nicht `.tmp.parquet`: dann trifft weder der Upload-Include noch das Glob in
-`load_features` eine liegengebliebene Datei.
 
 ---
 
@@ -399,6 +368,15 @@ tippecanoe. Gleicher Inhalt, aber kaum schneller (ts: 7 s statt 10 s auf 2 Kerne
 drei- bis vierfacher RAM-Bedarf und mit v0.8 noch Breaking Changes. Bleibt bei
 tippecanoe, bis das Kacheln Minuten statt Sekunden dauert.
 
+20.11.: Neuer Kandidat [manby](https://github.com/birkskyum/manby) (Rust, baut auf
+tippecanoe-rs auf, nimmt tippecanoes Optionen, `pip install manby`), in
+vizsim-lab/radinfra-history schon im Einsatz. Reizvoll vor allem, weil es über
+`uv.lock` käme und der C++-Build aus dem Dockerfile wegfiele. Mittelfristig, mit
+diesem Umzug zusammen. Vorher prüfen: dieselben Properties in den Kacheln wie
+heute (Feature-ids tragen sie nicht, #25), RAM auf dem Server
+(`--memory-budget`, Standard halber RAM), MVT statt MLT, Version pinnen
+(v0.2.x), Feature-Zahlen je Zoomstufe gegen tippecanoe vergleichen.
+
 ### 12. Generisches `campaign.py`
 
 **Aufwand:** 1 Tag für den Schnitt, dann ½ Tag je Kampagne · **Nutzen:** mittel · **Prio:** später
@@ -492,6 +470,41 @@ Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet i
 
 ## Erledigt
 
+### 27. CI baut das Worker-Image
+
+**Erledigt:** 20.11.2026
+
+Bis dahin baute erst der Server das Image, zu Beginn eines Wochenlaufs: Ein
+Fehler im Dockerfile oder in `uv.lock` fiel erst als gescheiterter Lauf auf. Jetzt
+baut ein zweiter Job in `.github/workflows/tests.yml` `docker/Dockerfile.worker`
+und ruft darin `scripts/smoke_test_worker_image.sh` auf, mit dem Repo per
+Bind-Mount unter `/app` wie auf dem Server: tippecanoe schreibt eine PMTiles-Datei,
+`mapillary_pipeline --help` und nbconvert starten, und die Kampagnen-Module und
+jeder Import der vier `radinfra_*`-Notebooks laden (die Notebooks brauchen
+z. B. seaborn, das kein Modul importiert). Der Deploy (#5) wartet auch auf diesen
+Job, weil er alle Check-Runs eines Commits prüft. Ohne Cache dauert der Bau rund
+2 min, fast alles davon tippecanoe. Lokal geprüft: grün im frischen Checkout, rot
+ohne tippecanoe. Ausbaustufe: #21.
+
+Danach am selben Tag `chore/remove-unused-deps` gemergt (#9, `7828442`), einen
+Monat später als geplant. Das Image ohne Cache gebaut: Smoke-Test grün,
+mapillary, fiona, folium, scipy und turfpy fehlen darin.
+
+### 26. Parquet und Metadaten atomar schreiben
+
+**Erledigt:** 20.11.2026
+
+`export_geodata` schrieb das Parquet direkt unter dem endgültigen Namen,
+`_write_metadata` die JSON per `open(path, "w")`. Starb der Prozess genau dabei,
+blieb eine halbe Datei liegen: An einer kaputten Metadatei scheitert jeder
+Folgelauf schon beim Lesen, ein halbes Parquet bricht `radinfra_1_export` ab.
+Jetzt gehen Parquet, Metadaten und das optionale `geojson.gz` über
+`mapillary_pipeline.write_atomically`: erst nach `<name>.tmp`, dann
+`os.replace`. Die Endung steht hinten (`x.parquet.tmp`), damit weder die
+Upload-Includes (enden auf `\.parquet$`) noch das Glob in `load_features`
+(`*.parquet`) eine liegengebliebene Datei treffen. Zwei Tests, beide rot gegen
+den alten Code.
+
 ### 19. Zweiter History-Rewrite
 
 **Erledigt:** 17.10.2026 — `.git` 206 MB → 29 MB.
@@ -564,10 +577,10 @@ sie brauchten (scipy, turfpy, haversine, geojson, branca, xyzservices,
 click-plugins, cligj); keine andere Version ändert sich. Alle Importe der
 getrackten Module und Notebooks lösen weiter auf, die Tests und beide
 `radinfra_1_export` laufen, das Überweg-Notebook schreibt dieselbe Datei.
-Das liegt auf dem Branch `chore/remove-unused-deps` und kommt **nach den Läufen
-am 21./22.10.** nach `main` — das Worker-Image wird damit neu gebaut, und der
-erste Lauf mit `python3 -m mapillary_pipeline` soll nichts anderes Neues
-mitbringen. `osm2geojson` bleibt, solange `analysis/analize_osm_ts.ipynb` bleibt.
+Das lag auf dem Branch `chore/remove-unused-deps` und ist am 20.11. nach `main`
+gemergt (`7828442`), nach #27 — dessen CI-Job baut das neue Image, bevor der
+Deploy es auf den Server lässt. `osm2geojson` bleibt, solange
+`analysis/analize_osm_ts.ipynb` bleibt.
 
 ### 5. Deploy-Weg festlegen
 
