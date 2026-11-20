@@ -58,6 +58,29 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def write_atomically(path: str, write) -> None:
+    """Call `write(tmp_path)`, then rename the result to `path`.
+
+    A process that dies while writing - mk runs have died at the memory limit -
+    would otherwise leave a truncated file under the final name. A broken
+    metadata file stops every later run when it is read, a broken parquet stops
+    radinfra_1_export, run after run. os.replace swaps the complete file in at
+    once, so `path` holds either the old or the new content.
+
+    The suffix goes after the full name (`x.parquet.tmp`, not `x.tmp.parquet`):
+    neither the include patterns of scripts/upload_outputs_to_b2.sh nor the glob
+    of campaign.load_features match a file a killed run left behind.
+    """
+    tmp_path = f"{path}.tmp"
+    try:
+        write(tmp_path)
+        os.replace(tmp_path, path)
+    except BaseException:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+        raise
+
+
 class RunLog:
     """print() plus Mitschrift in eine Datei.
 
@@ -126,8 +149,12 @@ def _read_metadata(path: str) -> dict:
 
 def _write_metadata(path: str, metadata: dict) -> None:
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+    def write(tmp_path):
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+    write_atomically(path, write)
 
 
 def update_bundesland_metadata(path: str, bundesland_id: str, timestamp: str) -> None:
@@ -172,7 +199,7 @@ def export_geodata(
     stem = os.path.join(output_folder, f"{pipeline.base_name}_{bundesland_id}_latest")
 
     if save_parquet:
-        gdf.to_parquet(f"{stem}.parquet", index=False)
+        write_atomically(f"{stem}.parquet", lambda tmp_path: gdf.to_parquet(tmp_path, index=False))
         emit(f"✔ Parquet saved to: {stem}.parquet")
 
     if save_geojson_gz:
@@ -186,8 +213,12 @@ def export_geodata(
         gdf_export = gdf.assign(**id_cols) if id_cols else gdf
         geojson_path = f"{stem}.geojson"
         gdf_export.to_file(geojson_path, driver="GeoJSON")
-        with open(geojson_path, "rb") as f_in, gzip.open(f"{geojson_path}.gz", "wb") as f_out:
-            f_out.writelines(f_in)
+
+        def write_gz(tmp_path):
+            with open(geojson_path, "rb") as f_in, gzip.open(tmp_path, "wb") as f_out:
+                f_out.writelines(f_in)
+
+        write_atomically(f"{geojson_path}.gz", write_gz)
         os.remove(geojson_path)
         emit(f"✔ Gzipped GeoJSON saved to: {geojson_path}.gz")
 

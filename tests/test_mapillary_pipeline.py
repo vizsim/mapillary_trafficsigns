@@ -112,6 +112,38 @@ def test_processed_date_nur_wenn_alle_laender_durchliefen(tmp_path):
     assert meta["last_run_incomplete"] == []
 
 
+def test_a_failed_parquet_write_keeps_the_previous_file(repo, monkeypatch):
+    # mk runs have died at the memory limit; one dying in to_parquet must not
+    # leave half a file under the name every later step reads.
+    mp.export_geodata(_gdf(4), mp.PIPELINE_TS, repo["out"], "DE-BW", emit=lambda m: None)
+
+    def dies_halfway(self, path, **kwargs):
+        with open(path, "wb") as f:
+            f.write(b"PAR1 truncated")
+        raise MemoryError
+
+    monkeypatch.setattr(gpd.GeoDataFrame, "to_parquet", dies_halfway)
+    with pytest.raises(MemoryError):
+        mp.export_geodata(_gdf(9), mp.PIPELINE_TS, repo["out"], "DE-BW", emit=lambda m: None)
+
+    monkeypatch.undo()
+    assert len(gpd.read_parquet(os.path.join(repo["out"], "mapillary_traffic-signs_DE-BW_latest.parquet"))) == 4
+    assert not [name for name in os.listdir(repo["out"]) if name.endswith(".tmp")]
+
+
+def test_a_failed_metadata_write_keeps_the_previous_file(tmp_path):
+    path = str(tmp_path / "meta.json")
+    mp.update_bundesland_metadata(path, "DE-BW", "2026-09-02T15:00:00+00:00")
+    before = open(path).read()
+
+    # json.dump has written part of the file when it hits the object it cannot serialise.
+    with pytest.raises(TypeError):
+        mp._write_metadata(path, {"bundeslaender": {"DE-BW": "x"}, "kaputt": object()})
+
+    assert open(path).read() == before
+    assert os.listdir(tmp_path) == ["meta.json"]
+
+
 def test_geojson_ids_als_string_parquet_exakt(repo):
     big = 2**53 + 1
     gdf = gpd.GeoDataFrame({"id": [big], "geometry": [Point(9, 48)]}, crs="EPSG:4326").astype({"id": "Int64"})
