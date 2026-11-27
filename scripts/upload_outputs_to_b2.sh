@@ -12,6 +12,9 @@
 # exit status 3 (a failed sync exits with 1). Either way the caller
 # (run_worker_with_vpn.sh) keeps going - the data stays on disk - but reports
 # the run as failed, because nothing was published.
+#
+# A failed sync job gets one more try after B2_RETRY_WAIT seconds (default
+# 900), see the end of this file.
 # ---------------------------------------------------------------------------
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -62,6 +65,10 @@ export B2_APPLICATION_KEY_ID="$B2_ARCHIVE_KEY_ID"
 export B2_APPLICATION_KEY="$B2_ARCHIVE_KEY"
 
 FAILED=0
+B2_RETRY_WAIT="${B2_RETRY_WAIT:-900}"
+# The jobs that went through. The second round skips them: a job whose files
+# are up must not count as failed because B2 is still down.
+declare -A SYNCED=()
 
 # ---------------------------------------------------------------------------
 # Ein Sync-Job.  sync_dir <SRC_DIR> <DEST> <INCLUDE_REGEX>…
@@ -82,9 +89,15 @@ FAILED=0
 sync_dir() {
   local src="$1" dest="$2"
   shift 2
+  local job="$src → $dest"
+
+  if [[ -n "${SYNCED[$job]:-}" ]]; then
+    return 0
+  fi
 
   if [[ ! -d "$src" ]]; then
     echo "⚠️  Quellverzeichnis '$src' fehlt — Job übersprungen."
+    SYNCED[$job]=1
     return 0
   fi
 
@@ -102,6 +115,7 @@ sync_dir() {
        --exclude-regex ".*" \
        "${include_args[@]}" \
        "$src" "$dest"; then
+    SYNCED[$job]=1
     return 0
   else
     echo "❌ Sync '$src' → '$dest' fehlgeschlagen."
@@ -113,47 +127,62 @@ sync_dir() {
 # ---------------------------------------------------------------------------
 # Was wird wohin archiviert?
 # ---------------------------------------------------------------------------
-case "$SERVICE" in
-  mapillary-ts_worker)
-    # 1) Roh-/Zwischendaten: Parquets pro Bundesland + Lauf-Metadaten.
-    sync_dir "output" \
-      "b2://vizsim-public-archive/mapillary_trafficsigns/" \
-      ".*mapillary_traffic-signs_.*\.parquet$" \
-      ".*ml-ts_metadata\.json$" \
-      ".*LICENSE\.txt$"
+sync_all() {
+  case "$SERVICE" in
+    mapillary-ts_worker)
+      # 1) Roh-/Zwischendaten: Parquets pro Bundesland + Lauf-Metadaten.
+      sync_dir "output" \
+        "b2://vizsim-public-archive/mapillary_trafficsigns/" \
+        ".*mapillary_traffic-signs_.*\.parquet$" \
+        ".*ml-ts_metadata\.json$" \
+        ".*LICENSE\.txt$"
 
-    # 2) Fertige Kampagnen-Outputs (Radinfrastruktur) — die Dateien, die
-    #    radinfra.de von data.vizsim.de liest. Nur hier veröffentlicht, seit
-    #    02.09.2026 nicht mehr in git.
-    sync_dir "use_cases/cycleway_complete_campaign/ts_output" \
-      "b2://vizsim-public-archive/mapillary_trafficsigns/cycleway-campaign/" \
-      ".*mapillary_trafficsigns_bicycle_latest\.pmtiles$" \
-      ".*mapillary_trafficsigns_bicycle_latest\.geojson\.gz$" \
-      ".*signs_by_month\.svg$" \
-      ".*signs_history\.json$" \
-      ".*README\.md$"
-    ;;
+      # 2) Fertige Kampagnen-Outputs (Radinfrastruktur) — die Dateien, die
+      #    radinfra.de von data.vizsim.de liest. Nur hier veröffentlicht, seit
+      #    02.09.2026 nicht mehr in git.
+      sync_dir "use_cases/cycleway_complete_campaign/ts_output" \
+        "b2://vizsim-public-archive/mapillary_trafficsigns/cycleway-campaign/" \
+        ".*mapillary_trafficsigns_bicycle_latest\.pmtiles$" \
+        ".*mapillary_trafficsigns_bicycle_latest\.geojson\.gz$" \
+        ".*signs_by_month\.svg$" \
+        ".*signs_history\.json$" \
+        ".*README\.md$"
+      ;;
 
-  mapillary-mk_worker)
-    # 1) mk-Parquets (map-feature-points / Markierungen) — eigener Ziel-Ordner,
-    #    bewusst getrennt von den traffic-signs, da anderer Datensatz.
-    sync_dir "output" \
-      "b2://vizsim-public-archive/mapillary_map-feature-points/" \
-      ".*mapillary_map-feature-points_.*\.parquet$" \
-      ".*ml-mf_metadata\.json$" \
-      ".*LICENSE\.txt$"
+    mapillary-mk_worker)
+      # 1) mk-Parquets (map-feature-points / Markierungen) — eigener Ziel-Ordner,
+      #    bewusst getrennt von den traffic-signs, da anderer Datensatz.
+      sync_dir "output" \
+        "b2://vizsim-public-archive/mapillary_map-feature-points/" \
+        ".*mapillary_map-feature-points_.*\.parquet$" \
+        ".*ml-mf_metadata\.json$" \
+        ".*LICENSE\.txt$"
 
-    # 2) Fertige Kampagnen-Outputs (Radinfrastruktur-Markierungen) — analog zur
-    #    ts-Kampagne, ebenfalls nur hier veröffentlicht.
-    sync_dir "use_cases/cycleway_complete_marking_campaign/mk_output" \
-      "b2://vizsim-public-archive/mapillary_map-feature-points/cycleway-campaign/" \
-      ".*mapillary_markings_bicycle_latest\.pmtiles$" \
-      ".*mapillary_markings_bicycle_latest\.geojson\.gz$" \
-      ".*markings_by_month\.svg$" \
-      ".*markings_history\.json$" \
-      ".*README\.md$"
-    ;;
-esac
+      # 2) Fertige Kampagnen-Outputs (Radinfrastruktur-Markierungen) — analog zur
+      #    ts-Kampagne, ebenfalls nur hier veröffentlicht.
+      sync_dir "use_cases/cycleway_complete_marking_campaign/mk_output" \
+        "b2://vizsim-public-archive/mapillary_map-feature-points/cycleway-campaign/" \
+        ".*mapillary_markings_bicycle_latest\.pmtiles$" \
+        ".*mapillary_markings_bicycle_latest\.geojson\.gz$" \
+        ".*markings_by_month\.svg$" \
+        ".*markings_history\.json$" \
+        ".*README\.md$"
+      ;;
+  esac
+}
+
+sync_all
+
+# Outages at B2 tend to last minutes - 503 "no tomes available" on 28.10.2026,
+# for ts and once for mk - while b2sdk gives up after five quick tries. One more
+# round after a pause would have published those weeks. b2 sync uploads only
+# what is not up yet.
+if [[ "$FAILED" -ne 0 ]]; then
+  echo "⏳ B2-Sync fehlgeschlagen — neuer Versuch der fehlgeschlagenen Jobs in ${B2_RETRY_WAIT} s."
+  sleep "$B2_RETRY_WAIT"
+  FAILED=0
+  sync_all
+fi
 
 if [[ "$FAILED" -ne 0 ]]; then
   echo "❌ Mindestens ein B2-Sync ist fehlgeschlagen."

@@ -51,7 +51,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 28 | mk nur noch monatlich | 30 min | gering | optional, Entscheidung offen |
 | 29 | manby statt tippecanoe | ½ Tag | mittel | später, Vergleich ✅ 20.11. |
 | 30 | Server-Platte: Docker räumt nie auf | 30 min | hoch | ✅ 27.11. |
-| 31 | B2-Upload bei Störung einmal wiederholen | 30 min | mittel | P3 |
+| 31 | B2-Upload bei Störung einmal wiederholen | 30 min | mittel | ✅ 27.11. |
 
 ---
 
@@ -286,19 +286,6 @@ nach sich zieht. Dazu Kommentare, die einen alten Stand beschreiben (Durchsicht)
   nicht mehr), und erklärt jetzt, warum Aufräumen in B2 keine Sache von
   `b2 sync --keep-days` ist (#24).
 
-### 31. B2-Upload bei Störung einmal wiederholen
-
-**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P3
-
-Am 28.10. (ts) und einmal bei mk scheiterte der Upload an einer Störung bei Backblaze:
-`503 service_unavailable no tomes available`, b2sdk gab nach 5 Versuchen in kurzer Folge
-auf. Der Lauf meldete korrekt Failure, aber die Woche war verloren — und halb
-veröffentlicht: Bei ts waren `.pmtiles` und `signs_by_month.svg` schon neu,
-`signs_history.json`, GeoJSON und README noch vom Vorlauf. Solche Störungen dauern
-meist Minuten. Vorschlag: Scheitert ein Sync-Job, nach ~15 min einmal wiederholen,
-bevor der Lauf als gescheitert gilt (`upload_outputs_to_b2.sh`; `b2 sync` überspringt,
-was schon oben ist).
-
 ### 24. B2: alte Versionen nach 90 Tagen löschen
 
 **Aufwand:** 15 min · **Nutzen:** gering · **Prio:** P3
@@ -498,6 +485,23 @@ Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet i
 ---
 
 ## Erledigt
+
+### 31. B2-Upload bei Störung einmal wiederholen
+
+**Erledigt:** 27.11.2026
+
+Am 28.10. (ts) und einmal bei mk scheiterte der Upload an einer Störung bei Backblaze:
+`503 service_unavailable no tomes available`, b2sdk gab nach 5 Versuchen in kurzer Folge
+auf. Der Lauf meldete korrekt Failure, aber die Woche war verloren — und halb
+veröffentlicht: Bei ts waren `.pmtiles` und `signs_by_month.svg` schon neu,
+`signs_history.json`, GeoJSON und README noch vom Vorlauf.
+
+Jetzt wiederholt `upload_outputs_to_b2.sh` die gescheiterten Sync-Jobs einmal, nach
+`B2_RETRY_WAIT` Sekunden (Standard 900), bevor der Upload als gescheitert gilt. Jobs, die
+schon durch waren, laufen nicht noch einmal: Sie könnten bei anhaltender Störung sonst
+scheitern, obwohl ihre Dateien oben sind. Ein Lauf wird dadurch höchstens 15 min länger,
+weit unter der Grace Time von healthchecks.io. `tests/test_upload_outputs_to_b2.py`
+prüft das mit einem falschen `b2`, ohne Netz.
 
 ### 30. Server-Platte: Docker räumt nie auf
 
