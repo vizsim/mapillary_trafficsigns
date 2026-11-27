@@ -55,6 +55,10 @@ in `logs/cron-mk.log` and `logs/executed/mk_*.ipynb`.
 
 > **Watch the memory.** The mk worker is capped at 6.5 GB and a run peaked at 5.3 GB
 > locally: the map-feature parquets carry every feature class, not just bicycle symbols.
+> The first number of each `RAM usage` line in `logs/cron-mk.log` is the container total,
+> page cache included, and has sat at the cap since October 2026. Since 27.11.2026 the line
+> also gives `anon` (what the processes hold), `file` (cache) and `swap`; those tell how
+> close a run gets.
 
 ---
 

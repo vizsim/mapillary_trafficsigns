@@ -64,12 +64,28 @@ maybe_drop_caches() {
 }
 
 # ---- RAM logger ----
+# The total (memory.current) counts the page cache too, which the kernel drops
+# once the container reaches its mem_limit - the mk runs sit at the limit week
+# after week, so the total says little about how close a run is to failing.
+# anon is what the processes hold themselves, swap what of it went to the swap
+# file. Both come from cgroup v2 (the server); without it the line has the total only.
+memory_detail() {
+  local cg=/sys/fs/cgroup swap
+  [[ -r $cg/memory.stat ]] || return 0
+  swap=$(cat "$cg/memory.swap.current" 2>/dev/null || echo 0)
+  awk -v swap="$swap" '
+    $1 == "anon" {anon = $2}
+    $1 == "file" {file = $2}
+    END {printf " (anon %.2f MB, file %.2f MB, swap %.2f MB)", anon / 1048576, file / 1048576, swap / 1048576}
+  ' "$cg/memory.stat" 2>/dev/null || true
+}
+
 (
   while true; do
     ts=$(date +"%H:%M:%S")
     mem=$(cat /sys/fs/cgroup/memory.current 2>/dev/null || cat /sys/fs/cgroup/memory/memory.usage_in_bytes)
     mem_mb=$(awk "BEGIN {printf \"%.2f\", $mem/1024/1024}")
-    echo "[$ts] RAM usage: ${mem_mb} MB"
+    echo "[$ts] RAM usage: ${mem_mb} MB$(memory_detail)"
     sleep 5
   done
 ) &
