@@ -51,6 +51,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 28 | mk nur noch monatlich | 30 min | gering | optional, Entscheidung offen |
 | 29 | manby statt tippecanoe | ½ Tag | mittel | später, Vergleich ✅ 20.11. |
 | 30 | Server-Platte: Docker räumt nie auf | 30 min | hoch | ✅ 27.11. |
+| 31 | B2-Upload bei Störung einmal wiederholen | 30 min | mittel | P3 |
 
 ---
 
@@ -284,6 +285,19 @@ nach sich zieht. Dazu Kommentare, die einen alten Stand beschreiben (Durchsicht)
   „aktuell ZUSÄTZLICH noch in git" (seit 02.09. nicht mehr, `COMMIT_PATHS` gibt es
   nicht mehr), und erklärt jetzt, warum Aufräumen in B2 keine Sache von
   `b2 sync --keep-days` ist (#24).
+
+### 31. B2-Upload bei Störung einmal wiederholen
+
+**Aufwand:** 30 min · **Nutzen:** mittel · **Prio:** P3
+
+Am 28.10. (ts) und einmal bei mk scheiterte der Upload an einer Störung bei Backblaze:
+`503 service_unavailable no tomes available`, b2sdk gab nach 5 Versuchen in kurzer Folge
+auf. Der Lauf meldete korrekt Failure, aber die Woche war verloren — und halb
+veröffentlicht: Bei ts waren `.pmtiles` und `signs_by_month.svg` schon neu,
+`signs_history.json`, GeoJSON und README noch vom Vorlauf. Solche Störungen dauern
+meist Minuten. Vorschlag: Scheitert ein Sync-Job, nach ~15 min einmal wiederholen,
+bevor der Lauf als gescheitert gilt (`upload_outputs_to_b2.sh`; `b2 sync` überspringt,
+was schon oben ist).
 
 ### 24. B2: alte Versionen nach 90 Tagen löschen
 
@@ -678,6 +692,13 @@ gilt auch ein gescheiterter oder übersprungener Upload (Exit 3), ein wegen
 Lock ausgefallener Lauf und ein Land, das an der Reißleine hängen blieb.
 healthchecks.io alarmiert zusätzlich, wenn gar kein Lauf kommt
 (Grace Time: ts 8 h, mk 10 h).
+
+Nachtrag 27.11.: Beide Checks brauchen als Zeitplan **Cron**, nicht den Standard
+„Simple, Period 1 day, Grace 1 hour“ — damit standen sie bis 27.11. da, und jeder Check
+meldete 25 h nach jedem erfolgreichen Lauf DOWN, Woche für Woche. Richtig: ts
+`0 1 * * 3`, mk `0 1 * * 4`, Zeitzone UTC, Grace Time 8 h bzw. 10 h (Schedule →
+„Change Schedule…“ → Cron). Mit dem Start-Ping begrenzt die Grace Time auch die
+Laufzeit: Kommt 8 bzw. 10 h nach dem Start kein Erfolg, gilt der Lauf als hängend.
 
 ### 4. Kopfzellen der `radinfra_1_export` korrigieren
 
