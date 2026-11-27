@@ -28,7 +28,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 5 | Deploy-Weg festlegen | 30 min | mittel | ✅ 17.10. |
 | 6 | Kampagnen-Inventur | 30 min | mittel | ✅ 18.10., Entscheidungen offen |
 | 7 | Alte Notebooks entfernen (ab 08.10.) | 1 h | mittel | ✅ 17.10. |
-| 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | P3 |
+| 8 | tippecanoe-Funktion ins Modul | 1–2 h | mittel | ✅ 20.11. |
 | 9 | Eine Python-Umgebung (uv) | ½ Tag | mittel | ✅ 17.10. |
 | 10 | CI | 1 h | hoch | ✅ 17.10. |
 | 11 | Notebook-Outputs aus git | 30 min | mittel | ✅ 17.10. |
@@ -49,6 +49,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 26 | Parquet und Metadaten atomar schreiben | 30 min | mittel | ✅ 20.11. |
 | 27 | CI baut das Worker-Image | 1 h | hoch | ✅ 20.11., #9-Branch gemergt |
 | 28 | mk nur noch monatlich | 30 min | gering | optional, Entscheidung offen |
+| 29 | manby statt tippecanoe | ½ Tag | mittel | später, Vergleich ✅ 20.11. |
 
 ---
 
@@ -223,7 +224,7 @@ src/mapillary_trafficsigns/
         crossings.py      ← use_cases/pc_campaign.py
         access.py         ← use_cases/ar_campaign.py
         tempo30.py        ← use_cases/t30_campaign.py
-    (vectortiles.py)      ← später die tippecanoe-Funktion, #8
+    vectortiles.py        ← use_cases/vectortiles.py (#8)
 tests/                    alle Tests, auch die der Kampagnen
 use_cases/                nur noch Notebooks und Daten
 ```
@@ -237,7 +238,7 @@ use_cases/                nur noch Notebooks und Daten
 - Runner: `python3 -m mapillary_trafficsigns.pipeline ts|mk`.
 - Pfade bleiben relativ zum Arbeitsverzeichnis; nichts im Code hängt an `__file__`.
 - Erst verschieben, dann ändern — sonst zeigt der Diff nicht, was sich inhaltlich
-  geändert hat. #8 deshalb nicht im selben Schritt.
+  geändert hat.
 
 Der Branch `src-paket` der Durchsicht setzt das um, aber auf dem Stand vor dem
 Schnitt aus #12 (nur `cw_campaign.py`). Nicht mergen, neu aufsetzen.
@@ -342,40 +343,52 @@ Am 17.10. zurückgestellt: Die übrigen Kampagnen werden später umgestellt, dan
 zusammen mit #12. Die Tempo-30-Daten sind ohnehin von 08/2025 — die nächste
 Runde braucht neue OSM-Daten, und mit ihr kommt dieser Fix.
 
-### 8. tippecanoe-Funktion ins Modul
+### 29. manby statt tippecanoe
 
-**Aufwand:** 1–2 h · **Nutzen:** mittel · **Prio:** später
+**Aufwand:** ½ Tag · **Nutzen:** mittel · **Prio:** später — frühestens, wenn manby ein paar
+Wochen ohne Breaking Changes läuft
 
-`gzgjson_to_pmtiles_dual_layer` steht zweimal kopiert in den Notebooks, in
-beiden `radinfra_2_pmtiles`; die Kopien sind identisch. Die beiden
-tippecanoe-Fixes (atomares Schreiben, `--no-tile-size-limit`) mussten
-schon je zweimal eingebaut werden — genau das Muster, durch das am 26.08.
-DE-NW verloren ging. Eine dritte Kopie in access_restrictions, ohne beide
-Fixes und ohne Eingabe, ist am 18.10. gelöscht.
+[manby](https://github.com/birkskyum/manby) baut auf tippecanoe-rs auf, nimmt tippecanoes
+Optionen und kommt per `pip install manby`, also über `uv.lock`; vizsim-lab/radinfra-history
+nutzt es schon. Der Gewinn ist Wartung: Der C++-Build fiele aus `docker/Dockerfile.worker`,
+und lokal, in der CI und auf dem Server liefe dieselbe gepinnte Version. Laufzeit spart es
+für uns kaum.
 
-Am 17.10. zurückgestellt, zusammen mit #12: erst wenn die übrigen Kampagnen
-umgestellt werden. Seit 18.10. ist das erfüllt — jetzt P3.
+Vergleich am 20.11.2026: manby 0.2.8 gegen tippecanoe 2.78.0 (wie im Image), mit den Optionen
+aus `vectortiles.py`, auf 2 Kerne beschränkt, Eingaben von data.vizsim.de (18./19.11.),
+dekodiert verglichen mit pmtiles 3.4.1 und mapbox-vector-tile 2.1.0:
 
-Beim Umzug gleich `--no-feature-limit` dazunehmen (Durchsicht, nachgestellt am
-17.10. mit 230.000 Punkten in einer z7-Kachel): Neben der 500-KB-Grenze kennt
-tippecanoe eine zweite, 200.000 Features je Kachel. Mit `--drop-rate=0` hat es
-auch dort kein Ventil und bricht mit Exit 110 ab, wie am 16.06. Die dichteste
-z7-Kachel der ts-Daten hatte im April knapp 30.000 Features — weit weg, aber
-dieselbe Falle.
+| | Verkehrszeichen (166.699 Punkte) | Markierungen (37.844 Punkte) |
+| --- | --- | --- |
+| tippecanoe 2.78.0 | 8,1 s, 300 MB | 1,95 s, 180 MB |
+| manby 0.2.8 | 2,7 s, 138 MB | 0,56 s, 63 MB |
 
-Ebenfalls am 17.10. geprüft: tylertoo (GeoParquet → PMTiles, Rust) als Ersatz für
-tippecanoe. Gleicher Inhalt, aber kaum schneller (ts: 7 s statt 10 s auf 2 Kernen),
-drei- bis vierfacher RAM-Bedarf und mit v0.8 noch Breaking Changes. Bleibt bei
-tippecanoe, bis das Kacheln Minuten statt Sekunden dauert.
+- **Kacheln:** in jeder Kachel z7–12 dieselben Features, Geometrien, Properties und
+  dieselbe Reihenfolge; gzip wie bisher; jede Mapillary-id der Eingabe steht auf z12.
+  Anders sind nur `name`/`description` (kommen vom Ausgabepfad) und `generator`
+  („tippecanoe v2.82.0“: manby folgt tippecanoes `main`, getaggt ist erst 2.79.0). Das
+  Archiv ist rund 5 % kleiner, anderer gzip-Encoder.
+- **Grenzen:** Bei einer z7-Kachel über 200.000 Features oder über 500 KB bricht manby wie
+  tippecanoe mit Exit 110 ab, aus demselben Grund; still verschwindet nichts. Mit
+  `--no-feature-limit` stehen alle Punkte drin. Nach einem Fehlschlag liegt unter dem
+  Zielnamen eine leere Datei (tippecanoe: eine halbe), die tmp-Logik bleibt also nötig.
+- **Speicher:** Der Standard von `--memory-budget` (halber RAM) übersieht das
+  Container-Limit. Ohne Angabe beendete der Kernel manby in einem Container mit 100 MB
+  (Exit 137); mit `--memory-budget=50M` lief es durch, mit denselben Kacheln. In Produktion
+  also immer setzen.
+- **Reife:** erste Version am 07.11.2026, 17 Releases bis 0.2.8 am 14.11., ein Breaking
+  Change (Rust-API) am 09.11.
 
-20.11.: Neuer Kandidat [manby](https://github.com/birkskyum/manby) (Rust, baut auf
-tippecanoe-rs auf, nimmt tippecanoes Optionen, `pip install manby`), in
-vizsim-lab/radinfra-history schon im Einsatz. Reizvoll vor allem, weil es über
-`uv.lock` käme und der C++-Build aus dem Dockerfile wegfiele. Mittelfristig, mit
-diesem Umzug zusammen. Vorher prüfen: dieselben Properties in den Kacheln wie
-heute (Feature-ids tragen sie nicht, #25), RAM auf dem Server
-(`--memory-budget`, Standard halber RAM), MVT statt MLT, Version pinnen
-(v0.2.x), Feature-Zahlen je Zoomstufe gegen tippecanoe vergleichen.
+Wenn es so weit ist: `manby==<Version>` in `pyproject.toml`; `geojson_gz_to_pmtiles` nimmt
+Programm und Optionen schon als Parameter, dazu `--memory-budget`. Ein, zwei Läufe erzeugen
+auf dem Server beide Archive und vergleichen sie, hochgeladen wird das von tippecanoe. Dann
+umstellen, tippecanoe ein paar Wochen als Rückfall im Image lassen, danach den C++-Build
+streichen. Der Dichte-Test im Smoke-Test zählt mit `tippecanoe-decode`; manby hat ein
+eigenes `decode`.
+
+Vorgänger: Am 17.10. war tylertoo (GeoParquet → PMTiles, Rust) geprüft — gleicher Inhalt,
+kaum schneller (ts: 7 s statt 10 s auf 2 Kernen), drei- bis vierfacher RAM-Bedarf und mit
+v0.8 noch Breaking Changes. Verworfen.
 
 ### 12. Generisches `campaign.py`
 
@@ -469,6 +482,29 @@ Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet i
 ---
 
 ## Erledigt
+
+### 8. tippecanoe-Funktion ins Modul
+
+**Erledigt:** 20.11.2026
+
+`gzgjson_to_pmtiles_dual_layer` stand identisch in beiden `radinfra_2_pmtiles`, und jeder
+der beiden tippecanoe-Fixes (atomares Schreiben, `--no-tile-size-limit`) musste in beide
+Kopien — das Muster, durch das am 26.08. DE-NW verloren ging. Jetzt steht die Funktion als
+`geojson_gz_to_pmtiles` in `use_cases/vectortiles.py` (der alte Name versprach zwei Layer,
+es ist einer), mit denselben Optionen und derselben tmp-Logik; die Notebooks rufen sie nur
+noch auf. Auf den Eingaben vom 18./19.11. liefert sie dieselben dekodierten Kacheln wie
+Produktion, auch per nbconvert im Worker-Image. `use_cases/test_vectortiles.py` prüft ohne
+tippecanoe, auch dass keine Kopie in ein Notebook zurückkommt.
+
+Dazu, als eigener Commit, `--no-feature-limit`: Neben den 500 KB kennt tippecanoe eine
+zweite Grenze, 200.000 Features je Kachel, und bricht mit `--drop-rate=0` auch dort mit
+Exit 110 ab. Der Smoke-Test im Image kachelt eine z7-Kachel mit 200.100 Punkten und zählt
+sie mit `tippecanoe-decode` zurück: ohne die Option Exit 110, mit ihr alle Punkte. Die
+dichteste z7-Kachel der Verkehrszeichen hatte am 20.11. 36.925 Features, im April knapp
+30.000.
+
+Eine dritte Kopie (access_restrictions, ohne beide Fixes) war schon am 18.10. gelöscht.
+Ersatz für tippecanoe: #29.
 
 ### 27. CI baut das Worker-Image
 
