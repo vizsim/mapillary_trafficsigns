@@ -51,11 +51,11 @@ hc_ping() {
 # ---------------------------
 # 🔒 Nur ein Worker gleichzeitig
 # ---------------------------
-# ts (Mi 15:00) und mk (Do 01:00) teilen sich Compose-Projekt, gluetun, output/
-# und den git-Index. `docker compose down` weiter unten ist projektweit: startet
-# mk, während ts noch läuft (nach VPN-Hängern mit langen Nachläufen durchaus
-# möglich), reißt es den ts-Lauf mit. Deshalb ein Lock — und bei Kollision
-# sichtbar aussteigen statt still zu kollidieren.
+# ts (Wed 01:00 UTC) and mk (Thu 01:00 UTC) share the compose project, gluetun,
+# output/ and the git index. `docker compose down` below is project-wide: should
+# mk start while ts still runs (after VPN hangs with long tails), it would take
+# the ts run down with it. Hence a lock - and on a collision, a visible exit
+# instead of a silent clash.
 LOCK_FILE="${MAPILLARY_WORKER_LOCK:-/tmp/mapillary_worker.lock}"
 # After a deploy the script restarts itself and inherits fd 9 with the lock
 # still held - taking it again would briefly release it.

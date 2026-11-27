@@ -50,6 +50,7 @@ später = bewusst zurückgestellt, bis die übrigen Kampagnen umgestellt werden 
 | 27 | CI baut das Worker-Image | 1 h | hoch | ✅ 20.11., #9-Branch gemergt |
 | 28 | mk nur noch monatlich | 30 min | gering | optional, Entscheidung offen |
 | 29 | manby statt tippecanoe | ½ Tag | mittel | später, Vergleich ✅ 20.11. |
+| 30 | Server-Platte: Docker räumt nie auf | 30 min | hoch | ✅ 27.11. |
 
 ---
 
@@ -248,7 +249,8 @@ Schnitt aus #12 (nur `cw_campaign.py`). Nicht mergen, neu aufsetzen.
 **Aufwand:** 1 h · **Nutzen:** mittel · **Prio:** P3
 
 Das Betriebswissen steht verstreut in Commit-Messages: Cron-Zeiten (ts Mi
-15:00 UTC, mk Do 01:00 UTC), der automatische Deploy (#5) und healthchecks.io
+01:00 UTC, bis 25.11.2026 Mi 15:00; mk Do 01:00 UTC; Docker-Aufräumen So 03:00
+UTC, #30), der automatische Deploy (#5) und healthchecks.io
 (#3), Wiederherstellen aus B2 (frühere Versionen 90 Tage lang, sobald #24
 eingerichtet ist), auf dem
 Server `checkout -B main origin/main` statt Branch-Wechsel (ein Wechsel hat
@@ -482,6 +484,26 @@ Hook wäre die dritte Sicherung. Wirkt nur in Klonen, in denen er eingerichtet i
 ---
 
 ## Erledigt
+
+### 30. Server-Platte: Docker räumt nie auf
+
+**Erledigt:** 27.11.2026
+
+Die Platte des Servers war zu 88 % voll (8,8 von 75 GB frei). Jeder Lauf mit
+`--build` legt neue Images an, und nichts räumte auf: 164 verwaiste Images seit
+12/2025, 32,5 GB Build-Cache, dazu sechs Images der alten Compose-Projektnamen
+`docker-*`/`docker_*` (vor der Umbenennung im September). Einmal aufgeräumt — verwaiste
+Images, Build-Cache älter als 30 Tage, die sechs Alt-Images — danach 50 % (36 GB frei).
+Die aktuellen Worker-Images und der Cache der letzten Wochen bleiben, der nächste Bau
+geht weiter schnell.
+
+Seitdem räumt eine Zeile in der Crontab des Servers (nicht im Repo) jeden Sonntag um
+03:00 UTC auf, wenn kein Lauf geplant ist: `docker image prune -f` und
+`docker builder prune -f --filter until=720h`, Protokoll in `~/docker_prune.log`. Sie
+betrifft alle Projekte auf dem Server; entfernt wird nur, was kein Image und kein
+laufender Bau mehr braucht. Gesichert vorher: `~/crontab_backup_2026-11-27.txt`.
+
+Am selben Tag der ts-Lauf von Mi 15:00 auf Mi 01:00 UTC gelegt, 24 h vor mk.
 
 ### 8. tippecanoe-Funktion ins Modul
 

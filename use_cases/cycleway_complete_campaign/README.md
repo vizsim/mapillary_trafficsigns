@@ -9,7 +9,7 @@ does the same for bicycle symbols painted on the road.
 | | `maproulette_*` | `radinfra_*` |
 | --- | --- | --- |
 | **Produces** | tasks for MapRoulette challenge 52916 | GeoJSON and vector tiles for radinfra.de |
-| **Triggered by** | a human, when a new round is due | cron on the server, **Wednesdays 15:00 UTC** |
+| **Triggered by** | a human, when a new round is due | cron on the server, **Wednesdays 01:00 UTC** |
 | **Runs in** | the repo's uv env (`uv sync` in the repo root) | the worker image, built from the same [`uv.lock`](../../uv.lock) |
 | **Needs** | the `osmium` CLI, a MapRoulette key, a Mapillary token | only `output/*.parquet` and the motorway file |
 
